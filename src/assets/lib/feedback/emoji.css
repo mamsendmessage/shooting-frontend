@@ -1,0 +1,66 @@
+.em,
+.em-svg {
+    height: 1.5em;
+    width: 1.5em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.em-angry {
+    background-image: url("1f620.png")
+}
+
+.em-angry.em-svg {
+    background: url("1f620.png");
+    background-image: url("1f620.svg"), none
+}
+
+.em-disappointed {
+    background-image: url("1f61e.png")
+}
+
+.em-disappointed.em-svg {
+    background: url("1f61e.png");
+    background-image: url("1f61e.svg"), none
+}
+
+.em-disappointed_relieved {
+    background-image: url("1f625.png")
+}
+
+.em-disappointed_relieved.em-svg {
+    background: url("1f625.png");
+    background-image: url("1f625.svg"), none
+}
+
+.em-expressionless {
+    background-image: url("1f611.png")
+}
+
+.em-expressionless.em-svg {
+    background: url("1f611.png");
+    background-image: url("1f611.svg"), none
+}
+
+.em-star-struck,
+.em-grinning_face_with_star_eyes {
+    background-image: url("1f929.png")
+}
+
+.em-star-struck.em-svg,
+.em-grinning_face_with_star_eyes.em-svg {
+    background: url("1f929.png");
+    background-image: url("1f929.svg"), none
+}
+
+.em-grinning {
+    background-image: url("1f600.png")
+}
+
+.em-grinning.em-svg {
+    background: url("1f600.png");
+    background-image: url("1f600.svg"), none
+}
