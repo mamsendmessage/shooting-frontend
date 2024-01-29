@@ -31,5 +31,30 @@ export class CommunicationService {
       return undefined;
     }
   }
+
+  public async putData(pUrl: string, pBody: any): Promise<any> {
+    try {
+      const tOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const tResponse = await this.http.put(pUrl, pBody, tOptions).toPromise();
+      return tResponse;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
+  public async deleteData(pUrl: string): Promise<any> {
+    try {
+      const tResponse = await this.http.delete(pUrl).toPromise();
+      return tResponse;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
   
 }

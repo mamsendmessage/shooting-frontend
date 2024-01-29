@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <!-- <div id="pre-loader">
+    <div id="pre-loader" *ngIf="!isPageReady">
         <div id="loader-logo">
             loading ...
             <div class="loading-page">
@@ -30,7 +30,7 @@
         </div>
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
-    </div> -->
+    </div>
 
 
 
@@ -46,7 +46,7 @@
             <ul>
                 <li> <a href="#" class="active"> <i class="dashboardIcon"> </i> <span> Dashboard </span> </a> </li>
 
-                <li> <a href="#" class=""> <i class="userIcon"> </i> <span> User Profile </span> </a> </li>
+                <li> <a href="#" [routerLink]="['/user']" class=""> <i class="userIcon"> </i> <span> User Profile </span> </a> </li>
 
                 <li> <a href="#" class=""> <i class="receptionistIcon"> </i> <span> Receptionist </span> </a> </li>
 
@@ -149,7 +149,7 @@
                             <div class="col-xxl-3 col-lg-3 col-md-3">
                                 <div class="report-box zoom-in">
                                     <div class="box p-3">
-                                        <div class="values"> <span class="fromV"> 4 </span> /{{numberOfLanes}}</div>
+                                        <div class="values"> <span class="fromV"> {{numberOfAvailableLanes}} </span> /{{numberOfLanes}}</div>
                                         <div class="titleSummary">Shooting Lane Availability</div>
                                         <div class="iconSummary shoterlane"> </div>
                                     </div>
@@ -158,7 +158,7 @@
                             <div class="col-xxl-3 col-lg-3 col-md-3">
                                 <div class="report-box zoom-in">
                                     <div class="box p-3">
-                                        <div class="values avilCol">1-2-4</div>
+                                        <div class="values avilCol">{{reservedLanes}}</div>
                                         <div class="titleSummary">Reserved Shooting Areas</div>
                                         <div class="iconSummary blockArea"> </div>
                                     </div>
@@ -167,7 +167,7 @@
                             <div class="col-xxl-3 col-lg-3 col-md-3">
                                 <div class="report-box zoom-in">
                                     <div class="box p-3">
-                                        <div class="values col-tickCol">200</div>
+                                        <div class="values col-tickCol">{{numberOfTicket}}</div>
                                         <div class="titleSummary">Num of Tickets</div>
                                         <div class="iconSummary numOFTicket"> </div>
                                     </div>
@@ -212,7 +212,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="intro-x">
+                                        <tr class="intro-x" >
                                             <td class="w-40">
                                                 <div class="flex">
                                                     <div class="w-10 h-10 image-fit zoom-in">
@@ -290,8 +290,6 @@
                                             <td class="text-center"> Online </td>
                                             <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
                                         </tr>
-
-
                                     </tbody>
                                 </table>
                             </div>

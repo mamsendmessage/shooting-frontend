@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
 import { CommunicationService } from '../communication/communication.service';
-import { AuthenticatedUser } from '../models/authenticatedUser';
+import { APIResponse } from '../models/APIResponse';
 import { Result } from '../models/enums';
 import { User } from '../models/user';
 import { UserManagementService } from './user-management.service';
+import { Constants } from '../models/Constants';
+import { Player } from '../models/Player';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
+  private serviceName: string = 'players';
+  private url: string = `${Constants.ServerUrl}/${this.serviceName}`
+  constructor(private communicationService: CommunicationService) { }
 
-  constructor(private communicationService: CommunicationService,
-    private userManagementService: UserManagementService) { }
-
-  public async GetTodayPlayers(): Promise<any[]> {
-    let  tPlayers: any[] = [];
+  public async GetTodayPlayers(): Promise<Player[]> {
+    let tPlayers: Player[] = [];
     try {
-      let tResult: Result = Result.ERROR;
-      const tUrl: string = 'http://localhost:2024/api/players?isToday=1';
-      const tResponse = await this.communicationService.getData(tUrl);
-      if (tResponse && tResponse.payload) {
-        tPlayers = tResponse.payload;
+      const tUrl: string = `${this.url}?isToday=1`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tPlayers.push(new Player(element));
+        }
       }
       return tPlayers;
     } catch (error) {
@@ -29,15 +33,89 @@ export class PlayerService {
     }
   }
 
-  public async SignUp(pUser: User): Promise<Result> {
+  public async GetActivePlayers(): Promise<Player[]> {
+    const tPlayers: Player[] = [];
     try {
-      let tResult: Result = Result.ERROR;
-      const tUrl: string = 'http://serverip:port//signup';
-      const tData = await this.communicationService.postData(tUrl, pUser);
-      return Result.SUCCESS;
+      const tUrl: string = `${this.url}?isToday=1`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tPlayers.push(new Player(element));
+        }
+      }
+      return tPlayers;
     } catch (error) {
       console.log(error);
-      return Result.ERROR;
+      return tPlayers;
+    }
+  }
+  public async GetAllPlayers(): Promise<Player[]> {
+    let tPlayers: Player[] = [];
+    try {
+      const tUrl: string = `${this.url}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tPlayers.push(new Player(element));
+        }
+      }
+      return tPlayers;
+    } catch (error) {
+      console.log(error);
+      return tPlayers;
+    }
+  }
+
+  public async IsPlayerExisit(pMobileNumber: number): Promise<boolean> {
+    try {
+      const tPlayers: Player[] = [];
+      const tUrl: string = `${this.url}?mobileNumber=` + pMobileNumber;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tPlayers.push(new Player(element));
+        }
+      }
+      return tPlayers.length > 0;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  public async AddPlayer(pPlayer: Player): Promise<number> {
+    try {
+      const tUrl: string = `${this.url}`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, pPlayer);
+      return tResponse.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  public async UpdatePlayer(pPlayer: Player): Promise<number> {
+    try {
+      const tUrl: string = `${this.url}/${pPlayer.ID}`;
+      const tResponse: APIResponse = await this.communicationService.putData(tUrl, pPlayer);
+      return tResponse.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  public async DeletePlayer(pId: number): Promise<number> {
+    try {
+      const tUrl: string = `${this.url}/${pId}`;
+      const tResponse: APIResponse = await this.communicationService.deleteData(tUrl);
+      return tResponse.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
     }
   }
 }
