@@ -14,13 +14,15 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TicketCreationComponent } from './components/ticket-creation/ticket-creation.component';
 import { HomeComponent } from './components/home/home.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     TicketCreationComponent,
-    HomeComponent
+    HomeComponent,
+    UsersComponent
   ],
   imports: [
     HttpClientModule,
