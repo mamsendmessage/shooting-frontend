@@ -1,0 +1,10 @@
+<div class="intro-y col-span-12 flex flex-nowrap items-center">
+    <nav class="w-full mr-auto">
+      <ul class="pagination">
+        <li *ngFor="let pageNumber of pageNumbers" [class.active]="pageNumber === currentPage">
+          <a (click)="changePage(pageNumber)" class="page-link">{{ pageNumber }}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  

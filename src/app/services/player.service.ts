@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { UserManagementService } from './user-management.service';
 import { Constants } from '../models/Constants';
 import { Player } from '../models/Player';
+import { X_TodayPlayer } from '../models/X_TodayPlayers';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,15 @@ export class PlayerService {
   private url: string = `${Constants.ServerUrl}/${this.serviceName}`
   constructor(private communicationService: CommunicationService) { }
 
-  public async GetTodayPlayers(): Promise<Player[]> {
-    let tPlayers: Player[] = [];
+  public async GetTodayPlayers(): Promise<X_TodayPlayer[]> {
+    let tPlayers: X_TodayPlayer[] = [];
     try {
       const tUrl: string = `${this.url}?isToday=1`;
       const tResponse: APIResponse = await this.communicationService.getData(tUrl);
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];
-          tPlayers.push(new Player(element));
+          tPlayers.push(new X_TodayPlayer(element));
         }
       }
       return tPlayers;

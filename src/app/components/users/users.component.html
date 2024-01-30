@@ -22,68 +22,59 @@
 
 <body>
 
+    <!----------Counter All------------>
+
+    <div class="counter-Page flex py-4">
+        <!----------sideMenu------------>
+        <nav class="sideMenu">
 
 
-
- 
-    <!----------Counter All------------> 
-
-<div class="counter-Page flex py-4"> 
-    <!----------sideMenu------------> 
-        <nav class="sideMenu"> 
-            
-        
             <span class="logo"> <a href="#"> </a> </span>
-
-
-
-            <ul> 
-
-
-            <li> <a href="index.html" class=""> <i class="dashboardIcon"> </i>  <span> Dashboard </span>   </a> </li>
-
-            <li> <a href="users.html" class="active">  <i class="userIcon"> </i>   <span> User Profile  </span>   </a> </li>
-
-            <li> <a href="#" class="">   <i class="receptionistIcon"> </i>  <span> Receptionist </span>     </a> </li>
-
-            <li> <a href="#" class="">    <i class="ticketsIcon"> </i> <span> Tickets </span>   </a> </li>
-
-            <li> <a href="#" class=""> <i class="settingIcon"> </i>   <span>  Setting</span>   </a> </li>
-
- 
-
+            <ul>
+                <li> <a href="#" [routerLink]="['/home']" class=""> <i class="dashboardIcon"> </i> <span> Dashboard
+                        </span> </a> </li>
+    
+                <li> <a href="#" [routerLink]="['/user']" class="active"> <i class="userIcon"> </i> <span> User Profile </span>
+                    </a> </li>
+    
+                <li> <a href="#" class=""> <i class="receptionistIcon"> </i> <span> Receptionist </span> </a> </li>
+    
+                <li> <a href="#" class=""> <i class="ticketsIcon"> </i> <span> Tickets </span> </a> </li>
+    
+                <li> <a href="#" class=""> <i class="settingIcon"> </i> <span> Setting</span> </a> </li>
             </ul>
-        
-        
-        </nav> 
 
 
-    <!----------sideMenu------------> 
-        <div class="contents">  
+        </nav>
 
- 
-            <div class="top-bar"> 
- 
 
+        <!----------sideMenu------------>
+        <div class="contents">
+            <div class="top-bar">
                 <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"> Application</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard </li>
+                        <li class="breadcrumb-item active" aria-current="page">Users </li>
                     </ol>
                 </nav>
 
-
-
                 <div class="intro-x relative sm-6">
                     <div class="search   sm:block">
-                        <input type="text" class="search__input form-control border-transparent" placeholder="Search...">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="search" data-lucide="search" class="lucide lucide-search search__icon dark:text-slate-500"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> 
+                        <input type="text" class="search__input form-control border-transparent"
+                            placeholder="Search...">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            icon-name="search" data-lucide="search"
+                            class="lucide lucide-search search__icon dark:text-slate-500">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
                     </div>
-                    
+
                     <div class="search-result">
                         <div class="search-result__content">
-                    
-                           
+
+
                             <div class="search-result__content__title">Users</div>
                             <div class="mb-5">
                                 <a href="" class="flex items-center mt-2">
@@ -91,46 +82,49 @@
                                         <img alt="SG" class="rounded-full" src="assets/img/profile-8.jpg">
                                     </div>
                                     <div class="ml-3">Kevin Spacey</div>
-                                    <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">kevinspacey@left4code.com</div>
+                                    <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">
+                                        kevinspacey@left4code.com</div>
                                 </a>
                                 <a href="" class="flex items-center mt-2">
                                     <div class="w-8 h-8 image-fit">
                                         <img alt="SG" class="rounded-full" src="assets/img/profile-8.jpg">
                                     </div>
                                     <div class="ml-3">Johnny Depp</div>
-                                    <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">johnnydepp@left4code.com</div>
+                                    <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">
+                                        johnnydepp@left4code.com</div>
                                 </a>
-                                
-                               
+
+
                             </div>
-                            
-                             
+
+
                         </div>
                     </div>
                 </div>
 
-
-                  <!-- BEGIN: Notifications -->
-                  <div class="intro-x dropdown  w-6 h-8 sm-6">
-                    
-
+                <!-- BEGIN: Notifications -->
+                <div class="intro-x dropdown  w-6 h-8 sm-6">
 
                     <div class="btn-group">
-                        <a class=" btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class=" btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <i class="far fa-bell"></i>
                         </a>
                         <ul class="dropdown-menu notificationBTN">
-                         
-    
-                        <li>  <span class="notification-succsess">  <i class="far fa-check-circle"></i>  30 User in Queue </span>  </li>
-                        <li>   <span class="notification-info"> <i class="far fa-times-circle"></i>  No avilable Stage </span> </li>
-                        <li>  <span class="notification-Error">   <i class="far fa-times-circle"></i> System Down </span> </li>
-                       
-    
-    
-    
+
+
+                            <li> <span class="notification-succsess"> <i class="far fa-check-circle"></i> 30 User in
+                                    Queue </span> </li>
+                            <li> <span class="notification-info"> <i class="far fa-times-circle"></i> No avilable Stage
+                                </span> </li>
+                            <li> <span class="notification-Error"> <i class="far fa-times-circle"></i> System Down
+                                </span> </li>
+
+
+
+
                         </ul>
-                      </div>
+                    </div>
 
 
 
@@ -140,366 +134,136 @@
                 <!-- END: Notifications -->
 
                 <div class="intro-x dropdown w-8 h-8 sm-6">
-                <div class="btn-group">
-                    <a class="userProfile btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <img src="assets/img/profile-8.jpg">
-                    </a>
-                    <ul class="dropdown-menu">
-                     
-
-                    <li> <a href="#"> Profile  </a>  </li>
-                    <li> <a href="#"> Setting</a> </li>
-                    <li> <a href="#"> LogOut </a></li>
-                   
-
-
-
-                    </ul>
-                  </div>
-                   
-
-                  </div>
-
-
+                    <div class="btn-group">
+                        <a class="userProfile btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="assets/img/profile-8.jpg">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li> <a href="#"> Profile </a> </li>
+                            <li> <a href="#"> Setting</a> </li>
+                            <li> <a href="#"> LogOut </a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
-
-            <div class="container-fluid"> 
-
-            <div class="row"> 
-
-
-                <div class="col-xxl-12 col-xl-12">   
-                    
-
-
-                    <div class="flex top-filter"> 
-
-
-                        <span class="titlebox  mr-auto">  List Of Players </span> 
-
-
-
-                        <div class="filter  sm-6"> 
-
-
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="w-56 relative text-slate-500">
-                                        <input type="text" class="form-control w-56 box pr-10" placeholder="Search...">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="search" class="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-lucide="search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> 
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="flex top-filter">
+                            <span class="titlebox  mr-auto"> List Of Players </span>
+                            <div class="filter  sm-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="w-56 relative text-slate-500">
+                                            <input type="text" class="form-control w-56 box pr-10"
+                                                placeholder="Search...">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" icon-name="search"
+                                                class="lucide lucide-search w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+                                                data-lucide="search">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" (change)="onStateChange($event.target)">
+                                            <option value=""> By Status ..</option>
+                                            <option value="2"> Planned</option>
+                                            <option value="1"> in Game</option>
+                                            <option value="0"> Wating</option>
+                                            <option value="3"> Finshed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" (change)="onUserTypeChange($event.target)">
+                                            <option value=""> By TicketType..</option>
+                                            <option value="1"> New Registration</option>
+                                            <option value="2"> Already Registered </option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" (change)="onTicketTypeChange($event.target)">
+                                            <option value=""> By Type of Player ..</option>
+                                            <option value="1"> Online</option>
+                                            <option value="2"> Promotion </option>
+                                            <option value="3"> Walk Through </option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col">
-                            
-                                    <select  class="form-select">
-
-                                        <option value=""> By Status ..</option>
-
-                                        <option> Planned</option>
-
-                                        <option> in Game</option>
-
-                                        <option> Wating</option>
-
-                                        <option> Finshed</option>
-
-
-                                    </select>
-                                </div>
-                                <div class="col">
-                                
-
-                                    <select  class="form-select">
-
-                                        <option value="">  By TicketType..</option>
-
-                                        <option> New Registration</option>
-
-                                        <option>  Already Registered </option>
-
-                                      
-
-                                    </select>
-                                  </div>
-                                  <div class="col">
-                                   
-                                    <select  class="form-select">
-
-                                        <option value="">  By Type of Player ..</option>
-
-                                        <option> Online</option>
-
-                                        <option>  Promotion </option>
-                                        <option>   Walk Through </option>
-
-                                    </select>
-                                  </div>
-                              </div>
-
-                              
-
-                            
+                            </div>
+                            <a href="#" class="CreateNewUser sm-6"> Add User </a>
                         </div>
-
-
-                        <a href="#" class="CreateNewUser sm-6"> Add User </a>
-
-
-
-
-                    </div>
-
-
-                   
-
-            
-
-                    <div class="col-xxl-12 col-lg-12 col-md-12"> 
-                        
- 
-
-
-                        <table class="table table-report sm:mt-2">
-                            <thead>
-                                <tr>
-                                    <th class="whitespace-nowrap">Photo </th>
-                                    <th class="whitespace-nowrap">Player Name </th>
-                                    <th class="text-center whitespace-nowrap">Type of user </th>
-                                    <th class="text-center whitespace-nowrap">Date Time  </th>
-                                    <th class="text-center whitespace-nowrap">Status</th>
-                                    <th class="text-center whitespace-nowrap">Level </th>
-                                    <th class="text-center whitespace-nowrap">Ticket Type </th>
-                                    <th class="text-center whitespace-nowrap">Actino</th>
-
-
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="text-Waiting">  Text Waiting</span>   </td>
-                                    <td class="text-center"> <span class="beginner">  Beginner </span> </td>
-                                    <td class="text-center">  Online </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="text-InGame">  in Game</span>   </td>
-                                    <td class="text-center"> <span class="professional">  Professional </span> </td>
-                                    <td class="text-center">  Promotion </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="planned">  Planned</span>   </td>
-                                    <td class="text-center">  <span class="intermediate">  Intermediate </span> </td>
-                                    <td class="text-center">  Online </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center"> <span class="planned">  Planned</span>  </td>
-                                    <td class="text-center">  <span class="intermediate">  Intermediate </span> </td>
-                                    <td class="text-center">  Walk through   </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="text-Waiting">  Text Waiting</span>   </td>
-                                    <td class="text-center"> <span class="beginner">  Beginner </span> </td>
-                                    <td class="text-center">  Online </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="text-InGame">  in Game</span>   </td>
-                                    <td class="text-center"> <span class="professional">  Professional </span> </td>
-                                    <td class="text-center">  Promotion </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center">  <span class="planned">  Planned</span>   </td>
-                                    <td class="text-center">  <span class="intermediate">  Intermediate </span> </td>
-                                    <td class="text-center">  Online </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Ahmad Hamd Sadeq
-                                    </td>
-                                    <td class="text-center">New Registration </td>
-                                    <td class="text-center">  26-Dec-2023 - 12:00 PM  </td>
-                                    <td class="text-center"> <span class="planned">  Planned</span>  </td>
-                                    <td class="text-center">  <span class="intermediate">  Intermediate </span> </td>
-                                    <td class="text-center">  Walk through   </td>
-                                    <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
-                                </tr>
-                               
-                               
-                                 
-                            </tbody>
-                        </table>
-
-                    
-
-
-
-
-                        <div class="intro-y col-span-12 flex flex-nowrap items-center">
-                            <nav class="w-full  mr-auto">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevrons-left" class="lucide lucide-chevrons-left w-4 h-4" data-lucide="chevrons-left"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg> </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-left" class="lucide lucide-chevron-left w-4 h-4" data-lucide="chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg> </a>
-                                    </li>
-                                    <li class="page-item"> <a class="page-link" href="#">...</a> </li>
-                                    <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                                    <li class="page-item active"> <a class="page-link" href="#">2</a> </li>
-                                    <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                                    <li class="page-item"> <a class="page-link" href="#">...</a> </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-right" class="lucide lucide-chevron-right w-4 h-4" data-lucide="chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevrons-right" class="lucide lucide-chevrons-right w-4 h-4" data-lucide="chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <select class="w-20 form-select box    mt-0">
-                                <option>10</option>
-                                <option>25</option>
-                                <option>35</option>
-                                <option>50</option>
-                            </select>
+                        <div class="col-xxl-12 col-lg-12 col-md-12">
+                            <app-users-list *ngIf="isReady" [data] ="players" ></app-users-list>
+                            <!-- <div class="intro-y col-span-12 flex flex-nowrap items-center">
+                                <nav class="w-full  mr-auto">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" icon-name="chevrons-left"
+                                                    class="lucide lucide-chevrons-left w-4 h-4"
+                                                    data-lucide="chevrons-left">
+                                                    <polyline points="11 17 6 12 11 7"></polyline>
+                                                    <polyline points="18 17 13 12 18 7"></polyline>
+                                                </svg> </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" icon-name="chevron-left"
+                                                    class="lucide lucide-chevron-left w-4 h-4"
+                                                    data-lucide="chevron-left">
+                                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                                </svg> </a>
+                                        </li>
+                                        <li class="page-item"> <a class="page-link" href="#">...</a> </li>
+                                        <li class="page-item"> <a class="page-link" href="#">1</a> </li>
+                                        <li class="page-item active"> <a class="page-link" href="#">2</a> </li>
+                                        <li class="page-item"> <a class="page-link" href="#">3</a> </li>
+                                        <li class="page-item"> <a class="page-link" href="#">...</a> </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" icon-name="chevron-right"
+                                                    class="lucide lucide-chevron-right w-4 h-4"
+                                                    data-lucide="chevron-right">
+                                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                                </svg> </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" icon-name="chevrons-right"
+                                                    class="lucide lucide-chevrons-right w-4 h-4"
+                                                    data-lucide="chevrons-right">
+                                                    <polyline points="13 17 18 12 13 7"></polyline>
+                                                    <polyline points="6 17 11 12 6 7"></polyline>
+                                                </svg> </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <select class="w-20 form-select box    mt-0">
+                                    <option>10</option>
+                                    <option>25</option>
+                                    <option>35</option>
+                                    <option>50</option>
+                                </select>
+                            </div> -->
                         </div>
-                    
-                    
-                    
-                    
-                    
                     </div>
-
- 
-                
                 </div>
-                
-
-               
-
-
             </div>
-
         </div>
-
-
-        </div>
-
-</div>
-    
-  
+    </div>
     <!---------topPOPUPS-setting----------->
-
-
     <!-- Modal -->
     <div class="modal fade" id="userProfile" tabindex="-1" aria-labelledby="euserProfileLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -509,32 +273,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has
+                    survived not only five centuries, but also the leap into electronic typesetting, remaining
+                    essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                    containing Lorem Ipsum passages, and more recently
                     with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-closeP" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-save">Save changes</button>
                 </div>
+            </div>
         </div>
-        </div>
-        </div>
-
-
-        <!-----script---->
-
-        <script src="/assets/js/jquery-3.2.1.min.js"></script>
-        <script src="/assets/lib/bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/assets/lib/slim/prettify.js "></script>
-        <script src="/assets/lib/slim/jquery.slimscroll.min.js"></script>
-        <script src="/assets/lib/highcharts/highcharts.js"></script>
-        <script src="/assets/lib/highcharts/highcharts-more.js"></script>
-         <script src="/assets/lib/highcharts/exporting.js"></script>
-        <script src="/assets/lib/highcharts/export-data.js"></script>
-        <script src="/assets/lib/highcharts/accessibility.js"></script>
-        <script src="/assets/js/main.js"></script>
-
+    </div>
 </body>
 
 </html>
