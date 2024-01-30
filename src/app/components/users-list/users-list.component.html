@@ -1,0 +1,37 @@
+<table class="table table-report sm:mt-2" *ngIf="isReady">
+    <thead>
+        <tr>
+            <th class="whitespace-nowrap">Photo </th>
+            <th class="whitespace-nowrap">Player Name </th>
+            <th class="text-center whitespace-nowrap">Type of user </th>
+            <th class="text-center whitespace-nowrap">Date Time </th>
+            <th class="text-center whitespace-nowrap">Status</th>
+            <th class="text-center whitespace-nowrap">Level </th>
+            <th class="text-center whitespace-nowrap">Ticket Type </th>
+            <th class="text-center whitespace-nowrap">Actino</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let player of players">
+            <tr class="intro-x">
+                <td class="w-40">
+                    <div class="flex">
+                        <div class="w-10 h-10 image-fit zoom-in">
+                            <img alt="SG" class="tooltip rounded-full" src="assets/img/profile-8.jpg">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{player.Name}}
+                </td>
+                <td class="text-center">{{ player.DisplayedUserType}} </td>
+                <td class="text-center"> {{player.DisplayedDateTime}} </td>
+                <td class="text-center"> {{player.DisplayedState}} </td>
+                <td class="text-center"> {{player.PlayerLevel}} </td>
+                <td class="text-center"> {{player.DisplayedTicketType}} </td>
+                <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+<app-pagination *ngIf="isReady" [totalItems] = "data.length" [itemsPerPage] = "5" [currentPage] = "1" (change)="fillDataToDisplay($event)"></app-pagination>

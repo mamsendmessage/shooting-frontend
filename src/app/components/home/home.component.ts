@@ -3,6 +3,7 @@ import { APIResponse } from 'src/app/models/APIResponse';
 import { Lane } from 'src/app/models/Lane';
 import { Player } from 'src/app/models/Player';
 import { Ticket } from 'src/app/models/Ticket';
+import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TicketService } from 'src/app/services/ticket.service';
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
   public numberOfAvailableLanes: number = 0;
   public reservedLanes: string = '0';
   public numberOfTicket: number = 0;
-  public players:Player[]=[];
+  public players: X_TodayPlayer[] = [];
   constructor(private playerService: PlayerService, private laneService: LaneService, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
@@ -31,10 +32,19 @@ export class HomeComponent implements OnInit {
 
   public async loadData(): Promise<number> {
     try {
-      this.players = await this.playerService.GetAllPlayers();
-      const tTodayPlayers: Player[] = await this.playerService.GetTodayPlayers();
-      if (tTodayPlayers) {
-        this.numberOfUsers = tTodayPlayers.length;
+      this.players = await this.playerService.GetTodayPlayers();
+      if (this.players.length > 0) {
+        this.numberOfTicket = this.players.length;
+        const uniqueIds: number[] = [];
+        this.players.filter(element => {
+          const isDuplicate = uniqueIds.includes(element.UserId);
+          if (!isDuplicate) {
+            uniqueIds.push(element.UserId);
+            return true;
+          }
+          return false;
+        });
+        this.numberOfUsers = uniqueIds.length;
       }
       const tLanes: Lane[] = await this.laneService.GetAllLanes();
       if (tLanes.length > 0) {
@@ -44,15 +54,10 @@ export class HomeComponent implements OnInit {
       const tReservedLanes: Lane[] = await this.laneService.GetReservedLanes();
       if (tReservedLanes.length > 0) {
         this.numberOfAvailableLanes = this.numberOfLanes - tReservedLanes.length;
-        this.reservedLanes = tReservedLanes.join('-');
+        this.reservedLanes = tReservedLanes.map((item)=>item.Number).join('-');
       } else {
         this.numberOfAvailableLanes = this.numberOfLanes;
         this.reservedLanes = '0';
-      }
-
-      const tTodayTickets:Ticket[] = await this.ticketService.GetTodayTickets();
-      if (tTodayTickets.length > 0) {
-        this.numberOfTicket = tTodayTickets.length;
       }
       return 0;
     } catch (error) {

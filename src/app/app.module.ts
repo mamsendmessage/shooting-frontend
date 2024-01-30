@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { TicketCreationComponent } from './components/ticket-creation/ticket-creation.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsersComponent } from './components/users/users.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { UsersComponent } from './components/users/users.component';
     LoginComponent,
     TicketCreationComponent,
     HomeComponent,
-    UsersComponent
+    UsersComponent,
+    PaginationComponent,
+    UsersListComponent
   ],
   imports: [
     HttpClientModule,
