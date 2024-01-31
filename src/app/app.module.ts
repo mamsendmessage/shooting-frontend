@@ -12,21 +12,41 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TicketCreationComponent } from './components/ticket-creation/ticket-creation.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsersComponent } from './components/users/users.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { UsersListComponent } from './components/users-list/users-list.component';
+import { TableComponent } from './components/table/table.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SlideMenuComponent } from './components/slide-menu/slide-menu.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
+import { SummaryStatisticsComponent } from './components/summary-statistics/summary-statistics.component';
+import { ReciptionComponent } from './components/reciption/reciption.component';
+import { TicketsComponent } from './components/tickets/tickets.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { CustomListComponent } from './components/custom-list/custom-list.component';
+import { TicketStatisticsComponent } from './components/ticket-statistics/ticket-statistics.component';
+import { CreateTicketModalComponent } from './components/create-ticket-modal/create-ticket-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TicketCreationComponent,
     HomeComponent,
     UsersComponent,
     PaginationComponent,
-    UsersListComponent
+    TableComponent,
+    LoaderComponent,
+    SlideMenuComponent,
+    TopbarComponent,
+    SummaryStatisticsComponent,
+    ReciptionComponent,
+    TicketsComponent,
+    SettingsComponent,
+    CustomListComponent,
+    TicketStatisticsComponent,
+    CreateTicketModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -38,7 +58,9 @@ import { UsersListComponent } from './components/users-list/users-list.component
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [
   ],

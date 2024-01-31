@@ -22,7 +22,7 @@ window.onload = function() {
     if (typeof loadTime == "number") {
         setTimeout(function() {
             $("body").addClass("loaded");
-        }, loadTime);
+        }, 1);
     } else {
         setTimeout(function() {
             $("body").addClass("loaded");
@@ -85,6 +85,12 @@ $(".scroll-all").slimScroll({
 
 
 
+
+
+
+$(".scrolluser").slimScroll({
+    height: "500px",
+});
 
 
 

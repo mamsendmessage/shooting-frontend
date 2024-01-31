@@ -1,160 +1,25 @@
-<div id="pre-loader" *ngIf="!isPageReady">
-    <div id="loader-logo">
-        loading ...
-        <div class="loading-page">
-
-        </div>
-    </div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
-</div>
+<app-loader></app-loader>
 <!----------Counter All------------>
 
 <div class="counter-Page flex py-4">
 
     <!----------sideMenu------------>
-    <nav class="sideMenu">
-
-        <span class="logo"> <a href="#"> </a> </span>
-        <ul>
-            <li> <a href="#" [routerLink]="['/home']" class="active"> <i class="dashboardIcon"> </i> <span> Dashboard
-                    </span> </a> </li>
-
-            <li> <a href="#" [routerLink]="['/user']" class=""> <i class="userIcon"> </i> <span> User Profile </span>
-                </a> </li>
-
-            <li> <a href="#" class=""> <i class="receptionistIcon"> </i> <span> Receptionist </span> </a> </li>
-
-            <li> <a href="#" class=""> <i class="ticketsIcon"> </i> <span> Tickets </span> </a> </li>
-
-            <li> <a href="#" class=""> <i class="settingIcon"> </i> <span> Setting</span> </a> </li>
-        </ul>
-    </nav>
+    <app-slide-menu [currentTab]="'Home'"></app-slide-menu>
     <!----------sideMenu------------>
     <div class="contents">
-        <div class="top-bar">
-            <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"> Application</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard </li>
-                </ol>
-            </nav>
-            <div class="intro-x relative sm-6">
-                <div class="search   sm:block">
-                    <input type="text" class="search__input form-control border-transparent" placeholder="Search...">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        icon-name="search" data-lucide="search"
-                        class="lucide lucide-search search__icon dark:text-slate-500">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </div>
-                <div class="search-result">
-                    <div class="search-result__content">
-                        <div class="search-result__content__title">Users</div>
-                        <div class="mb-5">
-                            <a href="" class="flex items-center mt-2">
-                                <div class="w-8 h-8 image-fit">
-                                    <img alt="SG" class="rounded-full" src="assets/img/profile-8.jpg">
-                                </div>
-                                <div class="ml-3">Kevin Spacey</div>
-                                <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">
-                                    kevinspacey@left4code.com</div>
-                            </a>
-                            <a href="" class="flex items-center mt-2">
-                                <div class="w-8 h-8 image-fit">
-                                    <img alt="SG" class="rounded-full" src="assets/img/profile-8.jpg">
-                                </div>
-                                <div class="ml-3">Johnny Depp</div>
-                                <div class="ml-auto w-48 truncate text-slate-500 text-xs text-right">
-                                    johnnydepp@left4code.com</div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- BEGIN: Notifications -->
-            <div class="intro-x dropdown  w-6 h-8 sm-6">
-                <div class="btn-group">
-                    <a class=" btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="far fa-bell"></i>
-                    </a>
-                    <ul class="dropdown-menu notificationBTN">
-                        <li> <span class="notification-succsess"> <i class="far fa-check-circle"></i> 30 User in
-                                Queue </span> </li>
-                        <li> <span class="notification-info"> <i class="far fa-times-circle"></i> No avilable Stage
-                            </span> </li>
-                        <li> <span class="notification-Error"> <i class="far fa-times-circle"></i> System Down
-                            </span> </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- END: Notifications -->
-            <div class="intro-x dropdown w-8 h-8 sm-6">
-                <div class="btn-group">
-                    <a class="userProfile btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <img src="assets/img/profile-8.jpg">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li> <a href="#"> Profile </a> </li>
-                        <li> <a href="#"> Setting</a> </li>
-                        <li> <a href="#"> LogOut </a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <app-topbar></app-topbar>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xxl-9 col-xl-12">
                     <span class="titlebox"> Summary </span>
-                    <div class="row">
-                        <div class="col-xxl-3 col-lg-3 col-md-3">
-                            <div class="report-box zoom-in">
-                                <div class="box p-3">
-                                    <div class="values">{{numberOfUsers}}</div>
-                                    <div class="titleSummary">Number of users</div>
-                                    <div class="iconSummary users"> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-lg-3 col-md-3">
-                            <div class="report-box zoom-in">
-                                <div class="box p-3">
-                                    <div class="values"> <span class="fromV"> {{numberOfAvailableLanes}} </span>
-                                        /{{numberOfLanes}}</div>
-                                    <div class="titleSummary">Shooting Lane Availability</div>
-                                    <div class="iconSummary shoterlane"> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-lg-3 col-md-3">
-                            <div class="report-box zoom-in">
-                                <div class="box p-3">
-                                    <div class="values avilCol">{{reservedLanes}}</div>
-                                    <div class="titleSummary">Reserved Shooting Areas</div>
-                                    <div class="iconSummary blockArea"> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-lg-3 col-md-3">
-                            <div class="report-box zoom-in">
-                                <div class="box p-3">
-                                    <div class="values col-tickCol">{{numberOfTicket}}</div>
-                                    <div class="titleSummary">Num of Tickets</div>
-                                    <div class="iconSummary numOFTicket"> </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <app-summary-statistics></app-summary-statistics>
                     <div class="row mt-8 ">
                         <div class="col-xxl-4 col-lg-4 col-md-4">
                             <span class="titlebox"> Type of Game </span>
                             <div class="intro-y box p-3 mt-12">
                                 <div id="box1chart" class="countsbox"> </div>
                             </div>
+
                         </div>
                         <div class="col-xxl-4 col-lg-4 col-md-4">
                             <span class="titlebox"> Level Selection </span>
@@ -167,12 +32,14 @@
                             <div class="intro-y box p-3 mt-12">
                                 <div id="box3chart" class="countsbox"> </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="row mt-8 ">
                         <div class="col-xxl-12 col-lg-12 col-md-12">
                             <span class="titlebox"> Players by today </span>
-                            <app-users-list *ngIf="isPageReady" [data] ="players" [itemsPerPage] = 4 ></app-users-list>
+                            <app-table *ngIf="isPageReady" [data]="players" [itemsPerPage]="itemPerPage"></app-table>
+                            <app-pagination *ngIf="isPageReady" [totalItems]="data.length" [currentPage]="1" (change)="updateItemPerPage($event)"></app-pagination>
                         </div>
                     </div>
                 </div>
