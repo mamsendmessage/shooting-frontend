@@ -1,0 +1,15 @@
+<app-loader></app-loader>
+
+
+<div class="counter-Page flex py-4">
+    <!----------sideMenu------------>
+    <app-slide-menu [currentTab]="'Tickets'"></app-slide-menu>
+    <!----------sideMenu------------>
+    <div class="contents" *ngIf="isReady">
+        <app-topbar></app-topbar>
+        <div class="container-fluid">
+            <app-ticket-statistics [data]="data"></app-ticket-statistics>
+            <app-custom-list class="full-width" [data]="data"></app-custom-list>
+        </div>
+    </div>
+</div>

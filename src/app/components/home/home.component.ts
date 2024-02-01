@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { APIResponse } from 'src/app/models/APIResponse';
 import { Lane } from 'src/app/models/Lane';
-import { Player } from 'src/app/models/Player';
-import { Ticket } from 'src/app/models/Ticket';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
@@ -22,9 +19,12 @@ export class HomeComponent implements OnInit {
   public reservedLanes: string = '0';
   public numberOfTicket: number = 0;
   public players: X_TodayPlayer[] = [];
+  public data: X_TodayPlayer[] = [];
+  public itemPerPage: number = 5;
   constructor(private playerService: PlayerService, private laneService: LaneService, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
+
     await this.loadData();
     this.isPageReady = true;
   }
@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
 
   public async loadData(): Promise<number> {
     try {
-      this.players = await this.playerService.GetTodayPlayers();
+      this.data = await this.playerService.GetTodayPlayers();
+      this.players = this.data;
       if (this.players.length > 0) {
         this.numberOfTicket = this.players.length;
         const uniqueIds: number[] = [];
@@ -54,7 +55,7 @@ export class HomeComponent implements OnInit {
       const tReservedLanes: Lane[] = await this.laneService.GetReservedLanes();
       if (tReservedLanes.length > 0) {
         this.numberOfAvailableLanes = this.numberOfLanes - tReservedLanes.length;
-        this.reservedLanes = tReservedLanes.map((item)=>item.Number).join('-');
+        this.reservedLanes = tReservedLanes.map((item) => item.Number).join('-');
       } else {
         this.numberOfAvailableLanes = this.numberOfLanes;
         this.reservedLanes = '0';
@@ -65,4 +66,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  public updateItemPerPage(pValue: any) {
+    if (isNaN(pValue)) {
+    } else {
+      this.itemPerPage = pValue;
+    }
+  }
 }
