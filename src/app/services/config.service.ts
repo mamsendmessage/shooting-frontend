@@ -9,6 +9,7 @@ import { APIResponse } from '../models/APIResponse';
 import { Constants } from '../models/Constants';
 import { Skeet } from '../models/Skeet';
 import { Configuration } from '../models/Configuration';
+import { Nationality } from '../models/Nationality';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,11 @@ export class ConfigurationService {
 
   private serviceName: string = 'config';
   private url: string = `${Constants.APIServerUrl}/${this.serviceName}`
-  constructor(private communicationService: CommunicationService) { }
+  private nationalities: Nationality[] = [];
+
+  constructor(private communicationService: CommunicationService) {
+
+  }
 
   public async GetAllSkeets(): Promise<Skeet[]> {
     const tSkeets: Skeet[] = [];
@@ -49,7 +54,7 @@ export class ConfigurationService {
           let tConfiguration = new Configuration(element)
           if (element.Config && element.Config.length > 0) {
             tConfiguration = JSON.parse(element.Config) as Configuration;
-          }else{
+          } else {
             tConfiguration = new Configuration(element);
 
           }
@@ -60,6 +65,28 @@ export class ConfigurationService {
     } catch (error) {
       console.log(error);
       return tConfigurations;
+    }
+  }
+
+  public async GetAllNationalites(): Promise<Skeet[]> {
+    try {
+      const tUrl: string = `${this.url}/nationalities`;
+      if (this.nationalities && this.nationalities.length > 0) {
+        return this.nationalities;
+      } else {
+        this.nationalities = [];
+        const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+        if (tResponse.result == 0) {
+          for (let index = 0; index < tResponse.payload.length; index++) {
+            const element = tResponse.payload[index];
+            this.nationalities.push(new Nationality(+element.ID, element.Name));
+          }
+        }
+      }
+      return this.nationalities;
+    } catch (error) {
+      console.log(error);
+      return [];
     }
   }
 
