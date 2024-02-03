@@ -2,7 +2,7 @@
   <nav class="w-full mr-auto">
     <ul class="pagination">
       <li class="page-item">
-        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        <a class="page-link" (click)="firstPage()" > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" icon-name="chevrons-left" class="lucide lucide-chevrons-left w-4 h-4"
             data-lucide="chevrons-left">
@@ -11,7 +11,7 @@
           </svg> </a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        <a class="page-link" (click)="previousPage()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" icon-name="chevron-left" class="lucide lucide-chevron-left w-4 h-4"
             data-lucide="chevron-left">
@@ -22,7 +22,7 @@
         <a (click)="changePage(pageNumber)" class="page-link">{{ pageNumber }}</a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        <a class="page-link" (click)="nextPage()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" icon-name="chevron-right" class="lucide lucide-chevron-right w-4 h-4"
             data-lucide="chevron-right">
@@ -30,7 +30,7 @@
           </svg> </a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        <a class="page-link" (click)="lastPage()" > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" icon-name="chevrons-right" class="lucide lucide-chevrons-right w-4 h-4"
             data-lucide="chevrons-right">
@@ -40,7 +40,7 @@
       </li>
     </ul>
   </nav>
-  <select class="w-20 form-select box mt-0" (change)="onChange($event.target)" [value]="itemsPerPage">
+  <select class="w-20 form-select box mt-0" (change)="onItemPerPageChange($event.target)" [value]="itemsPerPage">
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="25">25</option>

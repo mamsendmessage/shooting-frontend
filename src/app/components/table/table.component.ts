@@ -17,35 +17,37 @@ export class TableComponent implements OnInit, OnChanges {
   public isReady = false;
   @Input() data: X_TodayPlayer[] = [];
   @Input() itemsPerPage: number = 10;
+  @Input() startIndex: number = 0;
   players: X_TodayPlayer[] = [];
   public myImgUrl: string = 'assets/img/profile-8.jpg';
 
   constructor(public dialog: MatDialog, private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    //this.fillDataToDisplay(1);
+    for (let index = 0; index < this.data.length; index++) {
+      const element = this.data[index];
+      element.Photo = Constants.BaseServerUrl + element.Photo.replace('images', '');
+    }
     this.isReady = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.isReady = false;
     if (changes['itemsPerPage']) {
-      this.itemsPerPage = changes['itemsPerPage'].currentValue
+      this.itemsPerPage = +changes['itemsPerPage'].currentValue
     }
     if (changes['data']) {
       this.data = changes['data'].currentValue;
     }
-    this.fillDataToDisplay(1);
+    if (changes['startIndex']) {
+      this.startIndex = +changes['startIndex'].currentValue;
+    }
+    this.fillDataToDisplay();
     this.isReady = true;
   }
 
-  public fillDataToDisplay(pValue: number) {
-    for (let index = 0; index < this.data.length; index++) {
-      const element = this.data[index];
-      element.Photo = Constants.BaseServerUrl + element.Photo.replace('images', '');
-    }
-    this.currentPage = pValue
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  public fillDataToDisplay() {
+    const startIndex = this.startIndex;
     const endIndex = (startIndex + this.itemsPerPage) > this.data.length ? this.data.length : (startIndex + this.itemsPerPage);
     this.players = this.data.slice(startIndex, endIndex);
   }

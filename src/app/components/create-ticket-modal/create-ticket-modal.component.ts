@@ -17,11 +17,13 @@ export class CreateTicketModalComponent implements OnInit {
   public ticketForm: FormGroup;
   public webcamImage: WebcamImage = null;
   public image: string = '';
+  public fileName: string = 'No file selected';
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     private ticketService: TicketService, @Inject(MAT_DIALOG_DATA) public pPlayer: Player) {
 
     if (pPlayer && pPlayer.ID > 0) {
+      this.fileName = pPlayer.Document;
       this.image = Constants.BaseServerUrl + pPlayer.Photo.replace('images', '');
       this.ticketForm = this.fb.group({
         nameOfPlayer: [pPlayer.Name, Validators.required],
@@ -32,7 +34,8 @@ export class CreateTicketModalComponent implements OnInit {
         levelOfPlayer: ['', Validators.required],
         sessionTime: ['', Validators.required],
         laneId: ['', Validators.required],
-        photo: [],
+        photo: [''],
+        document: [''],
       });
     } else {
       this.ticketForm = this.fb.group({
@@ -43,7 +46,9 @@ export class CreateTicketModalComponent implements OnInit {
         gameType: ['', Validators.required],
         levelOfPlayer: ['', Validators.required],
         sessionTime: ['', Validators.required],
+        laneId: ['', Validators.required],
         photo: [''],
+        document: [''],
       });
     }
 
@@ -64,6 +69,7 @@ export class CreateTicketModalComponent implements OnInit {
       tPlayer.Name = this.ticketForm.value.nameOfPlayer;
       tPlayer.NationalityId = 1;
       tPlayer.Photo = this.webcamImage.imageAsBase64;
+      tPlayer.Document = this.ticketForm.value.document;
       const tTicket: Ticket = new Ticket(null);
       tTicket.UserId = tPlayer.ID;
       tTicket.GameTypeId = this.ticketForm.value.gameType;
@@ -86,6 +92,19 @@ export class CreateTicketModalComponent implements OnInit {
 
   handleLaneSelected(pValue) {
     this.ticketForm.value.laneId = pValue;
+  }
+
+  onSelect(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.fileName = file.name;
+    this.ticketForm.patchValue({ document: file });
+    this.ticketForm.get('document').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.ticketForm.value.document = reader.result;
+      console.log(reader.result);
+    };
+    reader.readAsDataURL(file);
   }
 
 }

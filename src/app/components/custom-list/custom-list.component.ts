@@ -12,7 +12,8 @@ export class CustomListComponent implements OnInit {
   @Input() public data: X_TodayPlayer[] = [];
   public players: X_TodayPlayer[] = [];
   public isReady: boolean = false;
-  public itemPerPage: number = 50;
+  @Input() public itemPerPage: number = 10;
+  public startIndex = 0;
   constructor(public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
@@ -22,7 +23,7 @@ export class CustomListComponent implements OnInit {
 
   public openCreateUserDialog(): void {
     const dialogRef = this.dialog.open(CreateTicketModalComponent, {
-      
+
     });
 
     // You can subscribe to the afterClosed() event to perform actions when the dialog is closed
@@ -61,4 +62,10 @@ export class CustomListComponent implements OnInit {
     }
   }
 
+  public updateCurrentPage(pValue: any) {
+    if (isNaN(pValue)) {
+    } else {
+      this.startIndex = pValue;
+    }
+  }
 }
