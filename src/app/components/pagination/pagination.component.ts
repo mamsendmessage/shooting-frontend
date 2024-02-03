@@ -13,6 +13,8 @@ export class PaginationComponent {
 
   onPageChange(page: number): void {
     const startIndex = (page - 1) * this.itemsPerPage;
+
+    this.change.emit(startIndex);
   }
 
   get totalPages(): number {
@@ -26,16 +28,16 @@ export class PaginationComponent {
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.change.emit(this.currentPage);
+      this.onPageChange(page);
     }
   }
 
   onChange(pValue: any) {
     if (pValue.value == "") {
-      //Nothing to do
+      // Nothing to do
     } else {
       this.itemsPerPage = +pValue.value;
-      this.change.emit(this.itemsPerPage)
+      this.onPageChange(1);
     }
   }
 

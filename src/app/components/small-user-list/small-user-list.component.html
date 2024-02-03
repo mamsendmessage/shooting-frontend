@@ -1,0 +1,26 @@
+<div class="container-fluid" *ngIf="isReady" >
+    <div class="row user-list">
+        <div class="col-xxl-12 col-xl-6 pl-3">
+            <span class="titlebox"> User Active - Per Day</span>
+            <div class="mt-2 ">
+                <ng-container *ngFor="let player of players" class="intro-x">
+                    <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
+                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                            <img alt="SG" src="assets/img/profile-8.jpg">
+                        </div>
+                        <div class="ml-4 mr-auto">
+                            <div class="font-medium">{{player.Name}}</div>
+                            <div class="text-slate-500 text-xs mt-0.5">{{player.DisplayedDateTime}}</div>
+                        </div>
+                        <div *ngIf="player.State==0" class="text-Waiting">{{player.DisplayedState}}</div>
+                        <div *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</div>
+                        <div *ngIf="player.State==2" class="planned">{{player.DisplayedState}}</div>
+                        <div *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</div>
+                    </div>
+                </ng-container>
+                <!-- <button class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
+                    More</button> -->
+            </div>
+        </div>
+    </div>
+</div>

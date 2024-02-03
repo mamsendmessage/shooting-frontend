@@ -1,11 +1,11 @@
-<div class="boxUser"  tabindex="-1" aria-labelledby="createUserLabel" id="create-ticket-modal">
+<div class="boxUser" tabindex="-1" aria-labelledby="createUserLabel" id="create-ticket-modal">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content darks">
             <form [formGroup]="ticketForm">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Create New Ticket <span
                             class="smallTitle"> for new Player Not Registered </span></h5>
-                    <button type="button" class="btn-close"  aria-label="Close" (click)="close()" id="close1"></button>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="close()" id="close1"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -15,8 +15,9 @@
                                 <div class="row g-3">
                                     <div class="col-sm-3 pd-r-1">
                                         <label for="NamePlayer" class="form-label"> Name of Player</label>
-                                        <input type="text" class="form-control" id="NamePlayer" 
-                                            placeholder="Name of Player" value="" required="" formControlName="nameOfPlayer">
+                                        <input type="text" class="form-control" id="NamePlayer"
+                                            placeholder="Name of Player" value="" required=""
+                                            formControlName="nameOfPlayer">
                                         <div class="invalid-feedback">
                                             Valid name of player is required.
                                         </div>
@@ -24,7 +25,8 @@
                                     <div class="col-sm-3 pd-r-1">
                                         <label for="Nationality" class="form-label">Nationality</label>
                                         <input type="text" class="form-control" id="Nationality"
-                                            placeholder="Nationality" value="" required="" formControlName="nationality">
+                                            placeholder="Nationality" value="" required=""
+                                            formControlName="nationality">
                                         <div class="invalid-feedback">
                                             Nationality
                                         </div>
@@ -33,8 +35,9 @@
                                         <label for="MobNum" class="form-label">Mobile Numer</label>
                                         <div class="input-group 3">
                                             <span class="input-group-text flags" id="qatariMobile"></span>
-                                            <input type="text" class="form-control" placeholder="66-XXXXXXXXXXX" formControlName="mobileNumber"
-                                                aria-label="qatariMobile" aria-describedby="basic-addon1">
+                                            <input type="text" class="form-control" placeholder="66-XXXXXXXXXXX"
+                                                formControlName="mobileNumber" aria-label="qatariMobile"
+                                                aria-describedby="basic-addon1">
                                         </div>
                                         <div class="invalid-feedback">
                                             Valid Mobile Numer is required.
@@ -57,15 +60,18 @@
                                         <label for="NamePlayer" class="form-label"> Game type</label>
                                         <ul class="flex g-3">
                                             <li class="mr-r-6">
-                                                <input id="r1" type="radio" name="gameType" value="1" checked formControlName="gameType">
+                                                <input id="r1" type="radio" name="gameType" value="1" checked
+                                                    formControlName="gameType">
                                                 <label for="r1">Normal </label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r2" type="radio" name="gameType" value="2" formControlName="gameType">
+                                                <input id="r2" type="radio" name="gameType" value="2"
+                                                    formControlName="gameType">
                                                 <label for="r2">Special</label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r3" type="radio" name="gameType" value="3" formControlName="gameType">
+                                                <input id="r3" type="radio" name="gameType" value="3"
+                                                    formControlName="gameType">
                                                 <label for="r3">Competition</label>
                                             </li>
                                         </ul>
@@ -74,15 +80,18 @@
                                         <label for="Nationality" class="form-label">Level of Player </label>
                                         <ul class="flex g-3">
                                             <li class="mr-r-6">
-                                                <input id="r11" type="radio" name="levelOfPlayer" value="1" checked formControlName="levelOfPlayer">
+                                                <input id="r11" type="radio" name="levelOfPlayer" value="1" checked
+                                                    formControlName="levelOfPlayer">
                                                 <label for="r11">Beginner </label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r22" type="radio" name="levelOfPlayer" value="2" formControlName="levelOfPlayer">
+                                                <input id="r22" type="radio" name="levelOfPlayer" value="2"
+                                                    formControlName="levelOfPlayer">
                                                 <label for="r22">Intermediate</label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r33" type="radio" name="levelOfPlayer" value="3" formControlName="levelOfPlayer">
+                                                <input id="r33" type="radio" name="levelOfPlayer" value="3"
+                                                    formControlName="levelOfPlayer">
                                                 <label for="r33">Professional</label>
                                             </li>
                                         </ul>
@@ -91,80 +100,33 @@
                                         <label for="MobNum" class="form-label">Session Time</label>
                                         <ul class="flex g-3">
                                             <li class="mr-r-6">
-                                                <input id="r111" type="radio" name="sessionTime" value="1" checked formControlName="sessionTime">
+                                                <input id="r111" type="radio" name="sessionTime" value="1" checked
+                                                    formControlName="sessionTime">
                                                 <label for="r111">30m </label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r222" type="radio" name="sessionTime" value="2" formControlName="sessionTime">
+                                                <input id="r222" type="radio" name="sessionTime" value="2"
+                                                    formControlName="sessionTime">
                                                 <label for="r222">45m</label>
                                             </li>
                                             <li class="mr-r-6">
-                                                <input id="r333" type="radio" name="sessionTime" value="3" formControlName="sessionTime">
+                                                <input id="r333" type="radio" name="sessionTime" value="3"
+                                                    formControlName="sessionTime">
                                                 <label for="r333">60m</label>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <span class="titlebox  mr-auto mr-t-6"> Shooting Lane Availability </span>
-                            <div class="forms  mr-t-6">
-                                <div class="row g-3">
-                                    <div class="topStage">
-                                        Shooting Lane Availability
-                                    </div>
-                                    <div class="select-stage">
-                                        <ul>
-                                            <li>
-                                                <span class="waitNo">15</span>
-                                                <span class="boxStage notAvilable">1</span>
-                                            </li>
-                                            <li>
-                                                <span class="waitNo">15</span>
-                                                <span class="boxStage notAvilable">2</span>
-                                            </li>
-                                            <li>
-                                                <span class="waitNo">30</span>
-                                                <span class="boxStage notAvilable">3</span>
-                                            </li>
-                                            <li>
-                                                <span class="waitNo">0</span>
-                                                <span class="boxStage your selected">4</span>
-                                            </li>
-                                            <li>
-                                                <span class="waitNo">Avilable</span>
-                                                <span class="boxStage itsAvilable">5</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="legendStage">
-                                        <ul>
-                                            <li class="avilablenote"> Avilable </li>
-                                            <li class="notAvilable"> not Avilable </li>
-                                            <li class="yourselected"> your Select </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <app-lanes (selectedLaneId) = "handleLaneSelected($event)"></app-lanes>
                         </div>
                         <div class="ccol-xxl-4 col-xl-4">
                             <div class="profiles">
-                                <canvas id="canvas" class="attachedPhoto">
-                                </canvas>
-                                <input type="text" hidden formControlName="photo" id="photo">
+                                <img class="attachedPhoto" [src]="image" />
                                 <span> Name Of Player </span>
                             </div>
                             <div class="takePhoto">
-                                <div class="cams">
-                                    <video id="camera-stream" class="cam-run"></video>
-                                </div>
-                                <div class="controlsCam">
-                                    <button disabled id="flip-btn" class="flipphotos">
-                                        Flip Camera
-                                    </button>
-                                    <button id="capture-camera" class="takePhotos">
-                                        Take photo
-                                    </button>
-                                </div>
+                                <app-camera (pictureTaken)="handleImage($event)"></app-camera>
                             </div>
                             <div class="takePhoto mr-t-6">
                                 <div class="file-container">
@@ -183,7 +145,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="close()" class="btn-cancel">Cancel</button>
-                    <button type="button" (click) = "onSubmit()" class=" btn-generate" id="close2">Generate Ticket</button>
+                    <button type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Generate
+                        Ticket</button>
                 </div>
             </form>
         </div>

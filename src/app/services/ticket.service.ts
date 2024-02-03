@@ -4,6 +4,7 @@ import { Lane } from '../models/Lane';
 import { APIResponse } from '../models/APIResponse';
 import { Constants } from '../models/Constants';
 import { Ticket } from '../models/Ticket';
+import { Player } from '../models/Player';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Ticket } from '../models/Ticket';
 export class TicketService {
 
   private serviceName: string = 'tickets';
-  private url: string = `${Constants.ServerUrl}/${this.serviceName}`
+  private url: string = `${Constants.APIServerUrl}/${this.serviceName}`
   constructor(private communicationService: CommunicationService) { }
 
   public async GetTodayTickets(): Promise<Ticket[]> {
@@ -50,10 +51,42 @@ export class TicketService {
     }
   }
 
+  public async GetUserTickets(pUserId): Promise<Ticket[]> {
+    let tTickets: Ticket[] = [];
+    try {
+      const tUrl: string = `${this.url}?userId=${pUserId}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tTickets.push(new Ticket(element));
+        }
+      }
+      return tTickets;
+    } catch (error) {
+      console.log(error);
+      return tTickets;
+    }
+  }
+
   public async AddTicket(pTicket: Ticket): Promise<number> {
     try {
       const tUrl: string = `${this.url}`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, pTicket);
+      return tResponse.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  public async AddTicketForNewPlayer(pPlayer: Player, pTicket: Ticket): Promise<number> {
+    try {
+      const tUrl: string = `${this.url}/newPlayer`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {
+        ticket: pTicket,
+        player: pPlayer
+      });
       return tResponse.result;
     } catch (error) {
       console.log(error);

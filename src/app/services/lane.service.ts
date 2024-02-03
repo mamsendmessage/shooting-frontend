@@ -14,7 +14,7 @@ import { Constants } from '../models/Constants';
 export class LaneService {
 
   private serviceName: string = 'lanes';
-  private url: string = `${Constants.ServerUrl}/${this.serviceName}`
+  private url: string = `${Constants.APIServerUrl}/${this.serviceName}`
   constructor(private communicationService: CommunicationService) { }
 
   public async GetReservedLanes(): Promise<Lane[]> {

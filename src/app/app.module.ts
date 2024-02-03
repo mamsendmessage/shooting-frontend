@@ -28,6 +28,13 @@ import { TicketStatisticsComponent } from './components/ticket-statistics/ticket
 import { CreateTicketModalComponent } from './components/create-ticket-modal/create-ticket-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CameraComponent } from './components/camera/camera.component';
+import {WebcamModule} from 'ngx-webcam';
+import { SmallUserListComponent } from './components/small-user-list/small-user-list.component';
+import { LanesComponent } from './components/lanes/lanes.component';
+import { NormalConfigComponent } from './components/normal-config/normal-config.component';
+import { CompetitionConfigComponent } from './components/competition-config/competition-config.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +53,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     SettingsComponent,
     CustomListComponent,
     TicketStatisticsComponent,
-    CreateTicketModalComponent
+    CreateTicketModalComponent,
+    CameraComponent,
+    SmallUserListComponent,
+    LanesComponent,
+    NormalConfigComponent,
+    CompetitionConfigComponent,
+    UserProfileComponent
   ],
   imports: [
     HttpClientModule,
@@ -60,7 +73,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatRadioModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    WebcamModule
   ],
   providers: [
   ],

@@ -1,0 +1,70 @@
+<div class="box p-3">
+
+
+    <span class="titlebox extrafonts"> {{type}} </span>
+    <form class="skeet-play" [formGroup]="configurationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="row mb-1">
+                <label for="Time_between_each_shot" class="col-sm-8 col-form-label">Time between
+                    each shot</label>
+                <div class="col-sm-4">
+                    <div class="d-flex">
+                        <span class="timer icons"> </span>
+                        <input class="form-control mb-1 custom-select" placeholder="" type="number"
+                            formControlName="TimePerShot">
+                        <span class="shotsValus"> shot/s </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-b">
+            <div class="row mb-1">
+                <label for="Time_between_each_shot" class="col-sm-8 col-form-label">Time between
+                    after 2 shot (to refill the bullets)</label>
+                <div class="col-sm-4">
+                    <div class="d-flex">
+                        <span class="timer icons"> </span>
+                        <input class="form-control mb-1 custom-select" placeholder="" type="number"
+                            formControlName="TimeToRefill">
+                        <span class="shotsValus"> shot/s </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="skeeter-cong">
+            <div class="row intro-x" formArrayName="Skeets">
+                <ng-container *ngFor="let skeet of Skeets.controls; let i = index" class="container-fluid">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex headshot">
+                                    <span class="skeetIcon"> Skeet No. {{i+1}}</span>
+                                    <span class="shots"> Shot {{i+1}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex" [formGroupName]="i">
+                                    <select class="form-control mb-1 mr-r-6 custom-select" formControlName="SkeetID">
+                                        <option *ngFor="let skeetItem of allSkeets; let i = index"
+                                            value="{{skeetItem.ID}}"> {{skeetItem.Name}} </option>
+                                    </select>
+                                    <input class="form-control mb-1 custom-select" placeholder=""
+                                        formControlName="TimePerShot" type="number">
+                                    <span class="shotsValus"> shot/s </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="total-skeet">
+            Total <span class="valuesNo"> 25 </span> shots with <span class="valuesNo"> 25
+            </span> clays
+
+        </div>
+        <button type="submit">Save</button>
+    </form>
+</div>

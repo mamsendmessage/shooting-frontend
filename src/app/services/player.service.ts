@@ -13,7 +13,7 @@ import { X_TodayPlayer } from '../models/X_TodayPlayers';
 })
 export class PlayerService {
   private serviceName: string = 'players';
-  private url: string = `${Constants.ServerUrl}/${this.serviceName}`
+  private url: string = `${Constants.APIServerUrl}/${this.serviceName}`
   constructor(private communicationService: CommunicationService) { }
 
   public async GetTodayPlayers(): Promise<X_TodayPlayer[]> {
@@ -69,7 +69,23 @@ export class PlayerService {
     }
   }
 
-  public async IsPlayerExisit(pMobileNumber: number): Promise<boolean> {
+  public async GetPlayerById(pId: number): Promise<Player> {
+    let tPlayer: Player;
+    try {
+      const tUrl: string = `${this.url}/${pId}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        const element = tResponse.payload;
+        tPlayer = new Player(element);
+      }
+      return tPlayer;
+    } catch (error) {
+      console.log(error);
+      return tPlayer;
+    }
+  }
+
+  public async GetPlayerByMobileNumber(pMobileNumber: string): Promise<Player> {
     try {
       const tPlayers: Player[] = [];
       const tUrl: string = `${this.url}?mobileNumber=` + pMobileNumber;
@@ -80,10 +96,10 @@ export class PlayerService {
           tPlayers.push(new Player(element));
         }
       }
-      return tPlayers.length > 0;
+      return tPlayers[0];
     } catch (error) {
       console.log(error);
-      return false;
+      return null;
     }
   }
 

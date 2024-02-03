@@ -12,7 +12,7 @@ import { TicketService } from 'src/app/services/ticket.service';
 })
 export class HomeComponent implements OnInit {
 
-  public isPageReady: boolean = false;
+  public isReady: boolean = false;
   public numberOfUsers: number = 0;
   public numberOfLanes: number = 0;
   public numberOfAvailableLanes: number = 0;
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     await this.loadData();
-    this.isPageReady = true;
+    this.isReady = true;
   }
 
 
