@@ -51,6 +51,24 @@ export class TicketService {
     }
   }
 
+  public async GetUserTickets(pUserId): Promise<Ticket[]> {
+    let tTickets: Ticket[] = [];
+    try {
+      const tUrl: string = `${this.url}?userId=${pUserId}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tTickets.push(new Ticket(element));
+        }
+      }
+      return tTickets;
+    } catch (error) {
+      console.log(error);
+      return tTickets;
+    }
+  }
+
   public async AddTicket(pTicket: Ticket): Promise<number> {
     try {
       const tUrl: string = `${this.url}`;

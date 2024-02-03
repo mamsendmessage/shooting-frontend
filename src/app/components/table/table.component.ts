@@ -1,6 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { X_TodayPlayer } from '../../models/X_TodayPlayers';
 import { Constants } from 'src/app/models/Constants';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PlayerService } from 'src/app/services/player.service';
+import { Player } from 'src/app/models/Player';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +20,7 @@ export class TableComponent implements OnInit, OnChanges {
   players: X_TodayPlayer[] = [];
   public myImgUrl: string = 'assets/img/profile-8.jpg';
 
-  constructor() { }
+  constructor(public dialog: MatDialog, private playerService: PlayerService) { }
 
   ngOnInit(): void {
     //this.fillDataToDisplay(1);
@@ -43,14 +47,25 @@ export class TableComponent implements OnInit, OnChanges {
     this.currentPage = pValue
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = (startIndex + this.itemsPerPage) > this.data.length ? this.data.length : (startIndex + this.itemsPerPage);
-    this.players = this.data.slice(startIndex , endIndex);
+    this.players = this.data.slice(startIndex, endIndex);
   }
 
   public updateItemPerPage(pValue: any) {
     this.itemsPerPage = +pValue.value;
   }
 
-  public selectItem(pID){
-    alert(pID);
+  public selectItem(pTikcet) {
+
+    this.openCreateUserDialog(pTikcet);
   }
+
+  public async openCreateUserDialog(pTikcet): Promise<void> {
+    const dialogRef = this.dialog.open(UserProfileComponent, {
+      data: pTikcet,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 }

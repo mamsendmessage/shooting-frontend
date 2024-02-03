@@ -34,6 +34,7 @@ import { SmallUserListComponent } from './components/small-user-list/small-user-
 import { LanesComponent } from './components/lanes/lanes.component';
 import { NormalConfigComponent } from './components/normal-config/normal-config.component';
 import { CompetitionConfigComponent } from './components/competition-config/competition-config.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CompetitionConfigComponent } from './components/competition-config/comp
     SmallUserListComponent,
     LanesComponent,
     NormalConfigComponent,
-    CompetitionConfigComponent
+    CompetitionConfigComponent,
+    UserProfileComponent
   ],
   imports: [
     HttpClientModule,

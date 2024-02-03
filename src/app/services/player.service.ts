@@ -69,6 +69,22 @@ export class PlayerService {
     }
   }
 
+  public async GetPlayerById(pId: number): Promise<Player> {
+    let tPlayer: Player;
+    try {
+      const tUrl: string = `${this.url}/${pId}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        const element = tResponse.payload;
+        tPlayer = new Player(element);
+      }
+      return tPlayer;
+    } catch (error) {
+      console.log(error);
+      return tPlayer;
+    }
+  }
+
   public async GetPlayerByMobileNumber(pMobileNumber: string): Promise<Player> {
     try {
       const tPlayers: Player[] = [];

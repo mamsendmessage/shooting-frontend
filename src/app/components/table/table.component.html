@@ -39,7 +39,7 @@
                     <span *ngIf="player.PlayerLevel=='Intermediate'" class="intermediate"> {{player.PlayerLevel}} </span>
                 </td>
                 <td class="text-center"> {{player.DisplayedTicketType}} </td>
-                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player.TicketId)"> </button></td>
+                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player)"> </button></td>
             </tr>
         </ng-container>
     </tbody>

@@ -9,15 +9,15 @@
                 <li *ngFor="let lane of lanes">
                     <span class="waitNo">{{lane.RemainingMinuts}}</span>
 
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isReserved">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isReserved" [disabled]="!active">
                         <span class="boxStage notAvilable"> {{lane.Number}}
                         </span>
                     </button>
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isSelected">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isSelected" [disabled]="!active">
                         <span class="boxStage your selected"> {{lane.Number}}
                         </span>
                     </button>
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="!lane.isReserved && !lane.isSelected">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="!lane.isReserved && !lane.isSelected" [disabled]="!active">
                         <span class="boxStage itsAvilable"> {{lane.Number}}
                         </span>
                     </button>

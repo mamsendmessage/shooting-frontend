@@ -22,6 +22,7 @@ export class CustomListComponent implements OnInit {
 
   public openCreateUserDialog(): void {
     const dialogRef = this.dialog.open(CreateTicketModalComponent, {
+      
     });
 
     // You can subscribe to the afterClosed() event to perform actions when the dialog is closed

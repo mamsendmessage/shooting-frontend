@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { PlayerService } from 'src/app/services/player.service';

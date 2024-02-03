@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Lane } from 'src/app/models/Lane';
 import { Ticket } from 'src/app/models/Ticket';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
@@ -14,6 +14,7 @@ import { TicketService } from 'src/app/services/ticket.service';
 export class LanesComponent implements OnInit {
   public lanes: Lane[] = [];
   @Output() selectedLaneId = new EventEmitter<number>();
+  @Input() public active: boolean = true;
   constructor(private laneService: LaneService, private playerService: PlayerService) { }
 
   async ngOnInit(): Promise<void> {
