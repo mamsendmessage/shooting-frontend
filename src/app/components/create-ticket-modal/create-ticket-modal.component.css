@@ -1,0 +1,9 @@
+.nationality-select {
+    padding: 7px 10px;
+}
+
+.error-hint{
+    color: red;
+    font-size: 12px;
+    padding: 0px 10px;
+}

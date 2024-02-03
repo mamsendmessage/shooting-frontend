@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WebcamImage } from 'ngx-webcam';
 import { Constants } from 'src/app/models/Constants';
+import { Nationality } from 'src/app/models/Nationality';
 import { Player } from 'src/app/models/Player';
 import { Ticket } from 'src/app/models/Ticket';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
+import { ConfigurationService } from 'src/app/services/config.service';
 import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
@@ -18,9 +20,10 @@ export class CreateTicketModalComponent implements OnInit {
   public webcamImage: WebcamImage = null;
   public image: string = '';
   public fileName: string = 'No file selected';
+  public nationalities: Nationality[] = [];
 
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
-    private ticketService: TicketService, @Inject(MAT_DIALOG_DATA) public pPlayer: Player) {
+    private ticketService: TicketService, @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private configService: ConfigurationService) {
 
     if (pPlayer && pPlayer.ID > 0) {
       this.fileName = pPlayer.Document;
@@ -54,7 +57,8 @@ export class CreateTicketModalComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.nationalities = await this.configService.GetAllNationalites();
   }
 
   public close() {
@@ -62,12 +66,12 @@ export class CreateTicketModalComponent implements OnInit {
     location.reload();
   }
   async onSubmit() {
-    if (this.ticketForm.valid) {
+    if (true) {
       const tPlayer: Player = new Player(null);
       tPlayer.Age = this.ticketForm.value.age;
       tPlayer.MobileNumber = this.ticketForm.value.mobileNumber;
       tPlayer.Name = this.ticketForm.value.nameOfPlayer;
-      tPlayer.NationalityId = 1;
+      tPlayer.NationalityId = this.ticketForm.value.nationality;
       tPlayer.Photo = this.webcamImage.imageAsBase64;
       tPlayer.Document = this.ticketForm.value.document;
       const tTicket: Ticket = new Ticket(null);
@@ -105,6 +109,14 @@ export class CreateTicketModalComponent implements OnInit {
       console.log(reader.result);
     };
     reader.readAsDataURL(file);
+  }
+
+  public isAttributeIsNotValid(pName) {
+    if (this.ticketForm.get(pName).touched || this.ticketForm.get(pName).dirty) {
+      return !this.ticketForm.get(pName).valid;
+    } else {
+      return false;
+    }
   }
 
 }

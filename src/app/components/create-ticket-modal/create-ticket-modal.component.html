@@ -18,15 +18,16 @@
                                         <input type="text" class="form-control" id="NamePlayer"
                                             placeholder="Name of Player" value="" required=""
                                             formControlName="nameOfPlayer">
-                                        <div class="invalid-feedback">
-                                            Valid name of player is required.
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('nameOfPlayer')">
+                                            Name of player is required.
                                         </div>
                                     </div>
                                     <div class="col-sm-3 pd-r-1">
                                         <label for="Nationality" class="form-label">Nationality</label>
-                                        <input type="text" class="form-control" id="Nationality"
-                                            placeholder="Nationality" value="" required=""
-                                            formControlName="nationality">
+                                        <select class="form-control nationality-select" formControlName="nationality">
+                                            <option *ngFor="let nationality of nationalities; let i = index"
+                                            value="{{nationality.ID}}"> {{nationality.Name}} </option>
+                                        </select>
                                         <div class="invalid-feedback">
                                             Nationality
                                         </div>
