@@ -17,7 +17,7 @@
                 <td class="w-40">
                     <div class="flex">
                         <div class="w-10 h-10 image-fit zoom-in">
-                            <img alt="SG" class=" rounded-full" src="assets/img/profile-8.jpg">
+                            <img alt="SG" class=" rounded-full" [src]="player.Photo!= null ? player.Photo : myImgUrl">
                         </div>
                     </div>
                 </td>
@@ -39,7 +39,7 @@
                     <span *ngIf="player.PlayerLevel=='Intermediate'" class="intermediate"> {{player.PlayerLevel}} </span>
                 </td>
                 <td class="text-center"> {{player.DisplayedTicketType}} </td>
-                <td class="text-center"> <a href="#" class="profileIcons"> </a></td>
+                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player.TicketId)"> </button></td>
             </tr>
         </ng-container>
     </tbody>

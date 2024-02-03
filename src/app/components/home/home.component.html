@@ -1,7 +1,7 @@
 <app-loader></app-loader>
 <!----------Counter All------------>
 
-<div class="counter-Page flex py-4">
+<div class="counter-Page flex py-4" *ngIf="isReady">
 
     <!----------sideMenu------------>
     <app-slide-menu [currentTab]="'Home'"></app-slide-menu>
@@ -38,84 +38,13 @@
                     <div class="row mt-8 ">
                         <div class="col-xxl-12 col-lg-12 col-md-12">
                             <span class="titlebox"> Players by today </span>
-                            <app-table *ngIf="isPageReady" [data]="players" [itemsPerPage]="itemPerPage"></app-table>
-                            <app-pagination *ngIf="isPageReady" [totalItems]="data.length" [currentPage]="1" (change)="updateItemPerPage($event)"></app-pagination>
+                            <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage"></app-table>
+                            <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" (change)="updateItemPerPage($event)"></app-pagination>
                         </div>
                     </div>
                 </div>
                 <div class="col-xxl-3 col-xl-12">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-xxl-12 col-xl-6 pl-3">
-                                <span class="titlebox"> User Active - Per Day</span>
-                                <div class="mt-2 ">
-                                    <div class="intro-x">
-                                        <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="SG" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            <div class="ml-4 mr-auto">
-                                                <div class="font-medium">Robert De Niro</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">17 January 2021</div>
-                                            </div>
-                                            <div class="text-success">+$70</div>
-                                        </div>
-                                    </div>
-                                    <div class="intro-x">
-                                        <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="SG" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            <div class="ml-4 mr-auto">
-                                                <div class="font-medium">Kate Winslet</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">23 November 2022</div>
-                                            </div>
-                                            <div class="text-danger">-$211</div>
-                                        </div>
-                                    </div>
-                                    <div class="intro-x">
-                                        <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="SG" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            <div class="ml-4 mr-auto">
-                                                <div class="font-medium">Angelina Jolie</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">11 February 2022</div>
-                                            </div>
-                                            <div class="text-danger">-$24</div>
-                                        </div>
-                                    </div>
-                                    <div class="intro-x">
-                                        <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="SG" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            <div class="ml-4 mr-auto">
-                                                <div class="font-medium">Arnold Schwarzenegger</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">24 November 2021</div>
-                                            </div>
-                                            <div class="text-success">+$30</div>
-                                        </div>
-                                    </div>
-                                    <div class="intro-x">
-                                        <div class="box px-3 py-3 mb-3 flex items-center zoom-in">
-                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                                <img alt="SG" src="assets/img/profile-8.jpg">
-                                            </div>
-                                            <div class="ml-4 mr-auto">
-                                                <div class="font-medium">Brad Pitt</div>
-                                                <div class="text-slate-500 text-xs mt-0.5">29 June 2022</div>
-                                            </div>
-                                            <div class="text-danger">-$44</div>
-                                        </div>
-                                    </div>
-                                    <a href=""
-                                        class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View
-                                        More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <app-small-user-list [data]="data"></app-small-user-list>
                 </div>
             </div>
         </div>

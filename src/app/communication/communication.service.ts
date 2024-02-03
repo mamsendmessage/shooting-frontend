@@ -39,7 +39,7 @@ export class CommunicationService {
           'Content-Type': 'application/json',
         },
       };
-      const tResponse = await this.http.put(pUrl, pBody, tOptions).toPromise();
+      const tResponse = await this.http.post(pUrl, pBody).toPromise();
       return tResponse;
     } catch (error) {
       console.error(error);

@@ -12,7 +12,7 @@ export class CustomListComponent implements OnInit {
   @Input() public data: X_TodayPlayer[] = [];
   public players: X_TodayPlayer[] = [];
   public isReady: boolean = false;
-  public itemPerPage: number = 10;
+  public itemPerPage: number = 50;
   constructor(public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
@@ -29,9 +29,6 @@ export class CustomListComponent implements OnInit {
       console.log('The dialog was closed with result:', result);
     });
   }
-  public OpenModal(){
-  }
-
   public onStateChange(pValue: any) {
     if (pValue.value == "") {
       this.players = this.data;

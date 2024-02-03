@@ -1,0 +1,4 @@
+.user-list{
+    overflow-y: auto;
+    max-height: 50vh;
+}

@@ -46,7 +46,7 @@
         </div>
         <div class="col-xxl-12 col-lg-12 col-md-12">
             <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage"></app-table>
-            <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1"
+            <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
                 (change)="updateItemPerPage($event)"></app-pagination>
         </div>
     </div>

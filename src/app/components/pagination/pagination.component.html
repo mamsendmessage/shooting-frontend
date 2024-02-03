@@ -40,7 +40,7 @@
       </li>
     </ul>
   </nav>
-  <select class="w-20 form-select box mt-0" (change)="onChange($event.target)">
+  <select class="w-20 form-select box mt-0" (change)="onChange($event.target)" [value]="itemsPerPage">
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="25">25</option>
