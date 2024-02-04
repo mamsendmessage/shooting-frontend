@@ -4,6 +4,9 @@ import { Configuration } from 'src/app/models/Configuration';
 import { Skeet } from 'src/app/models/Skeet';
 import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PlayerGameType } from 'src/app/models/enums';
 
 @Component({
   selector: 'app-normal-config',
@@ -12,13 +15,16 @@ import { ConfigurationService } from 'src/app/services/config.service';
 })
 export class NormalConfigComponent implements OnInit {
 
-  @Input() public type: string;
+  @Input() public type: number;
+  public typeName: string;
   configurationForm: FormGroup;
   @Input() public config: Configuration = new Configuration();
-  constructor(private fb: FormBuilder, private configService: ConfigurationService) {
+  constructor(private fb: FormBuilder, private configService: ConfigurationService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    
+    this.typeName = PlayerGameType[this.type].toString();
     this.getSkeetsNames()
     this.createForm();
   }
@@ -45,7 +51,6 @@ export class NormalConfigComponent implements OnInit {
       items.push(
         this.fb.group({
           SkeetID: [element.SkeetID, Validators.required],
-          TimePerShot: [element.TimePerShot, Validators.required],
           Order: [element.Order, Validators.required]
         })
       );
@@ -59,11 +64,37 @@ export class NormalConfigComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     if (this.configurationForm.valid) {
-      const tConfig:Configuration = this.configurationForm.value;
+      const tConfig: Configuration = this.configurationForm.value;
       tConfig.ID = this.config.ID;
       tConfig.NumberOfSkeet = this.config.NumberOfSkeet;
+      tConfig.Type = this.type;
       const tResult: number = await this.configService.UpdateConfig(this.config.ID, tConfig);
+      if (tResult == 0) {
+        this.dialog.open(AlertDialogComponent, {
+          data: {
+            icon: 'Error',
+            message: `The ${this.type} Settings Successuflly Saved`
+          }
+        });
+      } else {
+        this.dialog.open(AlertDialogComponent, {
+          data: {
+            icon: 'Error',
+            message: `Error in Saving ${this.type} Settings`
+          }
+        });
+      }
     }
   }
+
+  openAlertDialog(pMessage: string) {
+    this.dialog.open(AlertDialogComponent, {
+      data: {
+        icon: 'Error',
+        message: pMessage
+      }
+    });
+  }
+  
 
 }

@@ -1,7 +1,7 @@
 <div class="box p-3">
 
 
-    <span class="titlebox extrafonts"> {{type}} </span>
+    <span class="titlebox extrafonts"> {{typeName}} </span>
     <form class="skeet-play" [formGroup]="configurationForm" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="row mb-1">
@@ -33,16 +33,15 @@
         </div>
         <div class="skeeter-cong">
             <div class="row intro-x" formArrayName="Skeets">
-                <ng-container *ngFor="let skeet of Skeets.controls; let i = index" class="container-fluid">
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex headshot">
-                                    <span class="skeetIcon"> Skeet No. {{i+1}}</span>
-                                    <span class="shots"> Shot {{i+1}}</span>
-                                </div>
-                            </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex headshot">
+                            <span class="skeetIcon"> Skeet No. </span>
                         </div>
+                    </div>
+                </div>
+                <ng-container *ngFor="let skeet of Skeets.controls; let i = index" class="container-fluid">
+                    <div class="col-4">
                         <div class="row">
                             <div class="col-12">
                                 <div class="d-flex" [formGroupName]="i">
@@ -50,9 +49,6 @@
                                         <option *ngFor="let skeetItem of allSkeets; let i = index"
                                             value="{{skeetItem.ID}}"> {{skeetItem.Name}} </option>
                                     </select>
-                                    <input class="form-control mb-1 custom-select" placeholder=""
-                                        formControlName="TimePerShot" type="number">
-                                    <span class="shotsValus"> shot/s </span>
                                 </div>
                             </div>
                         </div>

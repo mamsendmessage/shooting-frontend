@@ -3,10 +3,10 @@ import { SkeetConfig } from "./SkeetConfig";
 export class Configuration {
     public ID: number;
     public Type: number;
-    public TimePerShot: number;
-    public TimeToRefill: number;
-    public NumberOfSkeet: number;
-    public Skeets: SkeetConfig[];
+    public TimePerShot: number = 10;
+    public TimeToRefill: number = 10;
+    public NumberOfSkeet: number = 25;
+    public Skeets: SkeetConfig[] = [];
     constructor(pConfig: Configuration = null) {
         this.Skeets = [];
         if (pConfig) {

@@ -1,29 +1,4 @@
-@import "../lib/font/stylesheet.css";
 
-
-body, html {
-    width: 100%;
-    min-height: 100%;
-  }
-
-body {
-	background:url(../img/bg-login.png) no-repeat center center;
-    background-size: cover;
-	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
-	line-height: 1.25;
-	letter-spacing: 1px;
-    background-size: cover;
-   object-fit: cover;
-   height: 100%;
-   margin: 0px;
-   padding: 0px;
-}
-
-* {
-	box-sizing: border-box;
-	transition: .25s all ease;
-}
 
 
 .logos {

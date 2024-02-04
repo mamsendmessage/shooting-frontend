@@ -4,7 +4,7 @@
             <div class="modal-body">
                 <div class="photoUsers">
                     <div class="card-cover" style="background: url(assets/img/user-m.jpg);"> </div>
-                    <img [src]="photo" class="profilesPhoto"> 
+                    <img [src]="photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'" class="profilesPhoto"> 
                     <span class="status avilable"> </span>
                 </div>
                 <div class="name-users">{{player.Name}}</div>
