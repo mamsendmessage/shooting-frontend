@@ -1,6 +1,6 @@
 export class Constants {
-    public static APIServerUrl: string = 'http://localhost:2024/api'
-    public static BaseServerUrl: string = 'http://localhost:2024/'
+    public static APIServerUrl: string = 'https://shooting-api.azurewebsites.net/api'
+    public static BaseServerUrl: string = 'https://shooting-api.azurewebsites.net/'
     public static apiWithoutHeader: string[] = [
         '/auth/login'
     ];
