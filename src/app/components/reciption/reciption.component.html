@@ -13,9 +13,10 @@
                     <h1> Check Player - Add phone Number</h1>
                     <form [formGroup]="form">
                         <div class="find-user">
-                            <input type="text" class="" id="userIDno" formControlName="mobileNumber" placeholder="+974 | xxx xxx xxx " value=""
-                                required="">
-                            <span class="resultUser regitered"><button (click)="openCreateUserDialog()">New Ticket</button>  </span>
+                            <input type="text" class="" id="userIDno" (keyup)="onKeySearch($event)"
+                                formControlName="mobileNumber" placeholder="+974 | xxx xxx xxx " value="" required="">
+                            <span [ngClass]="isPlayerExists?'resultUser regitered':'resultUser new'"><button
+                                    (click)="openCreateUserDialog()">{{btnCaption}}</button> </span>
                             <div class="loadingIcon postion1">
                             </div>
                         </div>
@@ -24,10 +25,10 @@
             </div>
             <div class="row mt-8 ">
                 <div class="col-xxl-8 col-xl-12">
-                    <app-lanes [active]="false" ></app-lanes>
+                    <app-lanes [active]="false"></app-lanes>
                 </div>
                 <div class="col-xxl-4 col-xl-12">
-                    <app-small-user-list [data] ="data" ></app-small-user-list>
+                    <app-small-user-list [data]="data"></app-small-user-list>
                 </div>
             </div>
         </div>

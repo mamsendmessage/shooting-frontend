@@ -6,15 +6,16 @@ import { UsersComponent } from './components/users/users.component';
 import { ReciptionComponent } from './components/reciption/reciption.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }, 
-  { path: 'home', component: HomeComponent }, 
-  { path: 'users', component: UsersComponent }, 
-  { path: 'reciption', component: ReciptionComponent }, 
-  { path: 'tickets', component: TicketsComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'reciption', component: ReciptionComponent, canActivate: [AuthGuard] },
+  { path: 'tickets', component: TicketsComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
   // Add other routes if needed
 ];

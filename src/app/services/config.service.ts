@@ -48,18 +48,17 @@ export class ConfigurationService {
       const tUrl: string = `${this.url}`;
       const tResponse: APIResponse = await this.communicationService.getData(tUrl);
       if (tResponse.result == 0) {
-
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];
-          let tConfiguration = new Configuration(element)
+          let tConfiguration = new Configuration(element);
           if (element.Config && element.Config.length > 0) {
             tConfiguration = JSON.parse(element.Config) as Configuration;
           } else {
             tConfiguration = new Configuration(element);
-
           }
           tConfigurations.push(tConfiguration);
         }
+
       }
       return tConfigurations;
     } catch (error) {

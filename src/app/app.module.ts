@@ -11,7 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { UsersComponent } from './components/users/users.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -28,13 +28,16 @@ import { TicketStatisticsComponent } from './components/ticket-statistics/ticket
 import { CreateTicketModalComponent } from './components/create-ticket-modal/create-ticket-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { CameraComponent } from './components/camera/camera.component';
-import {WebcamModule} from 'ngx-webcam';
+import { WebcamModule } from 'ngx-webcam';
 import { SmallUserListComponent } from './components/small-user-list/small-user-list.component';
 import { LanesComponent } from './components/lanes/lanes.component';
 import { NormalConfigComponent } from './components/normal-config/normal-config.component';
 import { CompetitionConfigComponent } from './components/competition-config/competition-config.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { DEFAULT_TIMEOUT, HttpInterceptorService } from './communication/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     LanesComponent,
     NormalConfigComponent,
     CompetitionConfigComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    AlertDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -74,9 +78,12 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     MatRadioModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    WebcamModule
+    WebcamModule,
+    MatIconModule
   ],
   providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    // { provide: DEFAULT_TIMEOUT, useValue: 5000 }
   ],
   bootstrap: [AppComponent]
 })

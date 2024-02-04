@@ -1,10 +1,11 @@
 import { Inject, InjectionToken, Injector } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { fromEvent, Observable, throwError } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { catchError, tap, timeout } from 'rxjs/operators';
 export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
 import { Injectable } from '@angular/core';
-import { Constants } from '../models/Constants';
+import { Router } from '@angular/router';
+import { UserManagementService } from '../services/user-management.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Constants } from '../models/Constants';
 export class HttpInterceptorService implements HttpInterceptor {
   private onlineEvent: Observable<Event> = new Observable<Event>();
   private offlineEvent: Observable<Event> = new Observable<Event>();
-  constructor(private injector: Injector, @Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number) {
+  constructor(@Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number, private router: Router, private uerManagementService: UserManagementService) {
     try {
       this.onlineEvent = fromEvent(window, 'online');
       this.offlineEvent = fromEvent(window, 'offline');
@@ -31,25 +32,53 @@ export class HttpInterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const timeoutValue = request.headers.get('timeout') || this.defaultTimeout;
     const timeoutValueNumeric = Number(timeoutValue);
+
     if (this.apiWithNoHeaders(request)) {
-      return next.handle(request).pipe(timeout(timeoutValueNumeric));
+      return next.handle(request).pipe(
+        timeout(timeoutValueNumeric),
+        catchError((error: any) => {
+          if (error.status == 401) {
+            this.uerManagementService.removeUser();
+            this.router.navigate(['/login'])
+          }
+          throw error; // Rethrow the error to propagate it
+        }),
+        tap((event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            console.log('Server response:', event);
+          }
+        })
+      );
     } else {
-      return next.handle(this.addHeadersToRequest(request)).pipe(timeout(timeoutValueNumeric));
+      return next.handle(this.addHeadersToRequest(request)).pipe(
+        timeout(timeoutValueNumeric),
+        catchError((error: any) => {
+          if (error.status == 401) {
+            this.uerManagementService.removeUser();
+            this.router.navigate(['/login'])
+          }
+          throw error;
+        }),
+        tap((event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            console.log('Server response:', event);
+          }
+        })
+      );
     }
   }
+
 
   addHeadersToRequest(req: HttpRequest<any>): HttpRequest<any> {
     const tHeaders: HttpHeaders = new HttpHeaders();
     tHeaders.set('Content-Type', 'application/json');
-    const accessToken = 'Token'
+    const accessToken = this.uerManagementService.getUser().Token;
     if (accessToken) {
-      tHeaders.set('Authorization', `Bearer ${accessToken}`);
-      return req.clone({
-        headers: tHeaders
+      req = req.clone({
+        setHeaders: { 'authorization': `Bearer ${accessToken}` }
       });
-    } else {
-      return req;
     }
+    return req;
   }
 
   handleErrors(error: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -81,7 +110,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
   apiWithNoHeaders(request: HttpRequest<object>): boolean {
-    return Constants.apiWithoutHeader.includes(request.url);
+    return request.url.includes('login')
   }
 
 }

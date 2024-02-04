@@ -1,24 +1,23 @@
-<mat-card>
-    <mat-card-title>Login</mat-card-title>
-<mat-card-content>
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-  <p>
-    <mat-form-field>
-      <input type="text" matInput placeholder="Email" formControlName="Email">
-    </mat-form-field>
-  </p>
-
-  <p>
-    <mat-form-field>
-      <input type="password" matInput placeholder="Password" formControlName="Password">
-    </mat-form-field>
-  </p>
-
-
-  <div class="button">
-    <button type="submit" mat-button>Login</button>
+<div class="videos">
+  <video src="/assets/bg.mp4" loop autoplay></video>
+</div>
+<div class="login-container">
+  <div class="logos">
   </div>
-
-</form>
-</mat-card-content>
-</mat-card>
+  <form action="" class="form-login" form [formGroup]="loginForm">
+    <label for="login-input-user" class="login__label">
+      Username
+    </label>
+    <input id="login-input-user" class="login__input" type="text" formControlName="Email" />
+    <label for="login-input-password" class="login__label">
+      Password
+    </label>
+    <input id="login-input-password" class="login__input" type="password" formControlName="Password" />
+    <label for="login-sign-up" class="login__label--checkbox">
+      <input id="login-sign-up" type="checkbox" class="login__input--checkbox" />
+      Keep me Signed in
+    </label>
+    <button (click)="onLogin()" class="login__submit">Sign in</button>
+  </form>
+  <a href="#" class="login__forgot">Forgot Password?</a>
+</div>

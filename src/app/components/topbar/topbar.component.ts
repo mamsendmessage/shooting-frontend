@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { Router } from '@angular/router';
+import { UserManagementService } from 'src/app/services/user-management.service';
 
 @Component({
   selector: 'app-topbar',
@@ -10,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userManagementService: UserManagementService) { }
+
 
   ngOnInit(): void {
   }
@@ -22,4 +22,8 @@ export class TopbarComponent implements OnInit {
       });
   }
 
+  public LogOut() {
+    this.userManagementService.removeUser();
+    this.router.navigate(['/login']);
+  }
 }

@@ -26,10 +26,10 @@
                                         <label for="Nationality" class="form-label">Nationality</label>
                                         <select class="form-control nationality-select" formControlName="nationality">
                                             <option *ngFor="let nationality of nationalities; let i = index"
-                                            value="{{nationality.ID}}"> {{nationality.Name}} </option>
+                                                value="{{nationality.ID}}"> {{nationality.Name}} </option>
                                         </select>
-                                        <div class="invalid-feedback">
-                                            Nationality
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('nationality')">
+                                            Nationality is required.
                                         </div>
                                     </div>
                                     <div class="col-sm-4 pd-r-1">
@@ -40,7 +40,7 @@
                                                 formControlName="mobileNumber" aria-label="qatariMobile"
                                                 aria-describedby="basic-addon1">
                                         </div>
-                                        <div class="invalid-feedback">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('mobileNumber')">
                                             Valid Mobile Numer is required.
                                         </div>
                                     </div>
@@ -48,8 +48,8 @@
                                         <label for="firstName" class="form-label">Age</label>
                                         <input type="text" class="form-control" id="firstName" placeholder="Above 21 "
                                             value="" required="" formControlName="age">
-                                        <div class="invalid-feedback">
-                                            Valid Age is required.
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('age')">
+                                            Age Numer is required.
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <app-lanes (selectedLaneId) = "handleLaneSelected($event)"></app-lanes>
+                            <app-lanes (selectedLaneId)="handleLaneSelected($event)"></app-lanes>
                         </div>
                         <div class="ccol-xxl-4 col-xl-4">
                             <div class="profiles">
@@ -132,7 +132,8 @@
                             <div class="takePhoto mr-t-6">
                                 <div class="file-container">
                                     <div class="file-wrapper">
-                                        <input class="file-input" id="js-file-input" type="file" #fileUplaoder (change)="onSelect($event)"/>
+                                        <input class="file-input" id="js-file-input" type="file" #fileUplaoder
+                                            (change)="onSelect($event)" />
                                         <div class="file-content">
                                             <div class="file-infos">
                                             </div>

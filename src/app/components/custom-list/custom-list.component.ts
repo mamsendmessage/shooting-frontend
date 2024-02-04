@@ -14,6 +14,8 @@ export class CustomListComponent implements OnInit {
   public isReady: boolean = false;
   @Input() public itemPerPage: number = 10;
   public startIndex = 0;
+  public timeout: any = null;
+  public searchKey: string = '';
   constructor(public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
@@ -67,5 +69,15 @@ export class CustomListComponent implements OnInit {
     } else {
       this.startIndex = pValue;
     }
+  }
+
+  public onKeySearch(event: any) {
+    clearTimeout(this.timeout);
+    const that = this;
+    this.timeout = setTimeout(async () => {
+      if (event.keyCode != 13) {
+        that.players = that.data.filter((item) => item.Name.toLocaleLowerCase().includes(this.searchKey.toLocaleLowerCase()));
+      }
+    }, 1000);
   }
 }

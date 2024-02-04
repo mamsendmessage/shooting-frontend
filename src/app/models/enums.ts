@@ -20,3 +20,11 @@ export enum TicketType {
     "Promotion" = 2,
     "Walk Through " = 3
 }
+
+
+export enum PlayerGameType {
+    "Beginner" = 1,
+    "In Intermediate" = 2,
+    "Professional" = 3,
+    "Competition" = 4
+}

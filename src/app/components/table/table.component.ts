@@ -26,7 +26,7 @@ export class TableComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     for (let index = 0; index < this.data.length; index++) {
       const element = this.data[index];
-      element.Photo = Constants.BaseServerUrl + element.Photo.replace('images', '');
+      element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo?.replace('images', '') : this.myImgUrl;
     }
     this.isReady = true;
   }

@@ -1,15 +1,14 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { WebcamImage } from 'ngx-webcam';
 import { Constants } from 'src/app/models/Constants';
 import { Nationality } from 'src/app/models/Nationality';
 import { Player } from 'src/app/models/Player';
 import { Ticket } from 'src/app/models/Ticket';
-import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { ConfigurationService } from 'src/app/services/config.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { TicketService } from 'src/app/services/ticket.service';
-
 @Component({
   selector: 'app-create-ticket-modal',
   templateUrl: './create-ticket-modal.component.html',
@@ -19,11 +18,11 @@ export class CreateTicketModalComponent implements OnInit {
   public ticketForm: FormGroup;
   public webcamImage: WebcamImage = null;
   public image: string = '';
+  public laneId: number = -1;
   public fileName: string = 'No file selected';
   public nationalities: Nationality[] = [];
-
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
-    private ticketService: TicketService, @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private configService: ConfigurationService) {
+    @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
     if (pPlayer && pPlayer.ID > 0) {
       this.fileName = pPlayer.Document;
@@ -33,10 +32,10 @@ export class CreateTicketModalComponent implements OnInit {
         nationality: [pPlayer.NationalityId, Validators.required],
         mobileNumber: [pPlayer.MobileNumber, Validators.required],
         age: [pPlayer.Age, Validators.required],
-        gameType: ['', Validators.required],
-        levelOfPlayer: ['', Validators.required],
-        sessionTime: ['', Validators.required],
-        laneId: ['', Validators.required],
+        gameType: ['1', Validators.required],
+        levelOfPlayer: ['1', Validators.required],
+        sessionTime: ['1', Validators.required],
+        laneId: [''],
         photo: [''],
         document: [''],
       });
@@ -46,10 +45,10 @@ export class CreateTicketModalComponent implements OnInit {
         nationality: ['', Validators.required],
         mobileNumber: ['', Validators.required],
         age: ['', Validators.required],
-        gameType: ['', Validators.required],
-        levelOfPlayer: ['', Validators.required],
-        sessionTime: ['', Validators.required],
-        laneId: ['', Validators.required],
+        gameType: ['1', Validators.required],
+        levelOfPlayer: ['1', Validators.required],
+        sessionTime: ['1', Validators.required],
+        laneId: [''],
         photo: [''],
         document: [''],
       });
@@ -66,26 +65,45 @@ export class CreateTicketModalComponent implements OnInit {
     location.reload();
   }
   async onSubmit() {
-    if (true) {
+    if (this.ticketForm.valid) {
+      if (!this.isLaneValid()) {
+        this.openAlertDialog('Please Select Avaiable Lane');
+        return;
+      }
       const tPlayer: Player = new Player(null);
       tPlayer.Age = this.ticketForm.value.age;
       tPlayer.MobileNumber = this.ticketForm.value.mobileNumber;
       tPlayer.Name = this.ticketForm.value.nameOfPlayer;
       tPlayer.NationalityId = this.ticketForm.value.nationality;
-      tPlayer.Photo = this.webcamImage.imageAsBase64;
-      tPlayer.Document = this.ticketForm.value.document;
+      tPlayer.Photo = this.webcamImage ? this.webcamImage.imageAsBase64 : '';
+      tPlayer.Document = this.ticketForm.value.document ? this.ticketForm.value.document : '';
       const tTicket: Ticket = new Ticket(null);
       tTicket.UserId = tPlayer.ID;
       tTicket.GameTypeId = this.ticketForm.value.gameType;
       tTicket.PlayerLevelId = this.ticketForm.value.levelOfPlayer;
       tTicket.SessionTimeId = this.ticketForm.value.sessionTime;
       tTicket.State = 0;
-      tTicket.LaneId = this.ticketForm.value.laneId;
+      tTicket.LaneId = this.laneId;
       const tResult: number = await this.ticketService.AddTicketForNewPlayer(tPlayer, tTicket);
       if (tResult == 0) {
         this.close();
+      } else {
+        this.openAlertDialog('An Error Occured While Performing Your Request, Please Check with the Adminstriator');
       }
+    } else {
+      this.getFormValidationErrors();
     }
+  }
+
+  getFormValidationErrors() {
+    Object.keys(this.ticketForm.controls).forEach(key => {
+      const controlErrors: ValidationErrors = this.ticketForm.get(key).errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach(keyError => {
+          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError] + " -> " + this.ticketForm.get(key).value);
+        });
+      }
+    });
   }
 
   handleImage(webcamImage: WebcamImage) {
@@ -95,7 +113,7 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   handleLaneSelected(pValue) {
-    this.ticketForm.value.laneId = pValue;
+    this.laneId = +pValue;
   }
 
   onSelect(event: Event) {
@@ -117,6 +135,19 @@ export class CreateTicketModalComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  public isLaneValid() {
+    return this.laneId > 0;
+  }
+
+  openAlertDialog(pMessage: string) {
+    this.dialog.open(AlertDialogComponent, {
+      data: {
+        icon: 'Error',
+        message: pMessage
+      }
+    });
   }
 
 }

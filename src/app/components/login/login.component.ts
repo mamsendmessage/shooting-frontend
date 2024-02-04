@@ -28,10 +28,11 @@ export class LoginComponent {
         Password: this.loginForm.value.Password
       }
       const tResult = await this.authenticationService.Login(tValue);
-      this.router.navigate(["home"]);
-      // if(tResult==0){
-      //   this.router.navigate(["home"]);
-      // }
+      if(tResult==0){
+        this.router.navigate(["home"]);
+      }else{
+        console.log('Login Faild')
+      }
       console.log(tResult);
     }
   }

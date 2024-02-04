@@ -4,6 +4,7 @@ import { AuthenticatedUser } from '../models/authenticatedUser';
 import { Result } from '../models/enums';
 import { User } from '../models/user';
 import { UserManagementService } from './user-management.service';
+import { APIResponse } from '../models/APIResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,16 @@ export class AuthenticationService {
   constructor(private communicationService: CommunicationService,
     private userManagementService: UserManagementService) { }
 
-  public async Login(pCredentials:any): Promise<Result> {
+  public async Login(pCredentials: any): Promise<Result> {
     try {
       let tResult: Result = Result.ERROR;
-
       const tUrl: string = 'http://localhost:2024/auth/login';
-      const tData = await this.communicationService.postData(tUrl, pCredentials);
-      if (tData) {
-        const tAuthenticatedUser: AuthenticatedUser = tData;
-        tResult = this.userManagementService.setUser(tAuthenticatedUser);
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, pCredentials);
+      if (tResponse.result == 0) {
+        const tAuthenticatedUser: AuthenticatedUser = new AuthenticatedUser(tResponse.payload);
+        tResponse.result = this.userManagementService.setUser(tAuthenticatedUser);
       }
-      return tResult;
+      return tResponse.result;
     } catch (error) {
       console.log(error);
       return Result.ERROR;
