@@ -53,6 +53,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row g-3">
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="NamePlayer" class="form-label"> QID /Passports No.</label>
+                                        <input type="text" class="form-control" id="NamePlayer"
+                                            formControlName="passportsNo" placeholder="QID number /Passports number"
+                                            value="" required="">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('passportsNo')">
+                                            Valid QID number or Passports number
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="Nationality" class="form-label">Membership number</label>
+                                        <input type="text" class="form-control" id="MembershipNo"
+                                            formControlName="membershipNo" placeholder="Membership number" value=""
+                                            required="">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('membershipNo')">
+                                            Valid Membership number
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="membershipExpiry" class="form-label">Membership expiry</label>
+                                        <input type="date" class="form-control" id="membershipExpiry"
+                                            formControlName="membershipExpiry" placeholder="Membership expiry">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('membershipExpiry')">
+                                            Valid Membership expiry
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <span class="titlebox  mr-auto mr-t-6"> Ticket details </span>
                             <div class="forms  mr-t-6">

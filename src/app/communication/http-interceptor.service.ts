@@ -45,7 +45,6 @@ export class HttpInterceptorService implements HttpInterceptor {
         }),
         tap((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log('Server response:', event);
           }
         })
       );
@@ -61,7 +60,6 @@ export class HttpInterceptorService implements HttpInterceptor {
         }),
         tap((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log('Server response:', event);
           }
         })
       );
@@ -110,7 +108,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
   apiWithNoHeaders(request: HttpRequest<object>): boolean {
-    return request.url.includes('login')
+    return request.url.includes('login') || request.url.includes('anonymous')
   }
 
 }

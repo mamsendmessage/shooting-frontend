@@ -5,6 +5,9 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PlayerService } from 'src/app/services/player.service';
 import { Player } from 'src/app/models/Player';
+import { SocketCommunicationService } from 'src/app/services/socket-communication.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { AllocateDialoadComponent } from '../allocate-diaload/allocate-diaload.component';
 
 @Component({
   selector: 'app-table',
@@ -21,7 +24,7 @@ export class TableComponent implements OnInit, OnChanges {
   players: X_TodayPlayer[] = [];
   public myImgUrl: string = 'assets/img/profile-8.jpg';
 
-  constructor(public dialog: MatDialog, private playerService: PlayerService) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     for (let index = 0; index < this.data.length; index++) {
@@ -70,4 +73,16 @@ export class TableComponent implements OnInit, OnChanges {
     });
   }
 
+  public async allocatePlayer(pTicket): Promise<void> {
+    try {
+      const dialogRef = this.dialog.open(AllocateDialoadComponent, {
+        data: pTicket,
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

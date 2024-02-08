@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { CreateTicketModalComponent } from '../create-ticket-modal/create-ticket-modal.component';
+import { SocketCommunicationService } from 'src/app/services/socket-communication.service';
+import { Player } from 'src/app/models/Player';
 @Component({
   selector: 'app-custom-list',
   templateUrl: './custom-list.component.html',
@@ -25,7 +27,7 @@ export class CustomListComponent implements OnInit {
 
   public openCreateUserDialog(): void {
     const dialogRef = this.dialog.open(CreateTicketModalComponent, {
-
+      data: new Player(null)
     });
 
     // You can subscribe to the afterClosed() event to perform actions when the dialog is closed

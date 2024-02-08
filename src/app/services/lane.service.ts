@@ -35,7 +35,7 @@ export class LaneService {
     }
   }
 
-  public async GetLaneBtNumber(pNumber: number) {
+  public async GetLaneByNumber(pNumber: number) {
     const tLanes: Lane[] = [];
     try {
       const tUrl: string = `${this.url}?number=${pNumber}`;
@@ -101,6 +101,22 @@ export class LaneService {
     } catch (error) {
       console.log(error);
       return -1;
+    }
+  }
+
+  public async GetLaneByID(pId: number) {
+    let tLane: Lane;;
+    try {
+      const tUrl: string = `${this.url}/${pId}`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        const element = tResponse.payload;
+        tLane = new Lane(element);
+      }
+      return tLane;
+    } catch (error) {
+      console.log(error);
+      return tLane;
     }
   }
 }

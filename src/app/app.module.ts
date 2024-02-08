@@ -29,6 +29,10 @@ import { CreateTicketModalComponent } from './components/create-ticket-modal/cre
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { CameraComponent } from './components/camera/camera.component';
 import { WebcamModule } from 'ngx-webcam';
 import { SmallUserListComponent } from './components/small-user-list/small-user-list.component';
@@ -38,6 +42,10 @@ import { CompetitionConfigComponent } from './components/competition-config/comp
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { DEFAULT_TIMEOUT, HttpInterceptorService } from './communication/http-interceptor.service';
+import { SkeetConffigComponent } from './components/skeet-conffig/skeet-conffig.component';
+import { LaneComponent } from './components/lane/lane.component';
+import { AllocateDialoadComponent } from './components/allocate-diaload/allocate-diaload.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -63,7 +71,10 @@ import { DEFAULT_TIMEOUT, HttpInterceptorService } from './communication/http-in
     NormalConfigComponent,
     CompetitionConfigComponent,
     UserProfileComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    SkeetConffigComponent,
+    LaneComponent,
+    AllocateDialoadComponent
   ],
   imports: [
     HttpClientModule,
@@ -79,11 +90,15 @@ import { DEFAULT_TIMEOUT, HttpInterceptorService } from './communication/http-in
     MatDialogModule,
     BrowserAnimationsModule,
     WebcamModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-    // { provide: DEFAULT_TIMEOUT, useValue: 5000 }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    { provide: DEFAULT_TIMEOUT, useValue: 5000 }
   ],
   bootstrap: [AppComponent]
 })
