@@ -52,13 +52,10 @@ export class ConfigurationService {
           const element = tResponse.payload[index];
           let tConfiguration = new Configuration(element);
           if (element.Config && element.Config.length > 0) {
-            tConfiguration = JSON.parse(element.Config) as Configuration;
-          } else {
-            tConfiguration = new Configuration(element);
+            tConfiguration.config = element.Config;
           }
           tConfigurations.push(tConfiguration);
         }
-
       }
       return tConfigurations;
     } catch (error) {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Configuration } from 'src/app/models/Configuration';
 import { Skeet } from 'src/app/models/Skeet';
 import { SkeetConfig } from 'src/app/models/SkeetConfig';
@@ -15,85 +15,88 @@ import { PlayerGameType } from 'src/app/models/enums';
 })
 export class NormalConfigComponent implements OnInit {
 
-  @Input() public type: number;
+  skeetForm: FormGroup;
   public typeName: string;
-  configurationForm: FormGroup;
+  public isReady: boolean = false;
   @Input() public config: Configuration = new Configuration();
-  constructor(private fb: FormBuilder, private configService: ConfigurationService, public dialog: MatDialog) {
-  }
+  public tempConfig: Configuration = new Configuration();
+  @Input() public type: number;
+  skeetOptions: Skeet[] = [];
 
-  ngOnInit(): void {
-    
+  constructor(private configService: ConfigurationService) { }
+
+  async ngOnInit(): Promise<void> {
+    this.skeetOptions = await this.configService.GetAllSkeets();
     this.typeName = PlayerGameType[this.type].toString();
-    this.getSkeetsNames()
-    this.createForm();
+    this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
+    this.initializeForm();
+    this.isReady = true;
   }
 
-  createForm(): void {
-    this.configurationForm = this.fb.group({
-      TimePerShot: [this.config.TimePerShot, Validators.required],
-      TimeToRefill: [this.config.TimeToRefill, Validators.required],
-      Skeets: this.fb.array([
-      ]),
+  initializeForm(): void {
+    // Initialize the form with a FormArray for skeets
+    this.skeetForm = new FormGroup({
+      timePerShot: new FormControl(this.config.TimePerShot),
+      timeToRefill: new FormControl(this.config.TimeToRefill),
+      skeets: new FormArray([
+
+      ])
     });
-    this.addItem();
-  }
-  public allSkeets: Skeet[] = [];
-  public async getSkeetsNames() {
-    this.allSkeets = await this.configService.GetAllSkeets();
-  }
-
-
-  addItem() {
-    for (let index = 0; index < this.config.Skeets.length; index++) {
-      const element = this.config.Skeets[index];
-      const items = this.configurationForm.get('Skeets') as FormArray;
-      items.push(
-        this.fb.group({
-          SkeetID: [element.SkeetID, Validators.required],
-          Order: [element.Order, Validators.required]
-        })
-      );
+    if (this.tempConfig.Skeets.length > 0) {
+      for (let index = 0; index < this.tempConfig.Skeets.length; index++) {
+        this.addSkeet(this.tempConfig.Skeets[index]);
+      }
+    } else {
+      this.addSkeet();
     }
   }
 
-  get Skeets() {
-    return this.configurationForm.get('Skeets') as FormArray;
+  public getSkeetsFeilds(pSkeet: SkeetConfig = new SkeetConfig()) {
+    return new FormGroup({
+      skeetID: new FormControl(pSkeet.SkeetID),
+    })
+  }
+
+  // Convenience getter for easy access to form array controls
+  get skeetsArray(): FormArray {
+    return this.skeetForm.get('skeets') as FormArray;
+  }
+
+  public addSkeet(pSkeet: SkeetConfig = new SkeetConfig()): void {
+    (this.skeetForm.get('skeets') as FormArray).push(this.getSkeetsFeilds(pSkeet));
   }
 
 
+  removeSkeet(index: number): void {
+    // Remove the skeet control at the specified index from the FormArray
+    this.skeetsArray.removeAt(index);
+  }
+
+  getTotalShots(): number {
+    // Calculate total shots based on the number of Skeets selected
+    return this.skeetForm.value.skeets.length;
+  }
+
+  getTotalClays(): number {
+    let tCount = 0;
+    for (let index = 0; index < this.skeetForm.value.skeets.length; index++) {
+      const num = this.skeetForm.value.skeets[index].skeetID.length;
+      tCount += num;
+    }
+    return tCount;
+  }
   async onSubmit(): Promise<void> {
-    if (this.configurationForm.valid) {
-      const tConfig: Configuration = this.configurationForm.value;
-      tConfig.ID = this.config.ID;
-      tConfig.NumberOfSkeet = this.config.NumberOfSkeet;
-      tConfig.Type = this.type;
-      const tResult: number = await this.configService.UpdateConfig(this.config.ID, tConfig);
-      if (tResult == 0) {
-        this.dialog.open(AlertDialogComponent, {
-          data: {
-            icon: 'Error',
-            message: `The ${this.type} Settings Successuflly Saved`
-          }
-        });
-      } else {
-        this.dialog.open(AlertDialogComponent, {
-          data: {
-            icon: 'Error',
-            message: `Error in Saving ${this.type} Settings`
-          }
-        });
-      }
+    const tConfiguration: Configuration = new Configuration();
+    tConfiguration.TimePerShot = this.skeetForm.value.timePerShot;
+    tConfiguration.TimeToRefill = this.skeetForm.value.timeToRefill;
+    for (let index = 0; index < this.skeetForm.value.skeets.length; index++) {
+      const tSkeets = this.skeetForm.value.skeets[index].skeetID;
+      const tSkeetConfig: SkeetConfig = new SkeetConfig(tSkeets)
+      tConfiguration.Skeets.push(tSkeetConfig);
     }
-  }
-
-  openAlertDialog(pMessage: string) {
-    this.dialog.open(AlertDialogComponent, {
-      data: {
-        icon: 'Error',
-        message: pMessage
-      }
-    });
+    tConfiguration.NumberOfSkeet = tConfiguration.Skeets.length;
+    tConfiguration.config = JSON.stringify(tConfiguration);
+    const tResult = await this.configService.UpdateConfig(this.config.ID, tConfiguration);
   }
   
 

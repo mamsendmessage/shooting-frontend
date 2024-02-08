@@ -21,16 +21,17 @@ export class CreateTicketModalComponent implements OnInit {
   public laneId: number = -1;
   public fileName: string = 'No file selected';
   public nationalities: Nationality[] = [];
+  public isFormSubmitted: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
     if (pPlayer && pPlayer.ID > 0) {
       this.fileName = pPlayer.Document;
-      this.image = Constants.BaseServerUrl + pPlayer.Photo.replace('images', '');
+      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo.replace('images', '') : null;
       this.ticketForm = this.fb.group({
         nameOfPlayer: [pPlayer.Name, Validators.required],
         nationality: [pPlayer.NationalityId, Validators.required],
-        mobileNumber: [pPlayer.MobileNumber, Validators.required],
+        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
         age: [pPlayer.Age, Validators.required],
         gameType: ['1', Validators.required],
         levelOfPlayer: ['1', Validators.required],
@@ -38,12 +39,15 @@ export class CreateTicketModalComponent implements OnInit {
         laneId: [''],
         photo: [''],
         document: [''],
+        passportsNo: [pPlayer.PassportsNo, Validators.required],
+        membershipNo: [pPlayer.MembershipNo, Validators.required],
+        membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
       });
     } else {
       this.ticketForm = this.fb.group({
         nameOfPlayer: ['', Validators.required],
         nationality: ['', Validators.required],
-        mobileNumber: ['', Validators.required],
+        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
         age: ['', Validators.required],
         gameType: ['1', Validators.required],
         levelOfPlayer: ['1', Validators.required],
@@ -51,9 +55,20 @@ export class CreateTicketModalComponent implements OnInit {
         laneId: [''],
         photo: [''],
         document: [''],
+        passportsNo: ['', Validators.required],
+        membershipNo: ['', Validators.required],
+        membershipExpiry: ['', Validators.required]
       });
     }
-
+    this.ticketForm.controls['sessionTime'].disable();
+    this.ticketForm.controls['gameType'].valueChanges
+      .subscribe((res: string) => {
+        if (res != "3") {
+          this.ticketForm.controls['sessionTime'].disable();
+        } else {
+          this.ticketForm.controls['sessionTime'].enable();
+        }
+      })
   }
 
   async ngOnInit() {
@@ -77,12 +92,15 @@ export class CreateTicketModalComponent implements OnInit {
       tPlayer.NationalityId = this.ticketForm.value.nationality;
       tPlayer.Photo = this.webcamImage ? this.webcamImage.imageAsBase64 : '';
       tPlayer.Document = this.ticketForm.value.document ? this.ticketForm.value.document : '';
+      tPlayer.PassportsNo = this.ticketForm.value.passportsNo;
+      tPlayer.MembershipNo = this.ticketForm.value.membershipNo;
+      tPlayer.MembershipExpiry = this.ticketForm.value.membershipExpiry;
       const tTicket: Ticket = new Ticket(null);
       tTicket.UserId = tPlayer.ID;
       tTicket.GameTypeId = this.ticketForm.value.gameType;
       tTicket.PlayerLevelId = this.ticketForm.value.levelOfPlayer;
       tTicket.SessionTimeId = this.ticketForm.value.sessionTime;
-      tTicket.State = 0;
+      tTicket.State = 2;
       tTicket.LaneId = this.laneId;
       const tResult: number = await this.ticketService.AddTicketForNewPlayer(tPlayer, tTicket);
       if (tResult == 0) {
@@ -91,6 +109,7 @@ export class CreateTicketModalComponent implements OnInit {
         this.openAlertDialog('An Error Occured While Performing Your Request, Please Check with the Adminstriator');
       }
     } else {
+      this.isFormSubmitted = true;
       this.getFormValidationErrors();
     }
   }
@@ -130,6 +149,9 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   public isAttributeIsNotValid(pName) {
+    if (this.isFormSubmitted && !this.ticketForm.get(pName).valid) {
+      return true;
+    }
     if (this.ticketForm.get(pName).touched || this.ticketForm.get(pName).dirty) {
       return !this.ticketForm.get(pName).valid;
     } else {

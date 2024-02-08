@@ -2206,7 +2206,7 @@ span.boxStage.selected {
 }
 
 .searchUserID {
-  height: 35vh;
+  height: 210px;
   text-align: center;
   max-width: 730px;
   margin: 0 auto;
@@ -2329,7 +2329,7 @@ span.resultUser {
 }
 
 .headshot span {
-  width: 50%;
+  width: 100px;
   display: block;
   text-align: left;
   font-size: 11px;
@@ -2387,8 +2387,8 @@ span.shotsValus {
   text-align: center;
   box-shadow: 0px 0px 6px rgb(160 178 196) inset;
   min-width: 50px;
+  max-width: 80px;
 }
-
 
 .skeeter-cong {
   border-bottom: 1px dashed #8597aa;
@@ -2625,7 +2625,77 @@ span.hints {
 }
 
 
+span.Memeberships {
+  margin-bottom: 0px;
+  display: block;
+  color: #1f336e;
+}
 
+
+.addMore {
+  width: 30px;
+  height: 30px;
+  background: url(../img/addSteps.svg) no-repeat center center;
+  border-radius: 60px;
+  vertical-align: middle;
+  line-height: 30px;
+  font-size: 0px;
+  margin-top: 3px;
+  margin-left: auto;
+  min-width: 30px;
+}
+
+
+.addMore:hover , .removeitems:hover{
+  transform: scale(1.1);
+}
+
+
+.removeitems{
+
+  width: 30px;
+  height: 30px;
+  background: url(../img/removeSteps.svg) no-repeat center center;
+  border-radius: 60px;
+  vertical-align: middle;
+  line-height: 30px;
+  font-size: 0px;
+  margin-top: 3px;
+  margin-left: auto;
+  background-size: contain;
+  min-width: 30px;
+}
+
+.bootstrap-select>.dropdown-toggle {
+  margin-right: 0px;
+  border: 1px solid #a0b2c4;
+  border-radius: 5px;
+  height: 37px;
+  padding: 2px 12px;
+  text-align: center;
+  box-shadow: 0px 0px 6px rgb(160 178 196) inset;
+  min-width: 50px;
+  max-width: 110px;
+  line-height: 30px;
+  background: #fff;
+}
+
+.btn:first-child:hover, :not(.btn-check)+.btn:hover {
+  background: #fff;
+  border-color: #3a80b9;
+  color: #3369a3;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: auto;
+  margin-right: 6px;
+}
+
+
+.filter-option-inner-inner {
+  font-size: 13px;
+  font-weight: 500;
+}
 
 @media (max-width: 1450px) {
 
@@ -2651,9 +2721,11 @@ span.hints {
   text-align: center;
   box-shadow: 0px 0px 6px rgb(160 178 196) inset;
   width: 58px;
-  margin: 0 auto;
+ 
   font-size: 13px;
 }
+
+
  
 .skeetIcon {
  

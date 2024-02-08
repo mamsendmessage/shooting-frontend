@@ -1,15 +1,11 @@
 import { API } from "./API";
 
 export class SkeetConfig {
-    public SkeetID: number;
-    public Name: string;
-    public Order: number;
+    public SkeetID: number[];
     public API: API[];
 
-    constructor(SkeetID: number, pName: string = '', pOrder: number) {
+    constructor(SkeetID: number[] = []) {
         this.SkeetID = SkeetID;
-        this.Name = pName
-        this.Order = pOrder;
         this.API = [];
     }
 }

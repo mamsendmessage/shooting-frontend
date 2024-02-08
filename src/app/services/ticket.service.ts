@@ -5,6 +5,7 @@ import { APIResponse } from '../models/APIResponse';
 import { Constants } from '../models/Constants';
 import { Ticket } from '../models/Ticket';
 import { Player } from '../models/Player';
+import { X_TodayPlayer } from '../models/X_TodayPlayers';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,27 @@ export class TicketService {
       return tTickets;
     }
   }
+
+
+  //Anonymous Call
+  public async GetTicketOnLane(pLaneId: number): Promise<X_TodayPlayer> {
+    let tTickets: X_TodayPlayer[] = [];
+    try {
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket?laneId=${pLaneId}`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tTickets.push(new X_TodayPlayer(element));
+        }
+      }
+      return tTickets[0];
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
+
 
   public async GetTickets(): Promise<Ticket[]> {
     let tTickets: Ticket[] = [];

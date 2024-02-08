@@ -7,6 +7,7 @@ export class Configuration {
     public TimeToRefill: number = 10;
     public NumberOfSkeet: number = 25;
     public Skeets: SkeetConfig[] = [];
+    public config: string;
     constructor(pConfig: Configuration = null) {
         this.Skeets = [];
         if (pConfig) {
@@ -16,6 +17,7 @@ export class Configuration {
             this.TimeToRefill = pConfig.TimeToRefill;
             this.NumberOfSkeet = pConfig.NumberOfSkeet;
             this.Skeets = pConfig.Skeets && this.Skeets.length > 0 ? this.Skeets : [];
+            this.config = pConfig.config;
         }
     }
 }
