@@ -377,6 +377,11 @@ span.infoplayer {
 
 }
 
+.status.Waiting .frames::before {
+  background: #ff9800;
+
+}
+
 
 .info-game li.timesicon .frames {
   background: url(../img/watch-white.svg) no-repeat center left;

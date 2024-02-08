@@ -73,6 +73,24 @@ export class TicketService {
     }
   }
 
+
+  public async GetTicketById(pTicketId: number): Promise<Ticket> {
+    let tTicket: Ticket;
+    try {
+
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket/${pTicketId}`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
+      if (tResponse.result == 0) {
+        const element = tResponse.payload;
+        tTicket = new Ticket(element);
+      }
+      return tTicket;
+    } catch (error) {
+      console.log(error);
+      return tTicket;
+    }
+  }
+
   public async GetUserTickets(pUserId): Promise<Ticket[]> {
     let tTickets: Ticket[] = [];
     try {
@@ -116,9 +134,9 @@ export class TicketService {
     }
   }
 
-  public async UpdateTicket(pTicket: Ticket): Promise<number> {
+  public async UpdateTicketState(pTicket: Ticket): Promise<number> {
     try {
-      const tUrl: string = `${this.url}/${pTicket.ID}`;
+      const tUrl: string = `${this.url}/updateState`;
       const tResponse: APIResponse = await this.communicationService.putData(tUrl, pTicket);
       return tResponse.result;
     } catch (error) {

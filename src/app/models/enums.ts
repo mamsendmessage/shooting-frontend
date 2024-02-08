@@ -22,9 +22,15 @@ export enum TicketType {
 }
 
 
-export enum PlayerGameType {
+export enum PlayerLevel {
     "Beginner" = 1,
     "Intermediate" = 2,
     "Professional" = 3,
     "Competition" = 4
+}
+
+export enum GameType {
+    "Normal" = 1,
+    "Special sessions" = 2,
+    "Competition" = 3
 }

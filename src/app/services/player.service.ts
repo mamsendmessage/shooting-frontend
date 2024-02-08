@@ -135,4 +135,22 @@ export class PlayerService {
       return -1;
     }
   }
+
+  public async GetPlayerById_An(pPlayerId: number): Promise<Player> {
+    let tPlayer: Player;
+    try {
+
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/player/${pPlayerId}`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
+      if (tResponse.result == 0) {
+        const element = tResponse.payload;
+        tPlayer = new Player(element);
+      }
+      return tPlayer;
+    } catch (error) {
+      console.log(error);
+      return tPlayer;
+    }
+  }
+
 }
