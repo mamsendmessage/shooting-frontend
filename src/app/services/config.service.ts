@@ -10,6 +10,8 @@ import { Constants } from '../models/Constants';
 import { Skeet } from '../models/Skeet';
 import { Configuration } from '../models/Configuration';
 import { Nationality } from '../models/Nationality';
+import { SessionsTime } from '../models/SessionsTime';
+import { PlayerLevel } from '../models/PlayerLevel';
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +98,38 @@ export class ConfigurationService {
       return -1;
     }
   }
-
+  public async GetSessionsTime(): Promise<SessionsTime[]> {
+    const tsessions: SessionsTime[] = [];
+    try {
+      const tUrl: string = `${this.url}/sessions-time`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tsessions.push(new SessionsTime(+element.ID, element.Name));
+        }
+      }
+      return tsessions;
+    } catch (error) {
+      console.log(error);
+      return tsessions;
+    }
+  }
+  public async GetPlayerLevel(): Promise<PlayerLevel[]> {
+    const tLevels: PlayerLevel[] = [];
+    try {
+      const tUrl: string = `${this.url}/levels`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tLevels.push(new SessionsTime(+element.ID, element.Name));
+        }
+      }
+      return tLevels;
+    } catch (error) {
+      console.log(error);
+      return tLevels;
+    }
+  }
 }

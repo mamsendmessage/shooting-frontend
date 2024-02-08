@@ -27,10 +27,12 @@
                 <td class="text-center">{{ player.DisplayedUserType}} </td>
                 <td class="text-center"> {{player.DisplayedDateTime}} </td>
                 <td class="text-center">
-                    <span *ngIf="player.State==0" class="text-Waiting">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==0" class="text-Waiting" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==4" class="planned">{{player.DisplayedState}}</span>
+
 
                 </td>
                 <td class="text-center">

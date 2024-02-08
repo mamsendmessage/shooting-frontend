@@ -108,6 +108,12 @@
                                     <div class="col-sm-5 pd-r-1">
                                         <label for="Nationality" class="form-label">Level of Player </label>
                                         <ul class="flex g-3">
+                                            <li class="mr-r-6" *ngFor="let level of PlayerLevels; let i = index">
+                                                <input id="r11" type="radio" name="levelOfPlayer" value="{{level.ID}}" checked
+                                                formControlName="levelOfPlayer">
+                                            <label for="r11">{{level.Name}} </label>
+                                            </li>
+<!-- 
                                             <li class="mr-r-6">
                                                 <input id="r11" type="radio" name="levelOfPlayer" value="1" checked
                                                     formControlName="levelOfPlayer">
@@ -122,13 +128,18 @@
                                                 <input id="r33" type="radio" name="levelOfPlayer" value="3"
                                                     formControlName="levelOfPlayer">
                                                 <label for="r33">Professional</label>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
-                                    <div class="col-sm-3 pd-r-1">
+                                    <div class="col-sm-3 pd-r-1" *ngIf="ticketForm.value.gameType==='3'">
                                         <label for="MobNum" class="form-label">Session Time</label>
                                         <ul class="flex g-3">
-                                            <li class="mr-r-6">
+                                            <li class="mr-r-6" *ngFor="let sessionTime of SessionsTime; let i = index">
+                                                <input id="r111" type="radio" name="sessionTime" value="{{sessionTime.ID}}" checked
+                                                formControlName="sessionTime">
+                                            <label for="r111">{{sessionTime.Name}} </label>
+                                            </li>
+                                            <!-- <li class="mr-r-6">
                                                 <input id="r111" type="radio" name="sessionTime" value="1" checked
                                                     formControlName="sessionTime">
                                                 <label for="r111">30m </label>
@@ -142,7 +153,7 @@
                                                 <input id="r333" type="radio" name="sessionTime" value="3"
                                                     formControlName="sessionTime">
                                                 <label for="r333">60m</label>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
