@@ -12,11 +12,11 @@
                     <span class="mobile icons-profile ">{{player.MobileNumber}}</span>
                     <span class="age icons-profile ">  {{player.Age}} <span class="hints">years </span></span>
                     <span class="levelPlyaer icons-profile "> {{level}} </span> 
-                    <button class="total-tickets icons-profile" (click)="sendDataToLanePage()"><span class="hints">Allocate</span> </button> 
+                    <span class="total-tickets icons-profile "> {{numOfTickets}}  <span class="hints">Tickets </span> </span> 
                 </div>
                 <div class="historyof-playing">
                     <div class="row">
-                        <div class="dates"> </div>
+                        <button (click)="sendDataToLanePage()" mat-raised-button color="primary">Ready</button>
                     </div>
                 </div>
             </div>

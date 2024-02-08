@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ChangeDetectorRef } from '@angular/core';
 import { Configuration } from 'src/app/models/Configuration';
-import { PlayerGameType } from 'src/app/models/enums';
+import { PlayerLevel } from 'src/app/models/enums';
 import { Skeet } from 'src/app/models/Skeet';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { CompetitionConfiguration } from 'src/app/models/CompetitionConfiguration';
@@ -38,7 +38,7 @@ export class SkeetConffigComponent implements OnInit {
     const tConfig5: Configuration = new Configuration();
     this.configs = [tConfig1, tConfig2, tConfig3, tConfig4, tConfig5]
     this.skeetOptions = await this.configService.GetAllSkeets();
-    this.typeName = PlayerGameType[this.type].toString();
+    this.typeName = PlayerLevel[this.type].toString();
     this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
     this.BuildForm();
     this.isReady = true;

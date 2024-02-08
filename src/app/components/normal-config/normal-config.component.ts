@@ -6,7 +6,7 @@ import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PlayerGameType } from 'src/app/models/enums';
+import { PlayerLevel } from 'src/app/models/enums';
 
 @Component({
   selector: 'app-normal-config',
@@ -27,7 +27,7 @@ export class NormalConfigComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.skeetOptions = await this.configService.GetAllSkeets();
-    this.typeName = PlayerGameType[this.type].toString();
+    this.typeName = PlayerLevel[this.type].toString();
     this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
     this.initializeForm();
     this.isReady = true;
