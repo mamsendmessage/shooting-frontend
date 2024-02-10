@@ -28,6 +28,7 @@ export class CreateTicketModalComponent implements OnInit {
 
   
   public isFormSubmitted: boolean = false;
+  public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
@@ -83,6 +84,7 @@ export class CreateTicketModalComponent implements OnInit {
     this.nationalities = await this.configService.GetAllNationalites();
     this.SessionsTime = await this.configService.GetSessionsTime();
     this.PlayerLevels = await this.configService.GetPlayerLevel();
+    this.isReady = true;
   }
 
   public close() {

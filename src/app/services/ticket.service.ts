@@ -74,11 +74,14 @@ export class TicketService {
   }
 
 
-  public async GetTicketById(pTicketId: number): Promise<Ticket> {
+  public async GetTicketById(pTicketId: number, pIsAllStatuses: boolean = false): Promise<Ticket> {
     let tTicket: Ticket;
     try {
-
-      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket/${pTicketId}`;
+      let tStatus: string = '';
+      if (pIsAllStatuses) {
+        tStatus = '?allStatus=0'
+      }
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket/${pTicketId}${tStatus}`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
       if (tResponse.result == 0) {
         const element = tResponse.payload;

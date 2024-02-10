@@ -9,35 +9,19 @@
                 <li *ngFor="let lane of lanes">
                     <span class="waitNo">{{lane.RemainingMinuts}}</span>
 
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isReserved" [disabled]="!active">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isReserved">
                         <span class="boxStage notAvilable"> {{lane.Number}}
                         </span>
                     </button>
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isSelected" [disabled]="!active">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isSelected">
                         <span class="boxStage your selected"> {{lane.Number}}
                         </span>
                     </button>
-                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="!lane.isReserved && !lane.isSelected" [disabled]="!active">
+                    <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="!lane.isReserved && !lane.isSelected">
                         <span class="boxStage itsAvilable"> {{lane.Number}}
                         </span>
                     </button>
                 </li>
-                <!-- <li>
-                    <span class="waitNo">15</span>
-                    <span class="boxStage notAvilable"> 2 </span>
-                </li>
-                <li>
-                    <span class="waitNo">30</span>
-                    <span class="boxStage notAvilable"> 3 </span>
-                </li>
-                <li>
-                    <span class="waitNo">0</span>
-                    <span class="boxStage your selected">4 </span>
-                </li>
-                <li>
-                    <span class="waitNo"> Avilable </span>
-                    <span class="boxStage itsAvilable"> 5 </span>
-                </li> -->
             </ul>
         </div>
         <div class="legendStage">

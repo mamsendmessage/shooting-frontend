@@ -1,0 +1,81 @@
+<!----------screen All------------>
+<div *ngIf="isActiveTicket">
+    <div class="topuser">
+        <div class="row g-3 d-flex">
+            <div class="col-4">
+                <div class="userphoto">
+                    <img src="/assets/img/user.png" alt="userPhoto">
+                </div>
+                <span class="infoplayer">
+                    {{player.Name}}
+                    <br>
+                    {{player.NationalityId}}
+                </span>
+            </div>
+            <div class="col-7">
+                <ul class="info-game">
+                    <li class="status Waiting" *ngIf="ticket.State==0">
+                        <div class="frames"> {{ticket.DisplayedState}} </div>
+                    </li>
+                    <li class="status inGame" *ngIf="ticket.State==1">
+                        <div class="frames"> {{ticket.DisplayedState}} </div>
+                    </li>
+                    <li class="timedown timesicon">
+                        <div class="frames"> 45.. left </div>
+                    </li>
+                    <li class="gametype">
+                        <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-1">
+                <img class="logo" src="/assets/img/logo.svg">
+            </div>
+        </div>
+    </div>
+    <div class="counter-screen">
+        <div class="grids">
+            <div class="box gamesType">
+                <ul>
+                    <li [ngClass]="currentTicket.GameTypeId == 1 ?'selected':''"> <img src="/assets/img/normal.svg">
+                        Normal </li>
+                    <li [ngClass]="currentTicket.GameTypeId == 2 ?'selected':''"> <img
+                            src="/assets/img/special-session.svg"> Special session </li>
+                    <li [ngClass]="currentTicket.GameTypeId == 3 ?'selected':''"> <img
+                            src="/assets/img/competition.svg"> Professional </li>
+                </ul>
+            </div>
+            <div class="box nameS"> {{player.Name}} </div>
+            <div class="box levels">
+                <ul>
+                    <li [ngClass]="currentTicket.PlayerLevelId == 1 ?'selected':''">
+                        <img src="/assets/img/pyallow.svg">
+                        Beginner
+                    </li>
+                    <li [ngClass]="currentTicket.PlayerLevelId == 2 ?'selected':''"><img src="/assets/img/pblue.svg">
+                        Intermediate </li>
+                    <li [ngClass]="currentTicket.PlayerLevelId == 3 ?'selected':''"><img src="/assets/img/pgreen.svg">
+                        Professional </li>
+                </ul>
+            </div>
+            <div class="box sessionsType">
+                <ul>
+                    <li [ngClass]="currentTicket.SessionTimeId == 1 ?'selected':''"> <img
+                            src="/assets/img/watch-blue.svg"> 30 min </li>
+                    <li [ngClass]="currentTicket.SessionTimeId == 2 ?'selected':''"> <img
+                            src="/assets/img/watch-blue.svg"> 45 min </li>
+                    <li [ngClass]="currentTicket.SessionTimeId == 3 ?'selected':''"> <img
+                            src="/assets/img/watch-blue.svg"> 60 min </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!isActiveTicket" class="full-height custom-dialog">
+    <div class="logos full-height ">
+        <span></span>
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>

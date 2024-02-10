@@ -1,4 +1,4 @@
-<div class="boxUser" tabindex="-1" aria-labelledby="createUserLabel" id="create-ticket-modal">
+<div *ngIf="isReady" class="boxUser" tabindex="-1" aria-labelledby="createUserLabel" id="create-ticket-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content darks">
             <form [formGroup]="ticketForm">

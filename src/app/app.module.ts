@@ -46,6 +46,7 @@ import { SkeetConffigComponent } from './components/skeet-conffig/skeet-conffig.
 import { LaneComponent } from './components/lane/lane.component';
 import { AllocateDialoadComponent } from './components/allocate-diaload/allocate-diaload.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { HistoryLaneComponent } from './components/history-lane/history-lane.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AlertDialogComponent,
     SkeetConffigComponent,
     LaneComponent,
-    AllocateDialoadComponent
+    AllocateDialoadComponent,
+    HistoryLaneComponent
   ],
   imports: [
     HttpClientModule,

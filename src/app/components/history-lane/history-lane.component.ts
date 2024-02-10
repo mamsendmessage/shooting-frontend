@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Lane } from 'src/app/models/Lane';
 import { Player } from 'src/app/models/Player';
 import { Ticket } from 'src/app/models/Ticket';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
@@ -11,12 +11,11 @@ import { SocketCommunicationService } from 'src/app/services/socket-communicatio
 import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
-  selector: 'app-lane',
-  templateUrl: './lane.component.html',
-  styleUrls: ['./lane.component.css']
+  selector: 'app-history-lane',
+  templateUrl: './history-lane.component.html',
+  styleUrls: ['./history-lane.component.css']
 })
-export class LaneComponent implements OnInit {
-  public laneId: number;
+export class HistoryLaneComponent implements OnInit {
   public ticket: X_TodayPlayer;
   public currentTicket: Ticket;
   public isReady: boolean = false;
@@ -24,31 +23,20 @@ export class LaneComponent implements OnInit {
   public gameType: string = '';
   public player: Player;
   public isActiveTicket: boolean = false;
-  constructor(private route: ActivatedRoute, private socketCommunicationService: SocketCommunicationService, private playerService: PlayerService,
-    private ticketService: TicketService, private laneService: LaneService) { }
+  constructor(private route: ActivatedRoute, private playerService: PlayerService, public dialogRef: MatDialogRef<HistoryLaneComponent>,
+    private ticketService: TicketService, @Inject(MAT_DIALOG_DATA) public laneId: number) { }
 
   async ngOnInit(): Promise<void> {
-    this.route.params.subscribe(async params => {
-      this.laneId = params['id'];
-      await this.initializeComponenet();
-    });
+    await this.initializeComponenet();
   }
 
   public async initializeComponenet() {
     try {
-
-      //const tLane: Lane = await this.laneService.GetLaneByID(this.laneId);
-      this.socketCommunicationService.listenToChange().subscribe(async (pTicket: X_TodayPlayer) => {
-        if (pTicket.LaneId == this.laneId) {
-          this.ticket = new X_TodayPlayer(pTicket);
-          await this.loadData();
-        }
-      });
       this.ticket = await this.ticketService.GetTicketOnLane(this.laneId);
       if (this.ticket) {
         await this.loadData();
       } else {
-        this.isActiveTicket = false;
+        // this.dialogRef.close();
       }
       this.isReady = true;
     } catch (error) {
@@ -57,7 +45,7 @@ export class LaneComponent implements OnInit {
   }
 
   public async loadData() {
-    this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId);
+    this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId, true);
     this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
     this.playerLevel = PlayerLevel[this.currentTicket.PlayerLevelId].toString();
     this.gameType = GameType[this.currentTicket.GameTypeId].toString();
