@@ -9,6 +9,8 @@ import { Ticket } from 'src/app/models/Ticket';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { TicketService } from 'src/app/services/ticket.service';
+import { SessionsTime } from 'src/app/models/SessionsTime';
+import { PlayerLevel } from 'src/app/models/PlayerLevel';
 @Component({
   selector: 'app-create-ticket-modal',
   templateUrl: './create-ticket-modal.component.html',
@@ -21,6 +23,10 @@ export class CreateTicketModalComponent implements OnInit {
   public laneId: number = -1;
   public fileName: string = 'No file selected';
   public nationalities: Nationality[] = [];
+  public SessionsTime: SessionsTime[] = [];
+  public PlayerLevels: PlayerLevel[] = [];
+
+  
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
@@ -66,14 +72,18 @@ export class CreateTicketModalComponent implements OnInit {
       .subscribe((res: string) => {
         if (res != "3") {
           this.ticketForm.controls['sessionTime'].disable();
+          this.ticketForm.controls['sessionTime'].removeValidators(Validators.required);
         } else {
           this.ticketForm.controls['sessionTime'].enable();
+          this.ticketForm.controls['sessionTime'].addValidators(Validators.required);
         }
       })
   }
 
   async ngOnInit() {
     this.nationalities = await this.configService.GetAllNationalites();
+    this.SessionsTime = await this.configService.GetSessionsTime();
+    this.PlayerLevels = await this.configService.GetPlayerLevel();
     this.isReady = true;
   }
 

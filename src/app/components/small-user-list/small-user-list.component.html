@@ -12,10 +12,20 @@
                             <div class="font-medium">{{player.Name}}</div>
                             <div class="text-slate-500 text-xs mt-0.5">{{player.DisplayedDateTime}}</div>
                         </div>
-                        <div *ngIf="player.State==0" class="text-Waiting">{{player.DisplayedState}}</div>
+                        <div [ngClass]="{
+                            'text-Waiting': player.State === 0,
+                            'text-InGame': player.State === 1,
+                            'planned': player.State === 2 || player.State === 4,
+                            'finished': player.State === 3,
+                            'text-cancel': player.State === 5
+                          }">
+                            {{ player.DisplayedState }}
+                          </div>
+                          
+                        <!-- <div *ngIf="player.State==0" class="text-Waiting">{{player.DisplayedState}}</div>
                         <div *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</div>
                         <div *ngIf="player.State==2" class="planned">{{player.DisplayedState}}</div>
-                        <div *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</div>
+                        <div *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</div> -->
                     </div>
                 </ng-container>
                 <!-- <button class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-slate-400 dark:border-darkmode-300 text-slate-500">View

@@ -42,12 +42,14 @@
                         <span *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</span>
                         <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                         <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span> -->
-
                         <li class="status Waiting" *ngIf="ticket.State==0">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="status inGame" *ngIf="ticket.State==1">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
+                        </li>
+                        <li class="status inGame" *ngIf="ticket.State==4">
+                          <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
                             <div class="frames"> 45.. left </div>
@@ -56,8 +58,6 @@
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
                         </li>
                         <!--- USE CLASS NAME FOR CHANGE STATUS AND GAME TYPE
-                   intermediate ---- begnner ----professional 
-                    ------->
                     </ul>
                 </div>
                 <div class="col-1">
