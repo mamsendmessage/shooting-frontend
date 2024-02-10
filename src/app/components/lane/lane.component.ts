@@ -25,7 +25,7 @@ export class LaneComponent implements OnInit {
   public player: Player;
   public isActiveTicket: boolean = false;
   constructor(private route: ActivatedRoute, private socketCommunicationService: SocketCommunicationService, private playerService: PlayerService,
-    private ticketService: TicketService, private laneService: LaneService) { }
+    private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async params => {
@@ -58,10 +58,22 @@ export class LaneComponent implements OnInit {
 
   public async loadData() {
     this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId);
-    this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
-    this.playerLevel = PlayerLevel[this.currentTicket.PlayerLevelId].toString();
-    this.gameType = GameType[this.currentTicket.GameTypeId].toString();
+    if (this.currentTicket) {
+      console.log(this.currentTicket);
+      this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
+      this.playerLevel = PlayerLevel[this.currentTicket.PlayerLevelId].toString();
+      this.gameType = GameType[this.currentTicket.GameTypeId].toString();
+    }
     this.isActiveTicket = true;
   }
 
+  public async UpdateTicketState() {
+    try {
+      this.currentTicket.State = 1;
+      await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

@@ -3,6 +3,8 @@ import { Configuration } from 'src/app/models/Configuration';
 import { Skeet } from 'src/app/models/Skeet';
 import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-settings',
@@ -27,6 +29,4 @@ export class SettingsComponent implements OnInit {
     }
     this.isReady = true;
   }
-
-
 }

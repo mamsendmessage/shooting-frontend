@@ -23,7 +23,7 @@ export class NormalConfigComponent implements OnInit {
   @Input() public type: number;
   skeetOptions: Skeet[] = [];
 
-  constructor(private configService: ConfigurationService) { }
+  constructor(private configService: ConfigurationService, private dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     this.skeetOptions = await this.configService.GetAllSkeets();
@@ -97,7 +97,22 @@ export class NormalConfigComponent implements OnInit {
     tConfiguration.NumberOfSkeet = tConfiguration.Skeets.length;
     tConfiguration.config = JSON.stringify(tConfiguration);
     const tResult = await this.configService.UpdateConfig(this.config.ID, tConfiguration);
+    if (tResult == 0) {
+      this.openAlertDialog('The Settings Saved Successfully');
+    } else {
+      this.openAlertDialog('Faild To Save Settings');
+    }
   }
-  
+
+
+  openAlertDialog(pMessage: string) {
+    this.dialog.open(AlertDialogComponent
+      , {
+        data: {
+          icon: 'Error',
+          message: pMessage
+        }
+      });
+  }
 
 }
