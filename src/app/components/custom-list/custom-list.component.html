@@ -4,9 +4,19 @@
             <span class="titlebox  mr-auto"> List Of Players </span>
             <div class="filter  sm-6">
                 <div class="row">
+                    <div class="col pd-r-1"></div>
+                    <div class="col pd-r-1"></div>
+                    <div class="col pd-r-1"></div>
+                    <div class="col pd-r-1"></div>
+                    <div class="col pd-r-1"></div>
+                    <div class="col pd-r-1">From Date</div>
+                    <div class="col pd-r-1">To Date</div>
+                </div>
+                <div class="row">
                     <div class="col pd-r-1 ">
                         <div class="w-56 relative text-slate-500">
-                            <input type="text" class="form-control w-56  pr-10" placeholder="Search..." (keyup)="onKeySearch($event)" [(ngModel)]="searchKey">
+                            <input type="text" class="form-control w-56  pr-10" placeholder="Search..."
+                                (keyup)="onKeySearch($event)" [(ngModel)]="searchKey">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" icon-name="search" class="iconSearch" data-lucide="search">
@@ -39,13 +49,20 @@
                             <option value="3"> Walk Through </option>
                         </select>
                     </div>
+                    <div class="col pd-r-1 ">
+                        <input type="date" class="form-control" id="membershipExpiry">
+                    </div>
+                    <div class="col pd-r-1 ">
+                        <input type="date" class="form-control" id="membershipExpiry">
+                    </div>
                 </div>
             </div>
             <button class="createNewUser sm-6" (click)="openCreateUserDialog()">Add User </button>
-            
+
         </div>
         <div class="col-xxl-12 col-lg-12 col-md-12">
-            <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage" [startIndex]="startIndex"></app-table>
+            <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage"
+                [startIndex]="startIndex"></app-table>
             <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
                 (change)="updateItemPerPage($event)" (currentPageChanges)="updateCurrentPage($event)"></app-pagination>
         </div>

@@ -37,18 +37,13 @@
                 </div>
                 <div class="col-7">
                     <ul class="info-game">
-
-                        <!-- <span *ngIf="player.State==0" class="text-Waiting">{{player.DisplayedState}}</span>
-                        <span *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</span>
-                        <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
-                        <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span> -->
-                        <li class="status Waiting" *ngIf="ticket.State==0">
+                        <li class="custom-btn status Waiting" *ngIf="ticket.State==0" (click)="UpdateTicketState()">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
-                        <li class="status inGame" *ngIf="ticket.State==1">
+                        <li class="custom-btn status inGame" *ngIf="ticket.State==1" (click)="UpdateTicketState()">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
-                        <li class="status inGame" *ngIf="ticket.State==4">
+                        <li class="custom-btn status inGame" *ngIf="ticket.State==4" (click)="UpdateTicketState()">
                           <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
@@ -57,7 +52,7 @@
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
                         </li>
-                        <!--- USE CLASS NAME FOR CHANGE STATUS AND GAME TYPE
+                        <!--- USE CLASS NAME FOR CHANGE STATUS AND GAME TYPE -->
                     </ul>
                 </div>
                 <div class="col-1">

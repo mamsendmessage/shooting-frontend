@@ -7,6 +7,8 @@ import { PlayerLevel } from 'src/app/models/enums';
 import { Skeet } from 'src/app/models/Skeet';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { CompetitionConfiguration } from 'src/app/models/CompetitionConfiguration';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-skeet-conffig',
@@ -28,7 +30,7 @@ export class SkeetConffigComponent implements OnInit {
   //new 
   public configs: Configuration[] = [];
 
-  constructor(private configService: ConfigurationService, private fb: FormBuilder) { }
+  constructor(private configService: ConfigurationService, private fb: FormBuilder, private dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     const tConfig1: Configuration = new Configuration();
@@ -104,9 +106,6 @@ export class SkeetConffigComponent implements OnInit {
     this.configurationSkeets(pIndex1).removeAt(pIndex2);
   }
 
-
-
-
   async onSubmit(): Promise<void> {
     const tConfiguration: Configuration = new Configuration();
     const tTimePerShot = this.skeetForm.get('timePerShot').value;
@@ -128,8 +127,23 @@ export class SkeetConffigComponent implements OnInit {
     }
     tConfiguration.config = JSON.stringify(tCompetitionConfiguration);
     const tResult = await this.configService.UpdateConfig(4, tConfiguration);
-    const tX = 20;
+    if (tResult == 0) {
+      this.openAlertDialog('The Settings Saved Successfully');
+    } else {
+      this.openAlertDialog('Faild To Save Settings');
+    }
 
     console.log(this.skeetForm.value)
+  }
+
+
+  openAlertDialog(pMessage: string) {
+    this.dialog.open(AlertDialogComponent
+      , {
+        data: {
+          icon: 'Error',
+          message: pMessage
+        }
+      });
   }
 }
