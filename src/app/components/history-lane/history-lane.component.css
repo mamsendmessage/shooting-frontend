@@ -2,7 +2,7 @@
     display: block;
     position: relative;
     left: 0px;
-    top: 27vh;
+    top: 16vh;
     width: 100%;
     height: 39vh;
     background-repeat: no-repeat;
@@ -16,4 +16,6 @@
     text-align: center;
     padding-top: 27vh;
     font-size: 14px;
+    color: #212529
 }
+

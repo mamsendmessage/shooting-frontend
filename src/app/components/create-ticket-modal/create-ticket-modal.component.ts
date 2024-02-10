@@ -22,6 +22,7 @@ export class CreateTicketModalComponent implements OnInit {
   public fileName: string = 'No file selected';
   public nationalities: Nationality[] = [];
   public isFormSubmitted: boolean = false;
+  public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
@@ -73,6 +74,7 @@ export class CreateTicketModalComponent implements OnInit {
 
   async ngOnInit() {
     this.nationalities = await this.configService.GetAllNationalites();
+    this.isReady = true;
   }
 
   public close() {
