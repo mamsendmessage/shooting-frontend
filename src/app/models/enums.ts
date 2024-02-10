@@ -8,7 +8,9 @@ export enum TicketState {
     "In Game" = 1,
     "Planned" = 2,
     "Finished" = 3,
-    "Ready"=4
+    "Ready"=4,
+    "Canceled"=5
+
 }
 
 export enum UserType {

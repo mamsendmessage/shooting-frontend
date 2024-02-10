@@ -48,6 +48,9 @@
                     <li class="status inGame" *ngIf="ticket.State==1">
                         <div class="frames"> {{ticket.DisplayedState}} </div>
                     </li>
+                    <li class="status inGame" *ngIf="ticket.State==4">
+                        <div class="frames"> {{ticket.DisplayedState}} </div>
+                    </li>
                     <li class="timedown timesicon">
                         <div class="frames"> 45.. left </div>
                     </li>

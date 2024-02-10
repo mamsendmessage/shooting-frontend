@@ -21,9 +21,14 @@ export class AllocateDialoadComponent implements OnInit {
   public level: string;
   public photo: string;
   public numOfTickets: number;
+  allowedStatusForCancel: number[] = [0, 2,];
+  allowedStatusForReady: number[] = [0, 2,];
+
+
   constructor(public dialogRef: MatDialogRef<AllocateDialoadComponent>,@Inject(MAT_DIALOG_DATA) public ticket: X_TodayPlayer, private socketService: SocketCommunicationService, private playerService: PlayerService, private ticketService: TicketService,public dialog: MatDialog) { }
   async ngOnInit(): Promise<void> {
 
+    console.log(this.ticket);
     this.player = await this.playerService.GetPlayerById(this.ticket.UserId);
     this.level = this.ticket.PlayerLevel;
     this.photo = Constants.BaseServerUrl + this.player.Photo.replace('images', '');
@@ -36,6 +41,18 @@ export class AllocateDialoadComponent implements OnInit {
     const tTicket: Ticket = new Ticket(null);
     tTicket.ID = this.ticket.TicketId;
     tTicket.State = 4;
+    const tResult = await this.ticketService.UpdateTicketState(tTicket);
+    if (tResult == 0) {
+      this.close();
+    } else {
+      this.openAlertDialog('An Error Occured While Performing Your Request, Please Check with the Adminstriator');
+    }
+    this.socketService.emitToServer("Change", this.ticket);
+  }
+  public async CancelTicket() {
+    const tTicket: Ticket = new Ticket(null);
+    tTicket.ID = this.ticket.TicketId;
+    tTicket.State = 5;
     const tResult = await this.ticketService.UpdateTicketState(tTicket);
     if (tResult == 0) {
       this.close();

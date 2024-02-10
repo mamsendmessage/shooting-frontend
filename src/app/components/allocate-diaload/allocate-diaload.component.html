@@ -16,7 +16,12 @@
                 </div>
                 <div class="historyof-playing">
                     <div class="row">
-                        <button (click)="sendDataToLanePage()" mat-raised-button color="primary">Ready</button>
+                        <button *ngIf="allowedStatusForReady.includes(ticket.State)" (click)="sendDataToLanePage()" mat-raised-button color="primary">Ready</button>
+                       
+                    </div>
+                    <div class="row">
+                        <button class="btn-cancel"  *ngIf="allowedStatusForCancel.includes(ticket.State)" (click)="CancelTicket()" mat-raised-button color="warn">Cancel</button>
+                       
                     </div>
                 </div>
             </div>

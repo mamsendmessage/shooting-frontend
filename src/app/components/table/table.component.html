@@ -32,6 +32,8 @@
                     <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==4" class="planned">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==5" class="text-cancel">{{player.DisplayedState}}</span>
+
 
 
                 </td>
