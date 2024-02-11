@@ -13,32 +13,32 @@
                 <div class="col-xxl-9 col-xl-12">
                     <span class="titlebox"> Summary </span>
                     <app-summary-statistics></app-summary-statistics>
-                    <div class="row mt-8 ">
+                    <div class="row mt-8">
                         <div class="col-xxl-4 col-lg-4 col-md-4">
                             <span class="titlebox"> Type of Game </span>
-                            <div class="intro-y box p-3 mt-12">
-                                <div id="box1chart" class="countsbox"> </div>
+                            <div class="intro-y box custom p-3 mt-12">
+                                <app-pie-chart></app-pie-chart>
                             </div>
-
                         </div>
                         <div class="col-xxl-4 col-lg-4 col-md-4">
                             <span class="titlebox"> Level Selection </span>
-                            <div class="intro-y box p-3 mt-12">
-                                <div id="box2chart" class="countsbox"> </div>
+                            <div class="intro-y box custom p-3 mt-12">
+                                <app-column-chart></app-column-chart>
                             </div>
                         </div>
                         <div class="col-xxl-4 col-lg-4 col-md-4">
                             <span class="titlebox"> Sales Report </span>
-                            <div class="intro-y box p-3 mt-12">
-                                <div id="box3chart" class="countsbox"> </div>
+                            <div class="intro-y box custom p-3 mt-12">
+                                <app-logarithmic-chart></app-logarithmic-chart>
                             </div>
-
                         </div>
                     </div>
+
+                    <div class="row mt-8 "></div>
                     <div class="row mt-8 ">
                         <div class="col-xxl-12 col-lg-12 col-md-12">
-                            <span class="titlebox"> Players by today </span>
-                            <app-custom-list class="full-width" [data]="data" [itemPerPage]="5"></app-custom-list>
+                            <app-custom-list class="full-width" [data]="data" [simple]="true"
+                                [itemPerPage]="5"></app-custom-list>
                         </div>
                     </div>
                 </div>

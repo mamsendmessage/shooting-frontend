@@ -29,7 +29,7 @@ export class LoginComponent {
       }
       const tResult = await this.authenticationService.Login(tValue);
       if(tResult==0){
-        this.router.navigate(["home"]);
+        this.router.navigate(["/home"]);
       }else{
         console.log('Login Faild')
       }

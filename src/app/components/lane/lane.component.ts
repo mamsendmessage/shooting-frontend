@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Lane } from 'src/app/models/Lane';
+import { Nationality } from 'src/app/models/Nationality';
 import { Player } from 'src/app/models/Player';
 import { Ticket } from 'src/app/models/Ticket';
 import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { GameType, PlayerLevel } from 'src/app/models/enums';
+import { ConfigurationService } from 'src/app/services/config.service';
 import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketCommunicationService } from 'src/app/services/socket-communication.service';
@@ -24,8 +26,9 @@ export class LaneComponent implements OnInit {
   public gameType: string = '';
   public player: Player;
   public isActiveTicket: boolean = false;
+  public playerNationality: string = '';
   constructor(private route: ActivatedRoute, private socketCommunicationService: SocketCommunicationService, private playerService: PlayerService,
-    private ticketService: TicketService) { }
+    private configurationService: ConfigurationService, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async params => {
@@ -63,6 +66,11 @@ export class LaneComponent implements OnInit {
       this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
       this.playerLevel = PlayerLevel[this.currentTicket.PlayerLevelId].toString();
       this.gameType = GameType[this.currentTicket.GameTypeId].toString();
+      const tNationalites: Nationality[] = await this.configurationService.GetAllNationalites();
+      if (tNationalites) {
+        const tPlayerNationality: Nationality = tNationalites.find((item) => item.ID == this.player.NationalityId);
+        this.playerNationality = tPlayerNationality ? tPlayerNationality.Name : '--';
+      }
     }
     this.isActiveTicket = true;
   }

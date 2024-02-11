@@ -150,7 +150,7 @@ export class TicketService {
 
   public async UpdateTicketState_Ann(pTicket: Ticket): Promise<number> {
     try {
-      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket/updateState`;
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/updateState`;
       const tResponse: APIResponse = await this.communicationService.putData(tUrl, pTicket);
       return tResponse.result;
     } catch (error) {
