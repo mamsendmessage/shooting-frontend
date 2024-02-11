@@ -8,9 +8,9 @@
                     <div class="col pd-r-1"></div>
                     <div class="col pd-r-1"></div>
                     <div class="col pd-r-1"></div>
-                    <div class="col pd-r-1"></div>
                     <div class="col pd-r-1">From Date</div>
                     <div class="col pd-r-1">To Date</div>
+                    <div class="col pd-r-1"></div>
                 </div>
                 <div class="row">
                     <div class="col pd-r-1 ">
@@ -42,18 +42,13 @@
                         </select>
                     </div>
                     <div class="col pd-r-1 ">
-                        <select class="form-select" (change)="onTicketTypeChange($event.target)">
-                            <option value=""> By Type of Player ..</option>
-                            <option value="1"> Online</option>
-                            <option value="2"> Promotion </option>
-                            <option value="3"> Walk Through </option>
-                        </select>
+                        <input type="date" class="form-control" [(ngModel)]= "fromDate">
                     </div>
                     <div class="col pd-r-1 ">
-                        <input type="date" class="form-control" id="membershipExpiry">
+                        <input type="date" class="form-control" [(ngModel)]= "toDate">
                     </div>
                     <div class="col pd-r-1 ">
-                        <input type="date" class="form-control" id="membershipExpiry">
+                        <button class="custom-btn" mat-raised-button (click)="GetTickets()" >Filter</button>
                     </div>
                 </div>
             </div>

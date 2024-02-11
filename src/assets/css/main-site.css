@@ -1387,6 +1387,13 @@ text.highcharts-credits {
   padding-bottom: 0.75rem;
 }
 
+.filterIcons {
+  background: url(../img/filter.png) no-repeat center center;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
 .profileIcons {
   background: url(../img/profile.svg) no-repeat center center;
   width: 20px;
