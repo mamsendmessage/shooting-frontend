@@ -22,7 +22,7 @@
 
 <body *ngIf="isReady">
     <!----------screen All------------>
-    <div *ngIf="isActiveTicket" >
+    <div *ngIf="isActiveTicket">
         <div class="topuser">
             <div class="row g-3 d-flex">
                 <div class="col-4">
@@ -44,11 +44,11 @@
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="custom-btn status inGame" *ngIf="ticket.State==4" (click)="UpdateTicketState()">
-                          <div class="frames"> {{ticket.DisplayedState}} </div>
+                            <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
                             <div class="frames" *ngIf="currentTicket.GameTypeId == 3"> 45.. left </div>
-                            <div class="frames" *ngIf="currentTicket.GameTypeId != 3"> ..  </div>
+                            <div class="frames" *ngIf="currentTicket.GameTypeId != 3"> .. </div>
                         </li>
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
@@ -98,6 +98,11 @@
                                 src="/assets/img/watch-blue.svg"> 60 min </li>
                     </ul>
                 </div>
+                <ul>
+                    <div *ngIf="ticket.State==1">
+                        <button class="custom-finish-btn" mat-raised-button (click)="FinishTicketTicket()">Finish</button>
+                    </div>
+                </ul>
             </div>
         </div>
     </div>

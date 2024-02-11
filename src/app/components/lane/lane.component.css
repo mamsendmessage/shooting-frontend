@@ -18,6 +18,15 @@
     font-size: 14px;
 }
 
-.custom-btn{
+.custom-btn {
     cursor: pointer;
+}
+
+.custom-finish-btn {
+    height: 60px;
+    width: 200px;
+    background-color: rgb(212, 31, 31);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
 }

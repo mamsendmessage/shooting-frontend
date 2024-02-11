@@ -84,4 +84,16 @@ export class LaneComponent implements OnInit {
       console.log(error);
     }
   }
+
+  
+  public async FinishTicketTicket() {
+    try {
+      this.currentTicket.State = 3;
+      await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }

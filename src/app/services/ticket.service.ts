@@ -54,6 +54,23 @@ export class TicketService {
     }
   }
 
+  public async GetAllTimeTickets(): Promise<X_TodayPlayer[]> {
+    let tTickets: X_TodayPlayer[] = [];
+    try {
+      const tUrl: string = `${this.url}?alltime=1`;
+      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      if (tResponse.result == 0) {
+        for (let index = 0; index < tResponse.payload.length; index++) {
+          const element = tResponse.payload[index];
+          tTickets.push(new X_TodayPlayer(element));
+        }
+      }
+      return tTickets;
+    } catch (error) {
+      console.log(error);
+      return tTickets;
+    }
+  }
 
   public async GetTickets(): Promise<Ticket[]> {
     let tTickets: Ticket[] = [];
