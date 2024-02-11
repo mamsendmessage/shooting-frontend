@@ -68,12 +68,12 @@ export class ConfigurationService {
 
   public async GetAllNationalites(): Promise<Skeet[]> {
     try {
-      const tUrl: string = `${this.url}/nationalities`;
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/nationalities`;
       if (this.nationalities && this.nationalities.length > 0) {
         return this.nationalities;
       } else {
         this.nationalities = [];
-        const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+        const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
         if (tResponse.result == 0) {
           for (let index = 0; index < tResponse.payload.length; index++) {
             const element = tResponse.payload[index];

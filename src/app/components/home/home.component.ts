@@ -4,7 +4,7 @@ import { X_TodayPlayer } from 'src/app/models/X_TodayPlayers';
 import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TicketService } from 'src/app/services/ticket.service';
-
+import * as Highcharts from 'highcharts';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,6 +21,18 @@ export class HomeComponent implements OnInit {
   public players: X_TodayPlayer[] = [];
   public data: X_TodayPlayer[] = [];
   public itemPerPage: number = 5;
+
+  public Highcharts: typeof Highcharts = Highcharts;
+
+  public chartOptions: Highcharts.Options = {
+    series: [
+      {
+        type: 'line',
+        data: [1, 2, 3, 4, 5],
+      },
+    ],
+  };
+
   constructor(private playerService: PlayerService, private laneService: LaneService, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {

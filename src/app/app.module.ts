@@ -47,6 +47,11 @@ import { LaneComponent } from './components/lane/lane.component';
 import { AllocateDialoadComponent } from './components/allocate-diaload/allocate-diaload.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryLaneComponent } from './components/history-lane/history-lane.component';
+import { LogarithmicChartComponent } from './components/logarithmic-chart/logarithmic-chart.component';
+import { ChartModule } from 'angular-highcharts';
+import { ColumnChartComponent } from './components/column-chart/column-chart.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -76,7 +81,10 @@ import { HistoryLaneComponent } from './components/history-lane/history-lane.com
     SkeetConffigComponent,
     LaneComponent,
     AllocateDialoadComponent,
-    HistoryLaneComponent
+    HistoryLaneComponent,
+    LogarithmicChartComponent,
+    ColumnChartComponent,
+    PieChartComponent,
   ],
   imports: [
     HttpClientModule,
@@ -96,7 +104,8 @@ import { HistoryLaneComponent } from './components/history-lane/history-lane.com
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ChartModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },

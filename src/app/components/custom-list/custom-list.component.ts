@@ -18,6 +18,7 @@ export class CustomListComponent implements OnInit {
   public startIndex = 0;
   public timeout: any = null;
   public searchKey: string = '';
+  @Input() public simple: boolean = false;
   constructor(public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {

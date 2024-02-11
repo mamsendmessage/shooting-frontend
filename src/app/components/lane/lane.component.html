@@ -32,7 +32,7 @@
                     <span class="infoplayer">
                         {{player.Name}}
                         <br>
-                        {{player.NationalityId}}
+                        {{playerNationality}}
                     </span>
                 </div>
                 <div class="col-7">
@@ -40,14 +40,15 @@
                         <li class="custom-btn status Waiting" *ngIf="ticket.State==0" (click)="UpdateTicketState()">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
-                        <li class="custom-btn status inGame" *ngIf="ticket.State==1" (click)="UpdateTicketState()">
+                        <li class="status inGame" *ngIf="ticket.State==1">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="custom-btn status inGame" *ngIf="ticket.State==4" (click)="UpdateTicketState()">
                           <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
-                            <div class="frames"> 45.. left </div>
+                            <div class="frames" *ngIf="currentTicket.GameTypeId == 3"> 45.. left </div>
+                            <div class="frames" *ngIf="currentTicket.GameTypeId != 3"> ..  </div>
                         </li>
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
@@ -69,7 +70,7 @@
                         <li [ngClass]="currentTicket.GameTypeId == 2 ?'selected':''"> <img
                                 src="/assets/img/special-session.svg"> Special session </li>
                         <li [ngClass]="currentTicket.GameTypeId == 3 ?'selected':''"> <img
-                                src="/assets/img/competition.svg"> Professional </li>
+                                src="/assets/img/competition.svg"> Competition </li>
                     </ul>
                 </div>
                 <div class="box nameS"> {{player.Name}} </div>
