@@ -10,14 +10,15 @@
                         </div>
                         <div class="ml-4 mr-auto">
                             <div class="font-medium">{{player.Name}}</div>
-                            <div class="text-slate-500 text-xs mt-0.5">{{player.DisplayedDateTime}}</div>
+                            <div class="text-slate-500 text-xs mt-0.5">{{player.DisplayedDateTime| date:'dd/MM/yyyy hh:mm a'}}</div>
                         </div>
                         <div [ngClass]="{
                             'text-Waiting': player.State === 0,
                             'text-InGame': player.State === 1,
-                            'planned': player.State === 2 || player.State === 4,
+                            'planned': player.State === 2,
                             'finished': player.State === 3,
-                            'text-cancel': player.State === 5
+                            'text-cancel': player.State === 5,
+                            'ready':player.State === 4
                           }">
                             {{ player.DisplayedState }}
                           </div>

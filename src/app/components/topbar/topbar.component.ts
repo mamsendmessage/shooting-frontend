@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { UserManagementService } from 'src/app/services/user-management.service';
 
 @Component({
@@ -8,11 +9,14 @@ import { UserManagementService } from 'src/app/services/user-management.service'
   styleUrls: ['./topbar.component.css']
 })
 export class TopbarComponent implements OnInit {
-
-  constructor(private router: Router, private userManagementService: UserManagementService) { }
+  breadcrumb: string[];
+  constructor(private router: Router, private userManagementService: UserManagementService,private breadcrumbService: BreadcrumbService) { }
 
 
   ngOnInit(): void {
+    this.breadcrumbService.getBreadcrumb().subscribe(breadcrumb => {
+      this.breadcrumb = breadcrumb;
+    });
   }
 
   public navigate(pPath: string) {

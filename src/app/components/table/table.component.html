@@ -3,12 +3,13 @@
         <tr>
             <th class="whitespace-nowrap">Photo </th>
             <th class="whitespace-nowrap">Player Name </th>
+            <th class="whitespace-nowrap">Lane </th>
             <th class="text-center whitespace-nowrap">Type of user </th>
             <th class="text-center whitespace-nowrap">Date Time </th>
             <th class="text-center whitespace-nowrap">Status</th>
             <th class="text-center whitespace-nowrap">Level </th>
             <th class="text-center whitespace-nowrap">Ticket Type </th>
-            <th class="text-center whitespace-nowrap">Actino</th>
+            <th class="text-center whitespace-nowrap">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -24,14 +25,17 @@
                 <td>
                     {{player.Name}}
                 </td>
+                <td>
+                    {{player.LaneId}}
+                </td>
                 <td class="text-center">{{ player.DisplayedUserType}} </td>
-                <td class="text-center"> {{player.DisplayedDateTime}} </td>
+                <td class="text-center"> {{player.DisplayedDateTime | date:'dd/MM/yyyy hh:mm a'}} </td>
                 <td class="text-center">
                     <span *ngIf="player.State==0" class="text-Waiting" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span>
-                    <span *ngIf="player.State==4" class="planned">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==4" class="ready">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==5" class="text-cancel">{{player.DisplayedState}}</span>
 
 

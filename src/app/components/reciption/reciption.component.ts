@@ -5,6 +5,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { CreateTicketModalComponent } from '../create-ticket-modal/create-ticket-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Player } from 'src/app/models/Player';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 
 @Component({
   selector: 'app-reciption',
@@ -19,13 +20,15 @@ export class ReciptionComponent implements OnInit {
   public isReady: boolean = false;
   public isPlayerExists: boolean = false;
   public btnCaption: string = 'New Player'
-  constructor(private playerService: PlayerService, public dialog: MatDialog, private fb: FormBuilder) {
+  constructor(private playerService: PlayerService, public dialog: MatDialog, private fb: FormBuilder,
+    private breadcrumbService: BreadcrumbService) {
     this.form = this.fb.group({
       mobileNumber: ['', Validators.required],
     });
   }
 
   async ngOnInit(): Promise<void> {
+    this.breadcrumbService.setBreadcrumb(['Application', 'Reciption']);
     this.data = await this.playerService.GetTodayPlayers();
     this.players = this.data;
     this.isReady = true;

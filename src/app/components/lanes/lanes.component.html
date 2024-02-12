@@ -7,7 +7,7 @@
         <div class="select-stage ">
             <ul>
                 <li *ngFor="let lane of lanes">
-                    <span class="waitNo">{{lane.RemainingMinuts}}</span>
+                    <span class="waitNo">{{lane.RemainingMinuts}} M</span>
 
                     <button (click)="SelectLane(lane.isReserved?-1:lane.ID)" *ngIf="lane.isReserved">
                         <span class="boxStage notAvilable"> {{lane.Number}}

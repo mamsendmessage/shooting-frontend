@@ -5,6 +5,7 @@ import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,8 +18,9 @@ export class SettingsComponent implements OnInit {
   public profissionalConfig: Configuration = new Configuration();
   public competitionConfig: Configuration = new Configuration();
   public isReady: boolean = false;
-  constructor(private configService: ConfigurationService) { }
+  constructor(private configService: ConfigurationService,private breadcrumbService: BreadcrumbService) { }
   async ngOnInit(): Promise<void> {
+    this.breadcrumbService.setBreadcrumb(['Application', 'Settings']);
 
     const tConfigs: Configuration[] = await this.configService.GetAllConfig();
     if (tConfigs && tConfigs.length > 0) {

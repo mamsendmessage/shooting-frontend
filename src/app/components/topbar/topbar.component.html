@@ -1,11 +1,19 @@
-<div class="top-bar">
-    <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden flex">
+ <div class="top-bar">
+   <!-- <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden flex">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"> Application</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard </li>
         </ol>
-    </nav>
-    <div class="intro-x relative sm-6">
+    </nav> -->
+    <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden flex">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" *ngFor="let item of breadcrumb; let last = last">
+            <a *ngIf="!last" >{{ item }}</a>
+            <span class="active" *ngIf="last">{{ item }}</span>
+          </li>
+        </ol>
+      </nav>
+    <!-- <div class="intro-x relative sm-6">
         <div class="search   sm:block">
             <input type="text" class="search__input form-control border-transparent"
                 placeholder="Search...">
@@ -40,9 +48,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- BEGIN: Notifications -->
-    <div class="intro-x dropdown  w-6 h-8 sm-6">
+    <!-- <div class="intro-x dropdown  w-6 h-8 sm-6">
         <div class="btn-group">
             <a class=" btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -57,18 +65,18 @@
                     </span> </li>
             </ul>
         </div>
-    </div>
+    </div> -->
     <!-- END: Notifications -->
     <div class="intro-x dropdown w-8 h-8 sm-6">
         <div class="btn-group">
             <a class="userProfile btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+                aria-expanded="true">
                 <img src="assets/img/profile-8.jpg">
             </a>
             <ul class="dropdown-menu">
-                <li> <a href="#"> Profile </a> </li>
+                <li> <a (click)="navigate('/home')"> Home </a> </li>
                 <li> <a (click)="navigate('/settings')"> Setting</a> </li>
-                <li> <a (click)="LogOut()"> LogOut </a></li>
+                <li> <a (click)="LogOut()"> Logout </a></li>
             </ul>
         </div>
     </div>

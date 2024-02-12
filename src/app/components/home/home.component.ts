@@ -5,6 +5,7 @@ import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import * as Highcharts from 'highcharts';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -33,10 +34,11 @@ export class HomeComponent implements OnInit {
     ],
   };
 
-  constructor(private playerService: PlayerService, private laneService: LaneService, private ticketService: TicketService) { }
+  constructor(private playerService: PlayerService, private laneService: LaneService, private ticketService: TicketService
+    ,private breadcrumbService: BreadcrumbService) { }
 
   async ngOnInit(): Promise<void> {
-
+    this.breadcrumbService.setBreadcrumb(['Application', 'Dashboard']);
     await this.loadData();
     this.isReady = true;
   }
