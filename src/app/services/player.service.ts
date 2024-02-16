@@ -107,6 +107,9 @@ export class PlayerService {
     try {
       const tUrl: string = `${this.url}`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, pPlayer);
+      if (tResponse.errorCode == -2) {
+        return tResponse.errorCode;
+      }
       return tResponse.result;
     } catch (error) {
       console.log(error);

@@ -1,0 +1,139 @@
+<div *ngIf="isReady" class="boxUser" tabindex="-1" aria-labelledby="createUserLabel" id="create-only-icket-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content darks">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Create New Ticket <span
+                            class="smallTitle"> for new Player Not Registered </span></h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="close()" id="close1"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <span class="titlebox  mr-auto"> Create New Ticket </span>
+                    </div>
+                    <div class="row">
+                        <form [formGroup]="ticketForm" class="col-xxl-8 col-xl-8">
+                            <div class="forms">
+                                <div class="row g-3">
+                                    <div class="col-sm-4 pd-r-1">
+                                        <label for="qatariMobile" class="form-label">Mobile Numer</label>
+                                        <div class="input-group 3">
+                                            <span class="input-group-text flags"></span>
+                                            <input type="text" class="form-control" placeholder="66-XXXXXXXXXXX"
+                                                formControlName="mobileNumber" aria-label="qatariMobile"
+                                                id="qatariMobile" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('mobileNumber')">
+                                            Valid Mobile Numer is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pd-r-1">
+                                        <label class="form-label"></label>
+                                        <div class="input-group 3 custom">
+                                            <button type="button" (click)="CheckPlayer()" class="btn-generate"
+                                                id="check"> Check</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="titlebox  mr-auto mr-t-6"> Ticket details </span>
+                            <div class="forms  mr-t-6"
+                                [ngClass]="!isPlayerFound?'forms  mr-t-6 opacity-class':'forms  mr-t-6'">
+                                <div class="row g-3">
+                                    <div class="col-sm-4 pd-r-1">
+                                        <label class="form-label"> Game type</label>
+                                        <ul class="flex g-3">
+                                            <li class="mr-r-6">
+                                                <input id="r1" type="radio" name="gameType" value="1" checked
+                                                    formControlName="gameType">
+                                                <label for="r1">Normal </label>
+                                            </li>
+                                            <li class="mr-r-6">
+                                                <input id="r2" type="radio" name="gameType" value="2"
+                                                    formControlName="gameType">
+                                                <label for="r2">Special</label>
+                                            </li>
+                                            <li class="mr-r-6">
+                                                <input id="r3" type="radio" name="gameType" value="3"
+                                                    formControlName="gameType">
+                                                <label for="r3">Competition</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-sm-5 pd-r-1">
+                                        <label class="form-label">Level of Player </label>
+                                        <ul class="flex g-3">
+                                            <li class="mr-r-6" *ngFor="let level of PlayerLevels; let i = index">
+                                                <input id="r11" type="radio" name="levelOfPlayer" value="{{level.ID}}"
+                                                    checked formControlName="levelOfPlayer">
+                                                <label for="r11">{{level.Name}} </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-3 pd-r-1" *ngIf="ticketForm.value.gameType==='3'">
+                                        <label class="form-label">Session Time</label>
+                                        <ul class="flex g-3">
+                                            <li class="mr-r-6" *ngFor="let sessionTime of SessionsTime; let i = index">
+                                                <input id="r111" type="radio" name="sessionTime"
+                                                    value="{{sessionTime.ID}}" checked formControlName="sessionTime">
+                                                <label for="r111">{{sessionTime.Name}} </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <app-lanes (selectedLaneId)="handleLaneSelected($event)" [disabled]="!isPlayerFound"
+                                [ngClass]="!isPlayerFound?'opacity-class':''"></app-lanes>
+                        </form>
+                        <div class="ccol-xxl-4 col-xl-4" [ngClass]="!isPlayerFound?'opacity-class':''">
+                            <div class="profiles">
+                                <img class="attachedPhoto" [src]="image" />
+                                <span></span>
+                            </div>
+                            <div class="profiles">
+                                <div class="row g-3">
+                                    <div class="col-sm-11 pd-r-1">
+                                        <label for="namePlayer" class="form-label"> Name of Player</label>
+                                        <input type="text" class="form-control" id="namePlayer"
+                                            [(ngModel)]="playerName" disabled>
+                                    </div>
+                                    <div class="col-sm-8 pd-r-1">
+                                        <label for="nationality" class="form-label"> Nationality</label>
+                                        <input type="text" class="form-control" id="nationality" [(ngModel)]="nationality" disabled>
+                                    </div>
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="age" class="form-label"> Age</label>
+                                        <input type="text" class="form-control" id="age" [(ngModel)]="playerAge" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profiles">
+                                <div class="row g-3">
+                                    <div class="col-sm-11 pd-r-1">
+                                        <label for="PassportsNo" class="form-label"> QID /Passports No.</label>
+                                        <input type="text" class="form-control" id="PassportsNo" [(ngModel)]="passportsNo" disabled>
+                                    </div>
+                                    <div class="col-sm-6 pd-r-1">
+                                        <label for="MembershipNo" class="form-label">Membership number</label>
+                                        <input type="text" class="form-control" id="MembershipNo" [(ngModel)]="membershipNo" disabled>
+                                    </div>
+                                    <div class="col-sm-5 pd-r-1">
+                                        <label for="membershipExpiry" class="form-label">Membership expiry</label>
+                                        <input type="text" class="form-control" id="membershipExpiry" [(ngModel)]="membershipExpiry" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="close()" class="btn-cancel">Cancel</button>
+                    <button type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Generate
+                        Ticket</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

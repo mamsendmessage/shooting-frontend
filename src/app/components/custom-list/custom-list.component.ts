@@ -7,6 +7,8 @@ import { Player } from 'src/app/models/Player';
 import { TicketService } from 'src/app/services/ticket.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { Ticket } from 'src/app/models/Ticket';
+import { CreateOnlyPlayerModalComponent } from '../create-only-player-modal/create-only-player-modal.component';
+import { CreateOnlyTicketModalComponent } from '../create-only-ticket-modal/create-only-ticket-modal.component';
 @Component({
   selector: 'app-custom-list',
   templateUrl: './custom-list.component.html',
@@ -22,7 +24,7 @@ export class CustomListComponent implements OnInit {
   public timeout: any = null;
   public searchKey: string = '';
   @Input() public simple: boolean = false;
-
+  @Input() public source: string;
 
   public fromDate: Date = new Date();
   public toDate: Date = new Date();
@@ -75,15 +77,31 @@ export class CustomListComponent implements OnInit {
   }
 
   public openCreateUserDialog(): void {
-    const dialogRef = this.dialog.open(CreateTicketModalComponent, {
-      data: new Player(null)
-    });
+
+    let dialogRef;
+
+    if (this.source == 'users') {
+      dialogRef = this.dialog.open(CreateOnlyPlayerModalComponent, {
+        data: new Player(null)
+      });
+    } else if (this.source == 'tickets') {
+      dialogRef = this.dialog.open(CreateOnlyTicketModalComponent, {
+        data: new Player(null)
+      });
+    } else {
+      dialogRef = this.dialog.open(CreateTicketModalComponent, {
+        data: new Player(null)
+      });
+    }
+
+
 
     // You can subscribe to the afterClosed() event to perform actions when the dialog is closed
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result:', result);
     });
   }
+
   public onStateChange(pValue: any) {
     if (pValue.value == "") {
       this.players = this.data;
