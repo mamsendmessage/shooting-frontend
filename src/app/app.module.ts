@@ -51,6 +51,8 @@ import { LogarithmicChartComponent } from './components/logarithmic-chart/logari
 import { ChartModule } from 'angular-highcharts';
 import { ColumnChartComponent } from './components/column-chart/column-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { CreateOnlyTicketModalComponent } from './components/create-only-ticket-modal/create-only-ticket-modal.component';
+import { CreateOnlyPlayerModalComponent } from './components/create-only-player-modal/create-only-player-modal.component';
 
 
 @NgModule({
@@ -85,6 +87,8 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     LogarithmicChartComponent,
     ColumnChartComponent,
     PieChartComponent,
+    CreateOnlyTicketModalComponent,
+    CreateOnlyPlayerModalComponent,
   ],
   imports: [
     HttpClientModule,

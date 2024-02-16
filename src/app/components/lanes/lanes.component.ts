@@ -17,6 +17,7 @@ export class LanesComponent implements OnInit {
   public lanes: Lane[] = [];
   @Output() selectedLaneId = new EventEmitter<number>();
   @Input() public active: boolean = true;
+  @Input() public disabled: boolean = false;
   constructor(private laneService: LaneService, private playerService: PlayerService, public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
@@ -53,23 +54,25 @@ export class LanesComponent implements OnInit {
   }
 
   public SelectLane(pId: number) {
-    if (this.active) {
-      this.selectedLaneId.emit(pId);
-      for (let index = 0; index < this.lanes.length; index++) {
-        const element = this.lanes[index];
-        if (element.ID == pId) {
-          element.isSelected = true;
-        } else {
-          element.isSelected = false;
+    if (!this.disabled) {
+      if (this.active) {
+        this.selectedLaneId.emit(pId);
+        for (let index = 0; index < this.lanes.length; index++) {
+          const element = this.lanes[index];
+          if (element.ID == pId) {
+            element.isSelected = true;
+          } else {
+            element.isSelected = false;
+          }
         }
+      } else {
+        this.dialog.open(HistoryLaneComponent, {
+          data: pId,
+          width: "1200px",
+          height: "700px",
+          panelClass: "custom-dialog"
+        })
       }
-    } else {
-      this.dialog.open(HistoryLaneComponent, {
-        data: pId,
-        width: "1200px",
-        height: "700px",
-        panelClass:"custom-dialog"
-      })
     }
   }
 

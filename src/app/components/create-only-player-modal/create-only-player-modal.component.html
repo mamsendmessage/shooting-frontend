@@ -1,0 +1,124 @@
+<div *ngIf="isReady" class="boxUser" tabindex="-1" aria-labelledby="createUserLabel" id="create-ticket-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content darks">
+            <form [formGroup]="playerForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Create New Player </h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="close()" id="close1"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xxl-8 col-xl-8">
+                            <span class="titlebox  mr-auto"> Create New Users Profile </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xxl-8 col-xl-8">
+                            <div class="forms">
+                                <div class="row g-3">
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="NamePlayer" class="form-label"> Name of Player</label>
+                                        <input type="text" class="form-control" id="NamePlayer"
+                                            placeholder="Name of Player" value="" required=""
+                                            formControlName="nameOfPlayer">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('nameOfPlayer')">
+                                            Name of player is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="Nationality" class="form-label">Nationality</label>
+                                        <select class="form-control nationality-select" formControlName="nationality">
+                                            <option *ngFor="let nationality of nationalities; let i = index"
+                                                value="{{nationality.ID}}"> {{nationality.Name}} </option>
+                                        </select>
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('nationality')">
+                                            Nationality is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pd-r-1">
+                                        <label for="MobNum" class="form-label">Mobile Numer</label>
+                                        <div class="input-group 3">
+                                            <span class="input-group-text flags" id="qatariMobile"></span>
+                                            <input type="text" class="form-control" placeholder="66-XXXXXXXXXXX"
+                                                formControlName="mobileNumber" aria-label="qatariMobile"
+                                                aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('mobileNumber')">
+                                            Valid Mobile Numer is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2  ">
+                                        <label for="firstName" class="form-label">Age</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="Above 21 "
+                                            value="" required="" formControlName="age">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('age')">
+                                            Age Numer is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="forms">
+                                <div class="row g-3">
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="NamePlayer" class="form-label"> QID /Passports No.</label>
+                                        <input type="text" class="form-control" id="NamePlayer"
+                                            formControlName="passportsNo" placeholder="QID number /Passports number"
+                                            value="" required="">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('passportsNo')">
+                                            Valid QID number or Passports number
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 pd-r-1">
+                                        <label for="Nationality" class="form-label">Membership number</label>
+                                        <input type="text" class="form-control" id="MembershipNo"
+                                            formControlName="membershipNo" placeholder="Membership number" value=""
+                                            required="">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('membershipNo')">
+                                            Valid Membership number
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="membershipExpiry" class="form-label">Membership expiry</label>
+                                        <input type="date" class="form-control" id="membershipExpiry"
+                                            formControlName="membershipExpiry" placeholder="Membership expiry">
+                                        <div class="error-hint" *ngIf="isAttributeIsNotValid('membershipExpiry')">
+                                            Valid Membership expiry
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="takePhoto">
+                                <app-camera (pictureTaken)="handleImage($event)"></app-camera>
+                            </div>
+                        </div>
+                        <div class="ccol-xxl-4 col-xl-4">
+                            <div class="profiles">
+                                <img class="attachedPhoto" [src]="image" />
+                                <span> {{ playerForm.get('nameOfPlayer')?.value}} </span>
+                            </div>
+                            <div class="takePhoto mr-t-6">
+                                <div class="file-container">
+                                    <div class="file-wrapper">
+                                        <input class="file-input" id="js-file-input" type="file" #fileUplaoder
+                                            (change)="onSelect($event)" />
+                                        <div class="file-content">
+                                            <div class="file-infos">
+                                            </div>
+                                            <p class="file-name" id="js-file-name">{{fileName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="close()" class="btn-cancel">Cancel</button>
+                    <button type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Add New Player</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
