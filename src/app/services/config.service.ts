@@ -34,7 +34,7 @@ export class ConfigurationService {
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];
-          tSkeets.push(new Skeet(+element.ID, element.Name));
+          tSkeets.push(new Skeet(+element.ID, element.Name, element.API));
         }
       }
       return tSkeets;
@@ -66,7 +66,7 @@ export class ConfigurationService {
     }
   }
 
-  public async GetAllNationalites(): Promise<Skeet[]> {
+  public async GetAllNationalites(): Promise<Nationality[]> {
     try {
       const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/nationalities`;
       if (this.nationalities && this.nationalities.length > 0) {
@@ -136,7 +136,7 @@ export class ConfigurationService {
     const tLevels: PlayerLevel[] = [];
     try {
       const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/levels`;
-      const tResponse: APIResponse = await this.communicationService.postData(tUrl,{});
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];

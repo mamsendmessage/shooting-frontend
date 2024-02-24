@@ -1,8 +1,10 @@
 export class Skeet {
     public ID: number;
     public Name: string;
-    constructor(pId: number, pName: string) {
+    public API: string;
+    constructor(pId: number, pName: string, pAPI: string) {
         this.ID = pId;
         this.Name = pName;
+        this.API = pAPI;
     }
 }

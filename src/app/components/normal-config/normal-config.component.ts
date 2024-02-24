@@ -87,7 +87,12 @@ export class NormalConfigComponent implements OnInit {
     tConfiguration.TimeToRefill = this.skeetForm.value.timeToRefill;
     for (let index = 0; index < this.skeetForm.value.skeets.length; index++) {
       const tSkeets = this.skeetForm.value.skeets[index].skeetID;
-      const tSkeetConfig: SkeetConfig = new SkeetConfig(tSkeets)
+      const tSkeetConfig: SkeetConfig = new SkeetConfig(tSkeets);
+      for (let skeetInex = 0; skeetInex < tSkeets.length; skeetInex++) {
+        const element: number = tSkeets[skeetInex];
+        const tItem = this.skeetOptions.find((item) => item.ID == element);
+        tSkeetConfig.API.push(tItem.API);
+      }
       tConfiguration.Skeets.push(tSkeetConfig);
     }
     tConfiguration.NumberOfSkeet = tConfiguration.Skeets.length;
