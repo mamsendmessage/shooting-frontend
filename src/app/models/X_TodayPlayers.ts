@@ -15,7 +15,9 @@ export class X_TodayPlayer {
     public DisplayedTicketType: string;
     public DisplayedUserType: string;
     public LaneId: number;
-    public TicketId: number ;
+    public LaneNumber: number;
+    public LaneName: string;
+    public TicketId: number;
     constructor(pTodayPlayer: X_TodayPlayer) {
         if (pTodayPlayer) {
             this.UserId = pTodayPlayer.UserId;
@@ -32,6 +34,8 @@ export class X_TodayPlayer {
             this.DisplayedState = TicketState[pTodayPlayer.State].toString();
             this.CreationDate = new Date(pTodayPlayer.CreationDate);
             this.LaneId = pTodayPlayer.LaneId;
+            this.LaneName = pTodayPlayer.LaneName;
+            this.LaneNumber = pTodayPlayer.LaneNumber;
             this.DisplayedDateTime = this.convertDateToFormat(this.CreationDate);
         }
     }

@@ -68,6 +68,14 @@ export class LaneComponent implements OnInit {
         }
       });
 
+      this.socketCommunicationService.listenToFinish().subscribe(async (pData: any) => {
+        if (pData.laneId == this.ticket.LaneId && pData.ticketId == this.ticket.TicketId) {
+          this.FinishTicket();
+        }
+      });
+
+
+
 
       this.ticket = await this.ticketService.GetTicketOnLane(this.laneId);
       if (this.ticket) {

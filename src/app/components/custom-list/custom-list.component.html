@@ -51,7 +51,7 @@
         <div class="col-xxl-12 col-lg-12 col-md-12">
             <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage" [startIndex]="startIndex"></app-table>
             <!-- <app-player-table *ngIf="isReady && source == 'users'" [data]="players" [itemsPerPage]="itemPerPage" [startIndex]="startIndex"></app-player-table> -->
-            <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
+            <app-pagination *ngIf="isReady && players.length" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
                 (change)="updateItemPerPage($event)" (currentPageChanges)="updateCurrentPage($event)"></app-pagination>
         </div>
     </div>

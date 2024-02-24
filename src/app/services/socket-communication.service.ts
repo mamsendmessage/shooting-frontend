@@ -50,6 +50,21 @@ export class SocketCommunicationService {
       return null;
     }
   }
+  public listenToFinish(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("FinishTicket", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+
+
 
   public emitToServer(connection: any, data: any): void {
     this.clientSocket.emit(connection, data);

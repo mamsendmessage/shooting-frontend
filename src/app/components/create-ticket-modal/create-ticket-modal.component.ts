@@ -88,8 +88,8 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   public close() {
-    // this.dialogRef.close();
-    //location.reload();
+    this.dialogRef.close();
+    location.reload();
   }
   async onSubmit() {
     if (this.ticketForm.valid) {
