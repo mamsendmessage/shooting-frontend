@@ -8,8 +8,9 @@ export enum TicketState {
     "In Game" = 1,
     "Planned" = 2,
     "Finished" = 3,
-    "Ready"=4,
-    "Canceled"=5
+    "Ready" = 4,
+    "Canceled" = 5,
+    "Paused" = 6
 
 }
 
@@ -24,13 +25,6 @@ export enum TicketType {
     "Walk Through " = 3
 }
 
-
-export enum PlayerLevel {
-    "Beginner" = 1,
-    "Intermediate" = 2,
-    "Professional" = 3,
-    "Competition" = 4
-}
 
 export enum GameType {
     "Normal" = 1,

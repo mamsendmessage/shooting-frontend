@@ -6,6 +6,7 @@ import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
+import { CreateLevelDialogComponent } from '../create-level-dialog/create-level-dialog.component';
 
 @Component({
   selector: 'app-settings',
@@ -13,22 +14,41 @@ import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+
+  public normalConfigs: Configuration[] = [];
+
   public beginnersConfig: Configuration = new Configuration();
   public intermidateConfig: Configuration = new Configuration();
   public profissionalConfig: Configuration = new Configuration();
   public competitionConfig: Configuration = new Configuration();
   public isReady: boolean = false;
-  constructor(private configService: ConfigurationService,private breadcrumbService: BreadcrumbService) { }
+  constructor(private configService: ConfigurationService, private breadcrumbService: BreadcrumbService, public dialog: MatDialog) { }
   async ngOnInit(): Promise<void> {
     this.breadcrumbService.setBreadcrumb(['Application', 'Settings']);
 
-    const tConfigs: Configuration[] = await this.configService.GetAllConfig();
-    if (tConfigs && tConfigs.length > 0) {
-      this.beginnersConfig = tConfigs.find((item) => item.Type == 1);
-      this.intermidateConfig = tConfigs.find((item) => item.Type == 2);
-      this.profissionalConfig = tConfigs.find((item) => item.Type == 3);
-      this.competitionConfig = tConfigs.find((item) => item.Type == 4);
-    }
+    this.normalConfigs = await this.configService.GetAllConfig();
+    this.competitionConfig = this.normalConfigs.find((item) => item.Type == null);
+    this.normalConfigs = this.normalConfigs.filter((item) => item.Type != null);
     this.isReady = true;
   }
+
+  public addLevelDynamic() {
+    this.openCreateUserDialog();
+  }
+
+
+  public openCreateUserDialog(): void {
+
+    let dialogRef;
+    dialogRef = this.dialog.open(CreateLevelDialogComponent, {
+
+    });
+    // You can subscribe to the afterClosed() event to perform actions when the dialog is closed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result:', result);
+    });
+  }
+
+
+
 }

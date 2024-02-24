@@ -1,0 +1,16 @@
+.title {
+    padding-top: 20px;
+}
+
+.add-user {
+    justify-content: end;
+    display: flex;
+}
+.custom-actions{
+    display: flex;
+    justify-content: end;
+}
+.custom-btn{
+    margin: 0px 5px;
+    background-color: #4a5a8b;
+}

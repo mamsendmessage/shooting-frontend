@@ -98,6 +98,23 @@ export class ConfigurationService {
       return -1;
     }
   }
+
+
+  public async AddConfig(pLevelName: string, pImagePath: string, pConfig: Configuration) {
+    try {
+      const tUrl: string = `${this.url}/AddConfig`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {
+        config: pConfig,
+        level: pLevelName,
+        image: pImagePath
+      });
+      return tResponse?.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
   public async GetSessionsTime(): Promise<SessionsTime[]> {
     const tsessions: SessionsTime[] = [];
     try {
@@ -118,12 +135,12 @@ export class ConfigurationService {
   public async GetPlayerLevel(): Promise<PlayerLevel[]> {
     const tLevels: PlayerLevel[] = [];
     try {
-      const tUrl: string = `${this.url}/levels`;
-      const tResponse: APIResponse = await this.communicationService.getData(tUrl);
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/levels`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl,{});
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];
-          tLevels.push(new SessionsTime(+element.ID, element.Name));
+          tLevels.push(new PlayerLevel(+element.ID, element.Name, element.Image));
         }
       }
       return tLevels;

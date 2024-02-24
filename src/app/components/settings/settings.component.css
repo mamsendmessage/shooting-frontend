@@ -1,3 +1,8 @@
 .custom-box {
     padding: 0px 20px 0px 20px;
 }
+
+.custom-btn{
+    background-color: #4a5a8b;
+    cursor: pointer !important;
+}

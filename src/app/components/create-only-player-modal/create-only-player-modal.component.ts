@@ -32,35 +32,21 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyPlayerModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private playerService: PlayerService, private configService: ConfigurationService, public dialog: MatDialog) {
+    private playerService: PlayerService, private configService: ConfigurationService, public dialog: MatDialog) {
 
-    if (pPlayer && pPlayer.ID > 0) {
-      this.fileName = pPlayer.Document;
-      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo.replace('images', '') : null;
-      this.playerForm = this.fb.group({
-        nameOfPlayer: [pPlayer.Name, Validators.required],
-        nationality: [pPlayer.NationalityId, Validators.required],
-        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
-        age: [pPlayer.Age, Validators.required],
-        photo: [''],
-        document: [''],
-        passportsNo: [pPlayer.PassportsNo, Validators.required],
-        membershipNo: [pPlayer.MembershipNo, Validators.required],
-        membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
-      });
-    } else {
-      this.playerForm = this.fb.group({
-        nameOfPlayer: ['', Validators.required],
-        nationality: ['', Validators.required],
-        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
-        age: ['', Validators.required],
-        photo: [''],
-        document: [''],
-        passportsNo: ['', Validators.required],
-        membershipNo: ['', Validators.required],
-        membershipExpiry: ['', Validators.required]
-      });
-    }
+    this.playerForm = this.fb.group({
+      nameOfPlayer: ['', Validators.required],
+      nationality: [634, Validators.required],
+      mobileNumber: ['', [Validators.required,
+      Validators.pattern("^[0-9]*$"),
+      Validators.minLength(8), Validators.maxLength(8)]],
+      age: ['', [Validators.required,Validators.min(21)]],
+      photo: [''],
+      document: [''],
+      passportsNo: ['', Validators.required],
+      membershipNo: ['', Validators.required],
+      membershipExpiry: ['', Validators.required]
+    });
   }
 
   async ngOnInit() {
@@ -87,7 +73,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       const tResult: number = await this.playerService.AddPlayer(tPlayer);
       if (tResult == 0) {
         this.close();
-      } else if (tResult == -2){
+      } else if (tResult == -2) {
         this.openAlertDialog('The Player Is Already Exist, Please Check with the Adminstriator');
       } else {
         this.openAlertDialog('An Error Occured While Performing Your Request, Please Check with the Adminstriator');
@@ -138,7 +124,6 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       return false;
     }
   }
-
   openAlertDialog(pMessage: string) {
     this.dialog.open(AlertDialogComponent, {
       data: {

@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SkeetConfig } from 'src/app/models/SkeetConfig';
-import { ChangeDetectorRef } from '@angular/core';
 import { Configuration } from 'src/app/models/Configuration';
-import { PlayerLevel } from 'src/app/models/enums';
 import { Skeet } from 'src/app/models/Skeet';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { CompetitionConfiguration } from 'src/app/models/CompetitionConfiguration';
@@ -40,7 +38,6 @@ export class SkeetConffigComponent implements OnInit {
     const tConfig5: Configuration = new Configuration();
     this.configs = [tConfig1, tConfig2, tConfig3, tConfig4, tConfig5]
     this.skeetOptions = await this.configService.GetAllSkeets();
-    this.typeName = PlayerLevel[this.type].toString();
     this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
     this.BuildForm();
     this.isReady = true;
@@ -134,6 +131,33 @@ export class SkeetConffigComponent implements OnInit {
     }
 
     console.log(this.skeetForm.value)
+  }
+
+  getTotalClays(): number {
+    let tCount = 0;
+    if (this.tempConfig.Configurations) {
+      for (let index = 0; index < this.tempConfig.Configurations.length; index++) {
+        for (let pIndex2 = 0; pIndex2 < this.configurationSkeets(index).length; pIndex2++) {
+          const tSkeet = this.configurationSkeets(index).value[pIndex2];
+          const num = tSkeet.SkeetID ? tSkeet.SkeetID.length : 0;
+          tCount += num;
+        }
+
+      }
+    }
+    return tCount;
+  }
+
+  getOneConfigClays(pIndex: number): number {
+    let tCount = 0;
+    if (this.tempConfig.Configurations) {
+      for (let tIndex = 0; tIndex < this.configurationSkeets(pIndex).length; tIndex++) {
+        const tSkeet = this.configurationSkeets(pIndex).value[tIndex];
+        const num = tSkeet.SkeetID ? tSkeet.SkeetID.length : 0;
+        tCount += num;
+      }
+    }
+    return tCount;
   }
 
 

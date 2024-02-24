@@ -4,16 +4,7 @@
             <span class="titlebox  mr-auto"> List Of Players </span>
             <div class="filter  sm-6">
                 <div class="row">
-                    <div class="col pd-r-1"></div>
-                    <div class="col pd-r-1"></div>
-                    <div class="col pd-r-1"></div>
-                    <div class="col pd-r-1"></div>
-                    <div class="col pd-r-1">From Date</div>
-                    <div class="col pd-r-1">To Date</div>
-                    <div class="col pd-r-1"></div>
-                </div>
-                <div class="row">
-                    <div class="col pd-r-1 ">
+                    <div class="col pd-r-1 custom-col">
                         <div class="w-56 relative text-slate-500">
                             <input type="text" class="form-control w-56  pr-10" placeholder="Search..."
                                 (keyup)="onKeySearch($event)" [(ngModel)]="searchKey">
@@ -25,7 +16,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="col pd-r-1 ">
+                    <div class="col pd-r-1 custom-col">
                         <select class="form-select" (change)="onStateChange($event.target)">
                             <option value=""> By Status ..</option>
                             <option value="2"> Planned</option>
@@ -34,21 +25,23 @@
                             <option value="3"> Finshed</option>
                         </select>
                     </div>
-                    <div class="col pd-r-1 ">
+                    <div class="col pd-r-1 custom-col">
                         <select class="form-select" (change)="onUserTypeChange($event.target)">
                             <option value=""> By TicketType..</option>
-                            <option value="1"> New Registration</option>
-                            <option value="2"> Already Registered </option>
+                            <option value="2"> New Registration</option>
+                            <option value="1"> Already Registered </option>
                         </select>
                     </div>
                     <div class="col pd-r-1 ">
-                        <input type="date" class="form-control" [(ngModel)]= "fromDate">
+                        <label class="custom-lable">From date</label>
+                        <input type="date" class="form-control" [(ngModel)]="fromDate">
                     </div>
                     <div class="col pd-r-1 ">
-                        <input type="date" class="form-control" [(ngModel)]= "toDate">
+                        <label class="custom-lable">To date</label>
+                        <input type="date" class="form-control" [(ngModel)]="toDate">
                     </div>
-                    <div class="col pd-r-1 ">
-                        <button class="custom-btn" mat-raised-button (click)="GetTickets()" >Filter</button>
+                    <div class="col pd-r-1 custom-col">
+                        <button class="custom-btn" mat-raised-button (click)="GetTickets()">Filter</button>
                     </div>
                 </div>
             </div>
@@ -56,8 +49,8 @@
 
         </div>
         <div class="col-xxl-12 col-lg-12 col-md-12">
-            <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage"
-                [startIndex]="startIndex"></app-table>
+            <app-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage" [startIndex]="startIndex"></app-table>
+            <!-- <app-player-table *ngIf="isReady && source == 'users'" [data]="players" [itemsPerPage]="itemPerPage" [startIndex]="startIndex"></app-player-table> -->
             <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
                 (change)="updateItemPerPage($event)" (currentPageChanges)="updateCurrentPage($event)"></app-pagination>
         </div>

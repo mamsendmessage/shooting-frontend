@@ -53,7 +53,7 @@ export class CreateTicketModalComponent implements OnInit {
     } else {
       this.ticketForm = this.fb.group({
         nameOfPlayer: ['', Validators.required],
-        nationality: ['', Validators.required],
+        nationality: [634, Validators.required],
         mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
         age: ['', Validators.required],
         gameType: ['1', Validators.required],
@@ -88,8 +88,8 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   public close() {
-    this.dialogRef.close();
-    location.reload();
+    // this.dialogRef.close();
+    //location.reload();
   }
   async onSubmit() {
     if (this.ticketForm.valid) {
@@ -112,7 +112,6 @@ export class CreateTicketModalComponent implements OnInit {
       tTicket.GameTypeId = this.ticketForm.value.gameType;
       tTicket.PlayerLevelId = this.ticketForm.value.levelOfPlayer;
       tTicket.SessionTimeId = this.ticketForm.value.sessionTime;
-      tTicket.State = 2;
       tTicket.LaneId = this.laneId;
       const tResult: number = await this.ticketService.AddTicketForNewPlayer(tPlayer, tTicket);
       if (tResult == 0) {

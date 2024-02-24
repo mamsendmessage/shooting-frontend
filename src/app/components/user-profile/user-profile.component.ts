@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.player = await this.playerService.GetPlayerById(this.pTikcet.UserId);
     this.level = this.pTikcet.PlayerLevel;
-    this.photo = Constants.BaseServerUrl + this.player.Photo.replace('images', '');
+    this.photo = Constants.BaseServerUrl + this.player.Photo?.replace('images', '');
     this.isReady = true;
     this.numOfTickets = (await this.ticketService.GetUserTickets(this.player.ID)).length;
   }

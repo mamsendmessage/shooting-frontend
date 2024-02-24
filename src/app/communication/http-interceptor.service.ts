@@ -108,7 +108,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
   apiWithNoHeaders(request: HttpRequest<object>): boolean {
-    return request.url.includes('login') || request.url.includes('anonymous')
+    return request.url.includes('auth') || request.url.includes('anonymous')
   }
 
 }

@@ -6,6 +6,10 @@ import { User } from '../models/user';
 import { UserManagementService } from './user-management.service';
 import { APIResponse } from '../models/APIResponse';
 import { Constants } from '../models/Constants';
+import { Role } from '../models/Role';
+import { X_Role } from '../models/X_Role';
+import { Screen } from '../models/Screen';
+import { Permission } from '../models/Permission';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +22,6 @@ export class AuthenticationService {
 
   public async Login(pCredentials: any): Promise<Result> {
     try {
-      let tResult: Result = Result.ERROR;
       const tUrl: string = `${this.url}auth/login`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, pCredentials);
       if (tResponse.result == 0) {
@@ -32,15 +35,4 @@ export class AuthenticationService {
     }
   }
 
-  public async SignUp(pUser: User): Promise<Result> {
-    try {
-      let tResult: Result = Result.ERROR;
-      const tUrl: string = 'http://serverip:port//signup';
-      const tData = await this.communicationService.postData(tUrl, pUser);
-      return Result.SUCCESS;
-    } catch (error) {
-      console.log(error);
-      return Result.ERROR;
-    }
-  }
 }

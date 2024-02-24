@@ -1,17 +1,25 @@
 <nav class="sideMenu">
-    <span class="logo"> <a href="#"> </a> </span>
-    <ul>
-        <li> <a (click)="navigate('/home')" [ngClass]="{'active': currentTab === 'Home'}"> <i class="dashboardIcon">
-                </i> <span> Dashboard </span> </a>
-        </li>
-        <li> <a (click)="navigate('/users')" [ngClass]="{'active': currentTab === 'Users'}"> <i class="userIcon"> </i>
-                <span> User Profile </span> </a> </li>
-        <li> <a (click)="navigate('/reciption')" [ngClass]="{'active': currentTab === 'Reciption'}">> <i
-                    class="receptionistIcon"> </i> <span> Receptionist </span>
-            </a> </li>
-        <li> <a (click)="navigate('/tickets')" [ngClass]="{'active': currentTab === 'Tickets'}"> <i class="ticketsIcon"> </i>
-                <span> Tickets </span> </a> </li>
-        <li> <a (click)="navigate('/settings')" [ngClass]="{'active': currentTab === 'Settings'}"> <i class="settingIcon"> </i>
-                <span> Setting</span> </a> </li>
-    </ul>
+        <span class="logo"> <a href="#"> </a> </span>
+        <ul>
+                <li *ngIf="isHomeEnabled"> <a (click)="navigate('/home')" [ngClass]="{'active': currentTab === 'Home'}">
+                                <i class="dashboardIcon">
+                                </i> <span> Dashboard </span> </a>
+                </li>
+                <li *ngIf="isPlayersEnabled"> <a (click)="navigate('/users')"
+                                [ngClass]="{'active': currentTab === 'Users'}"> <i class="userIcon"> </i>
+                                <span> User Profile </span> </a> </li>
+                <li *ngIf="isReceptionEnabled"> <a (click)="navigate('/reciption')"
+                                [ngClass]="{'active': currentTab === 'Reciption'}">> <i class="receptionistIcon"> </i>
+                                <span> Receptionist </span>
+                        </a> </li>
+                <li *ngIf="isTicketsEnabled"> <a (click)="navigate('/tickets')"
+                                [ngClass]="{'active': currentTab === 'Tickets'}"> <i class="ticketsIcon"> </i>
+                                <span> Tickets </span> </a> </li>
+                <li *ngIf="isSettingsEnabled"> <a (click)="navigate('/settings')"
+                                [ngClass]="{'active': currentTab === 'Settings'}"> <i class="settingIcon"> </i>
+                                <span> Setting</span> </a> </li>
+                <li *ngIf="isAdminEnabled"> <a (click)="navigate('/admin')"
+                                [ngClass]="{'active': currentTab === 'Admin'}"> <i class="adminIcon"> </i>
+                                <span> Admin Console</span> </a> </li>
+        </ul>
 </nav>

@@ -38,6 +38,19 @@ export class SocketCommunicationService {
     }
   }
 
+  public listenToTimer(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("TimeUpdate", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   public emitToServer(connection: any, data: any): void {
     this.clientSocket.emit(connection, data);
   }

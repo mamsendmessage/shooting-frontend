@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { X_TodayPlayer } from '../../models/X_TodayPlayers';
 import { PlayerService } from '../../services/player.service';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
+import { Player } from 'src/app/models/Player';
 
 @Component({
   selector: 'app-users',
@@ -10,13 +10,13 @@ import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 })
 export class UsersComponent implements OnInit {
 
-  public data: X_TodayPlayer[] = [];
+  public data: Player[] = [];
   public isReady: boolean = false;
-  constructor(private playerService: PlayerService,private breadcrumbService: BreadcrumbService) { }
+  constructor(private playerService: PlayerService, private breadcrumbService: BreadcrumbService) { }
 
   async ngOnInit(): Promise<void> {
     this.breadcrumbService.setBreadcrumb(['Application', 'Users']);
-    this.data = await this.playerService.GetTodayPlayers();
+    this.data = await this.playerService.GetAllPlayers();
     this.isReady = true;
   }
 }

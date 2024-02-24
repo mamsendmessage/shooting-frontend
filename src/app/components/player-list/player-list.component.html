@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-xxl-12 col-xl-12">
+        <div class="flex top-filter" *ngIf="!simple">
+            <span class="titlebox  mr-auto"> List Of Players </span>
+            <div class="filter sm-6">
+                <div class="row">
+                    <div class="col pd-r-1 custom-col">
+                        <div class="w-56 relative text-slate-500">
+                            <input type="text" class="form-control w-56  pr-10" placeholder="Search..."
+                                (keyup)="onKeySearch($event)" [(ngModel)]="searchKey">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" icon-name="search" class="iconSearch" data-lucide="search">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col pd-r-1 ">
+                        <label class="custom-lable">From date</label>
+                        <input type="date" class="form-control" [(ngModel)]="fromDate">
+                    </div>
+                    <div class="col pd-r-1 ">
+                        <label class="custom-lable">To date</label>
+                        <input type="date" class="form-control" [(ngModel)]="toDate">
+                    </div>
+                    <div class="col pd-r-1 custom-col">
+                        <button class="custom-btn" mat-raised-button (click)="Filter()">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <button class="createNewUser sm-6 custom-col" (click)="openCreateUserDialog()">Add User </button>
+
+        </div>
+        <div class="col-xxl-12 col-lg-12 col-md-12">
+            <app-player-table *ngIf="isReady" [data]="players" [itemsPerPage]="itemPerPage"
+                [startIndex]="startIndex"></app-player-table>
+            <app-pagination *ngIf="isReady" [totalItems]="data.length" [currentPage]="1" [itemsPerPage]="itemPerPage"
+                (change)="updateItemPerPage($event)" (currentPageChanges)="updateCurrentPage($event)"></app-pagination>
+        </div>
+    </div>
+</div>

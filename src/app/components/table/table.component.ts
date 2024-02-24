@@ -3,11 +3,9 @@ import { X_TodayPlayer } from '../../models/X_TodayPlayers';
 import { Constants } from 'src/app/models/Constants';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PlayerService } from 'src/app/services/player.service';
-import { Player } from 'src/app/models/Player';
-import { SocketCommunicationService } from 'src/app/services/socket-communication.service';
-import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { AllocateDialoadComponent } from '../allocate-diaload/allocate-diaload.component';
+import { ConfigurationService } from 'src/app/services/config.service';
+import { PlayerLevel } from 'src/app/models/PlayerLevel';
 
 @Component({
   selector: 'app-table',
@@ -22,11 +20,13 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() itemsPerPage: number = 10;
   @Input() startIndex: number = 0;
   players: X_TodayPlayer[] = [];
+  public PlayerLevels: PlayerLevel[] = [];
   public myImgUrl: string = 'assets/img/profile-8.jpg';
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private configService: ConfigurationService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.PlayerLevels = await this.configService.GetPlayerLevel();
     for (let index = 0; index < this.data.length; index++) {
       const element = this.data[index];
       element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo?.replace('images', '') : this.myImgUrl;
@@ -78,7 +78,7 @@ export class TableComponent implements OnInit, OnChanges {
       const dialogRef = this.dialog.open(AllocateDialoadComponent, {
         data: pTicket,
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
       });
     } catch (error) {

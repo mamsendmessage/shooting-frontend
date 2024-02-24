@@ -1,0 +1,39 @@
+<table class="table table-report sm:mt-2" *ngIf="isReady">
+    <thead>
+        <tr>
+            <th class="whitespace-nowrap">Photo </th>
+            <th class="whitespace-nowrap">Player Name </th>
+            <th class="whitespace-nowrap">Age </th>
+            <th class="text-center whitespace-nowrap">Nationality</th>
+            <th class="text-center whitespace-nowrap">Mobile Number</th>
+            <th class="text-center whitespace-nowrap">Passports No</th>
+            <th class="text-center whitespace-nowrap">Membership No </th>
+            <th class="text-center whitespace-nowrap">Membership Expiry</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let player of players">
+            <tr class="intro-x">
+                <td class="w-40">
+                    <div class="flex">
+                        <div class="w-10 h-10 image-fit zoom-in">
+                            <img  onerror="this.onerror=null; this.src='/assets/img/profile-8.jpg'" alt="" class=" rounded-full" [src]="player.Photo!= null ? player.Photo : myImgUrl">
+                        </div>
+                    </div>
+                </td>
+                <td >{{ player.Name}} </td>
+                <td >{{ player.Age}} </td>
+                <td class="text-center">{{ player.Nationality}} </td>
+                <td class="text-center">{{ player.MobileNumber}} </td>
+                <td class="text-center">{{ player.PassportsNo}} </td>
+                <td class="text-center">{{ player.MembershipNo}} </td>
+                <td class="text-center"> {{player.MembershipExpiry | date:'dd/MM/yyyy'}} </td>
+            </tr>
+        </ng-container>
+        <ng-container>
+            <tr *ngIf="players.length==0">
+                <td colspan="9" class="text-center">No Data Available </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

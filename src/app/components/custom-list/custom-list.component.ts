@@ -29,9 +29,6 @@ export class CustomListComponent implements OnInit {
   public fromDate: Date = new Date();
   public toDate: Date = new Date();
 
-  public fromDateStr: string = new Date().toLocaleDateString();
-  public toDateStr: string = new Date().toLocaleDateString();
-
   constructor(public dialog: MatDialog, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
@@ -41,19 +38,23 @@ export class CustomListComponent implements OnInit {
 
   public async GetTickets() {
     try {
-      this.fromDate = new Date(this.fromDate);
-      this.toDate = new Date(this.toDate);
-      const tNow: Date = new Date();
-      tNow.setHours(0, 0, 0, 0);
-      this.fromDate.setHours(0, 0, 0, 0)
-      this.toDate.setHours(0, 0, 0, 0)
-      if (!this.isBefore(this.fromDate, this.toDate)) {
+      const tFromDate = new Date(this.fromDate);
+      const tToDate = new Date(this.toDate);
+      tFromDate.setHours(0, 0, 0, 0);
+      tToDate.setHours(0, 0, 0, 0);
+      if (!this.isBefore(tFromDate, tToDate)) {
         this.openAlertDialog('From_Date Should Be Before To_Date');
         return;
-      } else if (!this.isBefore(this.toDate, tNow)) {
+      }
+      const tNow: Date = new Date();
+      tNow.setHours(0, 0, 0, 0);
+      if (!this.isBefore(tFromDate, tToDate)) {
+        this.openAlertDialog('From_Date Should Be Before To_Date');
+        return;
+      } else if (!this.isBefore(tToDate, tNow)) {
         this.openAlertDialog('To_Date Should Be Before Now');
         return;
-      } else if (!this.isBefore(this.fromDate, tNow)) {
+      } else if (!this.isBefore(tFromDate, tNow)) {
         this.openAlertDialog('From_Date Should Be Before Now');
         return;
       }
@@ -62,7 +63,7 @@ export class CustomListComponent implements OnInit {
       for (let index = 0; index < tTickets.length; index++) {
         const element: X_TodayPlayer = tTickets[index];
         element.CreationDate.setHours(0, 0, 0, 0);
-        if (this.isBefore(element.CreationDate, this.toDate) && this.isBefore(this.fromDate, element.CreationDate)) {
+        if (this.isBefore(element.CreationDate, tToDate) && this.isBefore(tFromDate, element.CreationDate)) {
           tFilteredPlayers.push(element);
         }
       }
@@ -80,17 +81,15 @@ export class CustomListComponent implements OnInit {
 
     let dialogRef;
 
-    if (this.source == 'users') {
-      dialogRef = this.dialog.open(CreateOnlyPlayerModalComponent, {
-        data: new Player(null)
-      });
-    } else if (this.source == 'tickets') {
+    if (this.source == 'tickets') {
       dialogRef = this.dialog.open(CreateOnlyTicketModalComponent, {
-        data: new Player(null)
+        data: new Player(null),
+        maxHeight: "95vh"
       });
     } else {
       dialogRef = this.dialog.open(CreateTicketModalComponent, {
-        data: new Player(null)
+        data: new Player(null),
+        maxHeight: "95vh"
       });
     }
 

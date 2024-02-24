@@ -28,7 +28,7 @@ export class X_TodayPlayer {
             this.TicketType = pTodayPlayer.TicketType;
             this.UserType = pTodayPlayer.UserType;
             this.DisplayedTicketType = TicketType[this.TicketType].toString();
-            this.DisplayedUserType = UserType[this.TicketType].toString();
+            this.DisplayedUserType = UserType[this.UserType].toString();
             this.DisplayedState = TicketState[pTodayPlayer.State].toString();
             this.CreationDate = new Date(pTodayPlayer.CreationDate);
             this.LaneId = pTodayPlayer.LaneId;

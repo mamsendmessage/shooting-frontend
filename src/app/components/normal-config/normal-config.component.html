@@ -46,7 +46,7 @@
                             <div class="d-flex" [formGroupName]="i">
                                 <mat-select  placeholder="Nothing selected"
                                     formControlName="skeetID" multiple>
-                                    <mat-option *ngFor="let option of skeetOptions" [disabled]="skeetsArray.value[i].skeetID.length>1 && !skeetsArray.value[i].skeetID.includes(option.ID)"
+                                    <mat-option *ngFor="let option of skeetOptions" [disabled]="skeetsArray.value[i].skeetID.length > (getTotalClays()%2) && !skeetsArray.value[i].skeetID.includes(option.ID)"
                                         [value]="option.ID">{{option.Name}}</mat-option>
                                 </mat-select>
                                 <ng-container *ngIf="i === 0">

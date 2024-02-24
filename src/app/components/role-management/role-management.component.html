@@ -1,0 +1,48 @@
+<div class="container-fluid">
+
+    <div class="row title">
+        <div class="col-xxl-10 col-xl-10">
+            <div class="flex top-filter">
+                <span class="titlebox mr-auto"> List Of Roles </span>
+            </div>
+        </div>
+        <div class="col-xxl-2 col-xl-2 add-user">
+            <button mat-raised-button color="primary" class="custom-btn" (click)="CreateRole()">Add Role</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12">
+            <table class="table table-report sm:mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">Name </th>
+                        <th class="whitespace-nowrap">Platform Access</th>
+                        <th class="whitespace-nowrap"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let role of rolesView">
+                        <tr class="intro-x">
+                            <td class="whitespace-nowrap">
+                                {{role.Role}}
+                            </td>
+                            <td class="whitespace-nowrap">
+                                {{role.Screens}}
+                            </td>
+                            <td class="whitespace-nowrap custom-actions">
+                                <button mat-mini-fab color="primary" (click)="UpdateRole(role)" class="custom-btn">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="primary" (click)="DeleteRole(role)" class="custom-btn">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

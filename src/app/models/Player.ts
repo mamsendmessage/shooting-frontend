@@ -9,6 +9,7 @@ export class Player {
     public Document: string;
     public PassportsNo: string;
     public MembershipNo: string;
+    public Nationality: string;
     public MembershipExpiry: Date;
     constructor(pPlayer: Player) {
         if (pPlayer) {

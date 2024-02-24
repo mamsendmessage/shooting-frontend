@@ -377,6 +377,26 @@ span.infoplayer {
 
 }
 
+.status.infinished .frames::before {
+
+  background: #5a5a5a
+
+}
+
+
+
+.status.paused .frames::before {
+
+  background: rgb(255, 51, 0);
+
+}
+
+.status.in-ready .frames::before {
+
+  background: #efeb03;
+
+}
+
 .status.Waiting .frames::before {
   background: #ff9800;
 

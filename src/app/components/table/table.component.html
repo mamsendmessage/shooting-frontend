@@ -18,7 +18,8 @@
                 <td class="w-40">
                     <div class="flex">
                         <div class="w-10 h-10 image-fit zoom-in">
-                            <img  onerror="this.onerror=null; this.src='/assets/img/profile-8.jpg'" alt="" class=" rounded-full" [src]="player.Photo!= null ? player.Photo : myImgUrl">
+                            <img onerror="this.onerror=null; this.src='/assets/img/profile-8.jpg'" alt=""
+                                class=" rounded-full" [src]="player.Photo!= null ? player.Photo : myImgUrl">
                         </div>
                     </div>
                 </td>
@@ -31,23 +32,33 @@
                 <td class="text-center">{{ player.DisplayedUserType}} </td>
                 <td class="text-center"> {{player.DisplayedDateTime | date:'dd/MM/yyyy hh:mm a'}} </td>
                 <td class="text-center">
-                    <span *ngIf="player.State==0" class="text-Waiting" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==0" class="text-Waiting"
+                        (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==1" class="text-InGame">{{player.DisplayedState}}</span>
-                    <span *ngIf="player.State==2" class="planned" (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
+                    <span *ngIf="player.State==2" class="planned"
+                        (click)="allocatePlayer(player)">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==3" class="finished">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==4" class="ready">{{player.DisplayedState}}</span>
                     <span *ngIf="player.State==5" class="text-cancel">{{player.DisplayedState}}</span>
-
+                    <span *ngIf="player.State==6" class="text-cancel">{{player.DisplayedState}}</span>
 
 
                 </td>
                 <td class="text-center">
-                    <span *ngIf="player.PlayerLevel=='Professional'" class="professional"> {{player.PlayerLevel}} </span>
-                    <span *ngIf="player.PlayerLevel=='Beginner'" class="beginner"> {{player.PlayerLevel}} </span>
-                    <span *ngIf="player.PlayerLevel=='Intermediate'" class="intermediate"> {{player.PlayerLevel}} </span>
+                    <ng-container *ngFor="let level of PlayerLevels; let i = index">
+                        <span *ngIf="player.PlayerLevel==level.Name"
+                            [ngClass]="{'professional': level.Name === 'Professional' , 'intermediate': level.Name === 'Intermediate' , 'beginner': level.Name === 'Beginner'}">
+                            {{player.PlayerLevel}} </span>
+                    </ng-container>
                 </td>
                 <td class="text-center"> {{player.DisplayedTicketType}} </td>
-                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player)"> </button></td>
+                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player)"> </button>
+                </td>
+            </tr>
+        </ng-container>
+        <ng-container>
+            <tr *ngIf="players.length==0">
+                <td colspan="9" class="text-center">No Data Available </td>
             </tr>
         </ng-container>
     </tbody>

@@ -68,8 +68,7 @@ export class LanesComponent implements OnInit {
       } else {
         this.dialog.open(HistoryLaneComponent, {
           data: pId,
-          width: "1200px",
-          height: "700px",
+          minWidth: "60%",
           panelClass: "custom-dialog"
         })
       }

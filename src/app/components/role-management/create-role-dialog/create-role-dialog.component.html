@@ -1,0 +1,30 @@
+<form action="" class="create-user-form" form [formGroup]="roleForm" *ngIf="isReady">
+
+    <div class="row">
+        <p class="dialog-title">
+            {{actionName}} Role
+        </p>
+    </div>
+    <div class="row">
+        <mat-form-field class="custom-input">
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput formControlName="Name" placeholder="Full Name">
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="custom-input">
+
+            <mat-label>Role</mat-label>
+            <mat-select placeholder="" formControlName="PlatformAccess" multiple>
+                <mat-option *ngFor="let screen of screens"
+                    [value]="screen.ID">{{screen.Name}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Select User Role</mat-hint>
+        </mat-form-field>
+    </div>
+
+
+
+    <button (click)="CreateRole()" class="custom-btn">{{actionName}} Role</button>
+</form>

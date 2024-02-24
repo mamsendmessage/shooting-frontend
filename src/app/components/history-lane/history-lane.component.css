@@ -2,7 +2,7 @@
     display: block;
     position: relative;
     left: 0px;
-    top: 16vh;
+    top: 27vh;
     width: 100%;
     height: 39vh;
     background-repeat: no-repeat;
@@ -16,10 +16,68 @@
     text-align: center;
     padding-top: 27vh;
     font-size: 14px;
-    color: #212529
 }
 
+.custom-btn {
+    cursor: pointer;
+}
 
-.back-color{
-    background-color: #173049 !important;
+.change-btn:hover {
+    background-color: lightgray;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.custom-btn:hover {
+    color: orange;
+}
+
+.custom-finish-btn {
+    height: 60px;
+    width: 200px;
+    background-color: rgb(83, 78, 78);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.custom-pause-btn {
+    height: 60px;
+    width: 200px;
+    background-color: rgb(212, 31, 31);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.custom-resume-btn {
+    height: 60px;
+    width: 200px;
+    background-color: rgb(0, 255, 170);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.custom-box:hover {
+    transform: scale(1.1);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.counter-screen {
+    min-height: auto;
+}
+
+.box {
+    padding: 10px;
+}
+
+.custom-body {
+    background: linear-gradient(13deg,
+            rgba(47, 71, 132, 1) 59%,
+            rgba(87, 140, 180, 1) 100%);
+    
 }

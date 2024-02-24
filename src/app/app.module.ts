@@ -46,6 +46,9 @@ import { SkeetConffigComponent } from './components/skeet-conffig/skeet-conffig.
 import { LaneComponent } from './components/lane/lane.component';
 import { AllocateDialoadComponent } from './components/allocate-diaload/allocate-diaload.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
 import { HistoryLaneComponent } from './components/history-lane/history-lane.component';
 import { LogarithmicChartComponent } from './components/logarithmic-chart/logarithmic-chart.component';
 import { ChartModule } from 'angular-highcharts';
@@ -53,8 +56,16 @@ import { ColumnChartComponent } from './components/column-chart/column-chart.com
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { CreateOnlyTicketModalComponent } from './components/create-only-ticket-modal/create-only-ticket-modal.component';
 import { CreateOnlyPlayerModalComponent } from './components/create-only-player-modal/create-only-player-modal.component';
-
-
+import { PlayerTableComponent } from './components/player-table/player-table.component';
+import { PlayerListComponent } from './components/player-list/player-list.component';
+import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { RoleManagementComponent } from './components/role-management/role-management.component';
+import { CreateDialogComponent } from './components/user-management/create-dialog/create-dialog.component';
+import { CreateRoleDialogComponent } from './components/role-management/create-role-dialog/create-role-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { CreateLevelDialogComponent } from './components/create-level-dialog/create-level-dialog.component';
+import { SetPasswordDialogComponent } from './components/user-management/set-password-dialog/set-password-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +100,16 @@ import { CreateOnlyPlayerModalComponent } from './components/create-only-player-
     PieChartComponent,
     CreateOnlyTicketModalComponent,
     CreateOnlyPlayerModalComponent,
+    PlayerTableComponent,
+    PlayerListComponent,
+    AdminConsoleComponent,
+    UserManagementComponent,
+    RoleManagementComponent,
+    CreateDialogComponent,
+    CreateRoleDialogComponent,
+    ConfirmDialogComponent,
+    CreateLevelDialogComponent,
+    SetPasswordDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -110,6 +131,8 @@ import { CreateOnlyPlayerModalComponent } from './components/create-only-player-
     MatNativeDateModule,
     MatFormFieldModule,
     ChartModule,
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },

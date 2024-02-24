@@ -1,7 +1,7 @@
 <div class="box p-3" *ngIf="isReady">
     <form [formGroup]="skeetForm">
         <div class="row box p-3">
-            <span class="titlebox extrafonts"> {{typeName}} </span>
+            <span class="titlebox extrafonts"> Competition</span>
             <div class="skeet-play custom-full-height">
                 <div class="row">
                     <div class="row mb-1">
@@ -40,15 +40,19 @@
                                 <div formArrayName="skeets">
                                     <div *ngFor="let skeet of configurationSkeets(i).controls; let j = index"
                                         class="row" [formGroupName]="j">
-                                        <mat-select placeholder="Nothing selected" multiple formControlName="SkeetID">
+                                        <mat-select placeholder="Nothing selected" multiple formControlName="SkeetID"
+                                            class="col-6">
                                             <mat-option *ngFor="let option of skeetOptions"
+                                                [disabled]="configurationSkeets(i).value[j].SkeetID.length > (getOneConfigClays(i)%2) && !configurationSkeets(i).value[j].SkeetID.includes(option.ID)"
                                                 [value]="option.ID">{{option.Name}}</mat-option>
                                         </mat-select>
                                         <ng-container *ngIf="j === 0">
-                                            <a class="addMore" (click)="addConfigurationSkeets(i)"> Add Skeet </a>
+                                            <a class="custom-link addMore" (click)="addConfigurationSkeets(i)"> Add
+                                                Skeet </a>
                                         </ng-container>
                                         <ng-container *ngIf="j !== 0">
-                                            <a class="removeitems" (click)="removConfigurationSkeets(i,j)"> Remove </a>
+                                            <a class=" custom-link removeitems" (click)="removConfigurationSkeets(i,j)">
+                                                Remove </a>
                                         </ng-container>
                                     </div>
                                 </div>
@@ -57,7 +61,8 @@
                     </div>
                 </div>
                 <div class="total-skeet">
-                    Total <span class="valuesNo">5</span> shots with <span class="valuesNo">5</span> clays
+                    Total <span class="valuesNo">{{getTotalClays()}}</span> shots with <span
+                        class="valuesNo">{{getTotalClays()}}</span> clays
                 </div>
             </div>
         </div>

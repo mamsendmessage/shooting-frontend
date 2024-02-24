@@ -12,7 +12,7 @@ import { Constants } from '../models/Constants';
   providedIn: 'root'
 })
 export class LaneService {
-
+  
   private serviceName: string = 'lanes';
   private url: string = `${Constants.APIServerUrl}/${this.serviceName}`
   constructor(private communicationService: CommunicationService) { }

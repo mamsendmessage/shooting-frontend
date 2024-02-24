@@ -36,10 +36,14 @@ export class TicketService {
 
 
   //Anonymous Call
-  public async GetTicketOnLane(pLaneId: number): Promise<X_TodayPlayer> {
+  public async GetTicketOnLane(pLaneId: number, pIsAllStatuses: boolean = false): Promise<X_TodayPlayer> {
     let tTickets: X_TodayPlayer[] = [];
     try {
-      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket?laneId=${pLaneId}`;
+      let tStatus: string = '';
+      if (pIsAllStatuses) {
+        tStatus = '&allStatus=0'
+      }
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/ticket?laneId=${pLaneId}${tStatus}`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
@@ -47,6 +51,7 @@ export class TicketService {
           tTickets.push(new X_TodayPlayer(element));
         }
       }
+
       return tTickets[0];
     } catch (error) {
       console.log(error);
@@ -168,6 +173,17 @@ export class TicketService {
   public async UpdateTicketState_Ann(pTicket: Ticket): Promise<number> {
     try {
       const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/updateState`;
+      const tResponse: APIResponse = await this.communicationService.putData(tUrl, pTicket);
+      return tResponse.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  public async UpdateTicketLevel_Ann(pTicket: Ticket): Promise<number> {
+    try {
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/updateLevel`;
       const tResponse: APIResponse = await this.communicationService.putData(tUrl, pTicket);
       return tResponse.result;
     } catch (error) {

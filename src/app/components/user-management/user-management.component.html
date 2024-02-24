@@ -1,0 +1,59 @@
+<div class="container-fluid">
+
+    <div class="row title">
+        <div class="col-xxl-10 col-xl-10">
+            <div class="flex top-filter">
+                <span class="titlebox mr-auto"> List Of Users </span>
+            </div>
+        </div>
+        <div class="col-xxl-2 col-xl-2 add-user">
+            <button mat-raised-button color="primary" class="custom-btn" (click)="CreateUser()">Add User</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12">
+            <table class="table table-report sm:mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">Name </th>
+                        <th class="whitespace-nowrap">Mobile Number </th>
+                        <th class="whitespace-nowrap">Email Address</th>
+                        <th class="whitespace-nowrap">Role</th>
+                        <th class="whitespace-nowrap"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let user of users">
+                        <tr class="intro-x custom-row">
+                            <td class="whitespace-nowrap">
+                                {{user.Name}}
+                            </td>
+                            <td class="whitespace-nowrap">
+                                {{user.MobileNumber}}
+                            </td>
+                            <td class="whitespace-nowrap">
+                                {{user.Email}}
+                            </td>
+                            <td class="whitespace-nowrap">
+                                {{user.RoleName}}
+                            </td>
+                            <td class="whitespace-nowrap custom-actions">
+                                <button mat-mini-fab color="primary" (click)="SetPassword(user)" class="col-4 custom-btn" [disabled]="user.ID == 1" >
+                                    <mat-icon svgIcon="pass"></mat-icon>
+                                </button>
+                                <button mat-mini-fab color="primary" (click)="UpdateUser(user)" class="col-4 custom-btn" [disabled]="user.ID == 1" >
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="primary" (click)="DeleteUser(user)" class="custom-btn" [disabled]="user.ID == currentUserId || user.ID == 1" >
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

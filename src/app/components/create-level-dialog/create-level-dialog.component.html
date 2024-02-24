@@ -1,0 +1,19 @@
+<form action="" class="create-level-form" form [formGroup]="levelForm">
+
+    <div class="row">
+        <p class="dialog-title">
+            Create New Level
+        </p>
+    </div>
+    <div class="row">
+        <mat-form-field class="custom-input">
+            <mat-label>Level Name</mat-label>
+            <input type="text" matInput formControlName="Name" placeholder="Full Name">
+        </mat-form-field>
+        <!-- <mat-form-field class="custom-input">
+            <mat-label>Image Path</mat-label>
+            <input type="text" matInput formControlName="Image" placeholder="Iamge Path">
+        </mat-form-field> -->
+    </div>
+    <button (click)="CreateLevel()" class="custom-btn">Create</button>
+</form>

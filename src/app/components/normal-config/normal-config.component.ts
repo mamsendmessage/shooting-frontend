@@ -6,7 +6,6 @@ import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PlayerLevel } from 'src/app/models/enums';
 
 @Component({
   selector: 'app-normal-config',
@@ -27,7 +26,9 @@ export class NormalConfigComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.skeetOptions = await this.configService.GetAllSkeets();
-    this.typeName = PlayerLevel[this.type].toString();
+    const tPlayerLevels = await this.configService.GetPlayerLevel();
+
+    this.typeName = tPlayerLevels.find((item) => item.ID == this.type)?.Name;
     this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
     this.initializeForm();
     this.isReady = true;
@@ -70,11 +71,6 @@ export class NormalConfigComponent implements OnInit {
   removeSkeet(index: number): void {
     // Remove the skeet control at the specified index from the FormArray
     this.skeetsArray.removeAt(index);
-  }
-
-  getTotalShots(): number {
-    // Calculate total shots based on the number of Skeets selected
-    return this.skeetForm.value.skeets.length;
   }
 
   getTotalClays(): number {

@@ -27,7 +27,7 @@
             <div class="row g-3 d-flex">
                 <div class="col-4">
                     <div class="userphoto">
-                        <img src="/assets/img/user.png" alt="userPhoto">
+                        <img [src]="player.Photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'" class="profilesPhoto"> 
                     </div>
                     <span class="infoplayer">
                         {{player.Name}}
@@ -37,18 +37,23 @@
                 </div>
                 <div class="col-7">
                     <ul class="info-game">
+
                         <li class="custom-btn status Waiting" *ngIf="ticket.State==0" (click)="UpdateTicketState()">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
                         <li class="status inGame" *ngIf="ticket.State==1">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
-                        <li class="custom-btn status inGame" *ngIf="ticket.State==4" (click)="UpdateTicketState()">
+                        <li class="status paused" *ngIf="ticket.State==6">
                             <div class="frames"> {{ticket.DisplayedState}} </div>
                         </li>
+                        <li [ngClass]="isEnter?'status inGame clickable':'custom-btn status in-ready'"
+                            (mouseenter)="enter()" (mouseleave)="leave()" *ngIf="ticket.State==4"
+                            (click)="UpdateTicketState()">
+                            <div class="frames change-btn"> {{isEnter?'Click to Start' :ticket.DisplayedState}} </div>
+                        </li>
                         <li class="timedown timesicon">
-                            <div class="frames" *ngIf="currentTicket.GameTypeId == 3"> 45.. left </div>
-                            <div class="frames" *ngIf="currentTicket.GameTypeId != 3"> .. </div>
+                            <div class="frames blink" *ngIf="currentTicket.GameTypeId != 3"> <span [ngClass]="isTimerStarted?'countdown':''">{{countdown}} </span></div>
                         </li>
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
@@ -76,16 +81,10 @@
                 <div class="box nameS"> {{player.Name}} </div>
                 <div class="box levels">
                     <ul>
-                        <li [ngClass]="currentTicket.PlayerLevelId == 1 ?'selected':''">
-                            <img src="/assets/img/pyallow.svg">
-                            Beginner
+                        <li *ngFor="let level of PlayerLevels; let i = index" (click)="UpdateLevel(level.ID)" [ngClass]="{'selected custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId == level.ID , 'custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId != level.ID, 'selected':  currentTicket.PlayerLevelId == level.ID}">
+                            <img [src]="level.Image">
+                            {{level.Name}}
                         </li>
-                        <li [ngClass]="currentTicket.PlayerLevelId == 2 ?'selected':''"><img
-                                src="/assets/img/pblue.svg">
-                            Intermediate </li>
-                        <li [ngClass]="currentTicket.PlayerLevelId == 3 ?'selected':''"><img
-                                src="/assets/img/pgreen.svg">
-                            Professional </li>
                     </ul>
                 </div>
                 <div class="box sessionsType">
@@ -98,11 +97,17 @@
                                 src="/assets/img/watch-blue.svg"> 60 min </li>
                     </ul>
                 </div>
-                <ul>
-                    <div *ngIf="ticket.State==1">
-                        <button class="custom-finish-btn" mat-raised-button (click)="FinishTicketTicket()">Finish</button>
+                <div class="row">
+                    <div class="col-3" *ngIf="ticket.State==1">
+                        <button class="custom-finish-btn" mat-raised-button (click)="FinishTicket()">Finish</button>
                     </div>
-                </ul>
+                    <div class="col-3" *ngIf="ticket.State==1">
+                        <button class="custom-pause-btn" mat-raised-button (click)="Pause()">Pause</button>
+                    </div>
+                    <div class="col-3" *ngIf="ticket.State==6">
+                        <button class="custom-resume-btn" mat-raised-button (click)="Resume()">Resume</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
