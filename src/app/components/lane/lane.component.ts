@@ -35,11 +35,11 @@ export class LaneComponent implements OnInit {
   public isTimerPaused: boolean = false;
   public timerInterval: any; // Interval ID
   public PlayerLevels: PlayerLevel[] = [];
+  public timerCaption = ''
   constructor(private route: ActivatedRoute, private socketCommunicationService: SocketCommunicationService, private playerService: PlayerService,
     private configurationService: ConfigurationService, private ticketService: TicketService) { }
 
   async ngOnInit(): Promise<void> {
-    this.PlayerLevels = await this.configurationService.GetPlayerLevel();
     this.route.params.subscribe(async params => {
       this.laneId = params['id'];
       await this.initializeComponenet();
@@ -57,26 +57,42 @@ export class LaneComponent implements OnInit {
   public async initializeComponenet() {
     try {
       //const tLane: Lane = await this.laneService.GetLaneByID(this.laneId);
-      this.socketCommunicationService.listenToChange().subscribe(async (pTicket: X_TodayPlayer) => {
+      this.socketCommunicationService.listenToChange().subscribe((pTicket: X_TodayPlayer) => {
         if (pTicket.LaneId == this.laneId) {
-          location.reload();
+          this.BuildUI();
         }
       });
-      this.socketCommunicationService.listenToTimer().subscribe(async (pData: any) => {
-        if (pData.laneId == this.ticket.LaneId && pData.timer > 0) {
-          this.startTimer(pData.timer * 1000)
+      this.socketCommunicationService.listenToRefillTimer().subscribe((pData: any) => {
+        if (pData.laneId == this.ticket.LaneId) {
+          if (pData.timer > 0) {
+            this.startTimer(pData.timer * 1000, 'Time to Refill')
+          }
+        }
+      });
+
+      this.socketCommunicationService.listenToTimePerShotTimer().subscribe((pData: any) => {
+        if (pData.laneId == this.ticket.LaneId) {
+          if (pData.timer > 0) {
+            this.startTimer(pData.timer * 1000, 'Time for Next Shot')
+          }
         }
       });
 
       this.socketCommunicationService.listenToFinish().subscribe(async (pData: any) => {
-        if (pData.laneId == this.ticket.LaneId && pData.ticketId == this.ticket.TicketId) {
-          this.FinishTicket();
+        if (pData.laneId == -100 || (pData.laneId == this.ticket.LaneId && pData.ticketId == this.ticket.TicketId)) {
+          await this.FinishTicket();
         }
       });
+      this.BuildUI();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 
-
+  public async BuildUI() {
+    try {
       this.ticket = await this.ticketService.GetTicketOnLane(this.laneId);
       if (this.ticket) {
         await this.loadData();
@@ -92,10 +108,9 @@ export class LaneComponent implements OnInit {
   public async loadData() {
     this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId);
     if (this.currentTicket) {
-      console.log(this.currentTicket);
+      this.PlayerLevels = await this.configurationService.GetPlayerLevel(this.currentTicket.GameTypeId);
       this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
-      const tPlayerLevels = await this.configurationService.GetPlayerLevel();
-      this.playerLevel = tPlayerLevels.find((item) => item.ID == this.currentTicket.PlayerLevelId)?.Name;
+      this.playerLevel = this.PlayerLevels.find((item) => item.ID == this.currentTicket.PlayerLevelId)?.Name;
       this.gameType = GameType[this.currentTicket.GameTypeId].toString();
       const tNationalites: Nationality[] = await this.configurationService.GetAllNationalites();
       if (tNationalites) {
@@ -110,7 +125,8 @@ export class LaneComponent implements OnInit {
     try {
       this.currentTicket.State = 1;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      window.location.reload();
+      this.BuildUI();
+      this.startTimer(3000, 'Time to Start')
     } catch (error) {
       console.log(error);
     }
@@ -155,11 +171,12 @@ export class LaneComponent implements OnInit {
     }
   }
 
-  public startTimer(milliseconds) {
+  public startTimer(milliseconds, pCaption) {
     if (!this.isTimerStarted) {
       this.remainingMilliseconds = milliseconds;
       this.resumeTimer();
       this.isTimerStarted = true;
+      this.timerCaption = pCaption;
     }
   }
 
@@ -192,6 +209,7 @@ export class LaneComponent implements OnInit {
           clearInterval(this.timerInterval);
           this.isTimerStarted = false;
           this.countdown = '00:00';
+          this.timerCaption = '';
         }
       }, 1000);
       this.isTimerPaused = false;

@@ -7,7 +7,7 @@
             <div class="row g-3 d-flex">
                 <div class="col-4">
                     <div class="userphoto">
-                        <img src="/assets/img/user.png" alt="userPhoto">
+                        <img [src]="player.Photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'" class="profilesPhoto"> 
                     </div>
                     <span class="infoplayer">
                         {{player.Name}}
@@ -37,8 +37,11 @@
                             <div class="frames change-btn"> {{isEnter?'Click to Start' :ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
-                            <div class="frames" *ngIf="currentTicket.GameTypeId == 3"> 45.. left </div>
-                            <div class="frames" *ngIf="currentTicket.GameTypeId != 3"> .. </div>
+                            <div class="frames blink">
+                                <div>
+                                    <span>00:00 </span>
+                                </div>
+                            </div>
                         </li>
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
@@ -64,7 +67,7 @@
                     </ul>
                 </div>
                 <div class="box nameS"> {{player.Name}} </div>
-                <div class="box levels">
+                <div class="box levels"  *ngIf="PlayerLevels.length>0">
                     <ul>
                         <li *ngFor="let level of PlayerLevels; let i = index" (click)="UpdateLevel(level.ID)" [ngClass]="{'selected custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId == level.ID , 'custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId != level.ID, 'selected':  currentTicket.PlayerLevelId == level.ID}">
                             <img [src]="level.Image">
@@ -72,7 +75,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="box sessionsType">
+                <div class="box sessionsType" *ngIf="currentTicket.GameTypeId ==2">
                     <ul>
                         <li [ngClass]="currentTicket.SessionTimeId == 1 ?'selected':''"> <img
                                 src="/assets/img/watch-blue.svg"> 30 min </li>

@@ -35,7 +35,6 @@
                                     <div class="col-sm-4 pd-r-1">
                                         <label for="MobNum" class="form-label">Mobile Numer</label>
                                         <div class="input-group 3">
-                                            <span class="input-group-text flags" id="qatariMobile"></span>
                                             <input type="text" class="form-control" placeholder="66-XXXXXXXXXXX"
                                                 formControlName="mobileNumber" aria-label="qatariMobile"
                                                 aria-describedby="basic-addon1">
@@ -90,70 +89,41 @@
                                         <ul class="flex g-3">
                                             <li class="mr-r-6">
                                                 <input id="r1" type="radio" name="gameType" value="1" checked
-                                                    formControlName="gameType">
+                                                    formControlName="gameType" (change)="ChangeGameType(1)">
                                                 <label for="r1">Normal </label>
                                             </li>
                                             <li class="mr-r-6">
                                                 <input id="r2" type="radio" name="gameType" value="2"
-                                                    formControlName="gameType">
+                                                    formControlName="gameType" (change)="ChangeGameType(2)">
                                                 <label for="r2">Special</label>
                                             </li>
                                             <li class="mr-r-6">
                                                 <input id="r3" type="radio" name="gameType" value="3"
-                                                    formControlName="gameType">
+                                                    formControlName="gameType" (change)="ChangeGameType(3)">
                                                 <label for="r3">Competition</label>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-sm-5 pd-r-1">
+                                    <div class="col-sm-5 pd-r-1" *ngIf="PlayerLevels.length>0">
                                         <label for="Nationality" class="form-label">Level of Player </label>
                                         <ul class="flex g-3">
                                             <li class="mr-r-6" *ngFor="let level of PlayerLevels; let i = index">
-                                                <input id="r11" type="radio" name="levelOfPlayer" value="{{level.ID}}" checked
-                                                formControlName="levelOfPlayer">
-                                            <label for="r11">{{level.Name}} </label>
+                                                <div *ngIf="level.GameTypeId == ticketForm.get('gameType').value">
+                                                    <input id="r11" type="radio" name="levelOfPlayer"
+                                                        value="{{level.ID}}" checked formControlName="levelOfPlayer">
+                                                    <label for="r11">{{level.Name}} </label>
+                                                </div>
                                             </li>
-<!-- 
-                                            <li class="mr-r-6">
-                                                <input id="r11" type="radio" name="levelOfPlayer" value="1" checked
-                                                    formControlName="levelOfPlayer">
-                                                <label for="r11">Beginner </label>
-                                            </li>
-                                            <li class="mr-r-6">
-                                                <input id="r22" type="radio" name="levelOfPlayer" value="2"
-                                                    formControlName="levelOfPlayer">
-                                                <label for="r22">Intermediate</label>
-                                            </li>
-                                            <li class="mr-r-6">
-                                                <input id="r33" type="radio" name="levelOfPlayer" value="3"
-                                                    formControlName="levelOfPlayer">
-                                                <label for="r33">Professional</label>
-                                            </li> -->
                                         </ul>
                                     </div>
-                                    <div class="col-sm-3 pd-r-1" *ngIf="ticketForm.value.gameType==='3'">
+                                    <div class="col-sm-3 pd-r-1" *ngIf="ticketForm.value.gameType==='2'">
                                         <label for="MobNum" class="form-label">Session Time</label>
                                         <ul class="flex g-3">
                                             <li class="mr-r-6" *ngFor="let sessionTime of SessionsTime; let i = index">
-                                                <input id="r111" type="radio" name="sessionTime" value="{{sessionTime.ID}}" checked
-                                                formControlName="sessionTime">
-                                            <label for="r111">{{sessionTime.Name}} </label>
+                                                <input id="r111" type="radio" name="sessionTime"
+                                                    value="{{sessionTime.ID}}" checked formControlName="sessionTime">
+                                                <label for="r111">{{sessionTime.Name}} </label>
                                             </li>
-                                            <!-- <li class="mr-r-6">
-                                                <input id="r111" type="radio" name="sessionTime" value="1" checked
-                                                    formControlName="sessionTime">
-                                                <label for="r111">30m </label>
-                                            </li>
-                                            <li class="mr-r-6">
-                                                <input id="r222" type="radio" name="sessionTime" value="2"
-                                                    formControlName="sessionTime">
-                                                <label for="r222">45m</label>
-                                            </li>
-                                            <li class="mr-r-6">
-                                                <input id="r333" type="radio" name="sessionTime" value="3"
-                                                    formControlName="sessionTime">
-                                                <label for="r333">60m</label>
-                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -163,14 +133,14 @@
                         <div class="ccol-xxl-4 col-xl-4">
                             <div class="profiles">
                                 <img class="attachedPhoto" [src]="image" />
-                                <span> Name Of Player </span>
+                                <span> {{ticketForm.get('nameOfPlayer').value}} </span>
                             </div>
                             <div class="takePhoto">
                                 <app-camera (pictureTaken)="handleImage($event)"></app-camera>
                             </div>
                             <div class="takePhoto mr-t-6">
                                 <div class="file-container">
-                                    <div class="file-wrapper">
+                                    <div class="file-wrapper" *ngIf="!filePath">
                                         <input class="file-input" id="js-file-input" type="file" #fileUplaoder
                                             (change)="onSelect($event)" />
                                         <div class="file-content">
@@ -178,6 +148,11 @@
                                             </div>
                                             <p class="file-name" id="js-file-name">{{fileName}}</p>
                                         </div>
+                                    </div>
+                                    <div class="file-wrapper" *ngIf="filePath">
+
+                                        <a class="file-name" id="js-file-name" (click)="download()"
+                                            [download]="fileName">{{fileName}}</a>
                                     </div>
                                 </div>
                             </div>

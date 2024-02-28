@@ -29,7 +29,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.PlayerLevels = await this.configService.GetPlayerLevel();
     for (let index = 0; index < this.data.length; index++) {
       const element = this.data[index];
-      element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo?.replace('images', '') : this.myImgUrl;
+      element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo : this.myImgUrl;
     }
     this.isReady = true;
   }
@@ -64,17 +64,21 @@ export class TableComponent implements OnInit, OnChanges {
     this.openCreateUserDialog(pTikcet);
   }
 
-  public async openCreateUserDialog(pTikcet): Promise<void> {
+  public async openCreateUserDialog(pTikcet: X_TodayPlayer): Promise<void> {
     const dialogRef = this.dialog.open(UserProfileComponent, {
-      data: pTikcet,
+      data: {
+        playerId: pTikcet.UserId,
+        PlayerLevel: pTikcet.PlayerLevel
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
-  public async allocatePlayer(pTicket): Promise<void> {
+  public async allocatePlayer(pTicket: X_TodayPlayer): Promise<void> {
     try {
+      // if the lane id 
       const dialogRef = this.dialog.open(AllocateDialoadComponent, {
         data: pTicket,
       });

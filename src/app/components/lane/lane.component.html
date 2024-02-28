@@ -27,7 +27,8 @@
             <div class="row g-3 d-flex">
                 <div class="col-4">
                     <div class="userphoto">
-                        <img [src]="player.Photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'" class="profilesPhoto"> 
+                        <img [src]="player.Photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'"
+                            class="profilesPhoto">
                     </div>
                     <span class="infoplayer">
                         {{player.Name}}
@@ -53,7 +54,14 @@
                             <div class="frames change-btn"> {{isEnter?'Click to Start' :ticket.DisplayedState}} </div>
                         </li>
                         <li class="timedown timesicon">
-                            <div class="frames blink" *ngIf="currentTicket.GameTypeId != 3"> <span [ngClass]="isTimerStarted?'countdown':''">{{countdown}} </span></div>
+                            <div class="frames blink">
+                                <div>
+                                    <span *ngIf="timerCaption.length>0"
+                                        [ngClass]="isTimerStarted?'small-font countdown':'small-font'">{{timerCaption}}
+                                        <br></span>
+                                    <span [ngClass]="isTimerStarted?'countdown':''">{{countdown}} </span>
+                                </div>
+                            </div>
                         </li>
                         <li class="gametype">
                             <div class="frames"> {{playerLevel}} <br> {{gameType}}</div>
@@ -79,15 +87,16 @@
                     </ul>
                 </div>
                 <div class="box nameS"> {{player.Name}} </div>
-                <div class="box levels">
+                <div class="box levels" *ngIf="PlayerLevels.length>0">
                     <ul>
-                        <li *ngFor="let level of PlayerLevels; let i = index" (click)="UpdateLevel(level.ID)" [ngClass]="{'selected custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId == level.ID , 'custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId != level.ID, 'selected':  currentTicket.PlayerLevelId == level.ID}">
+                        <li *ngFor="let level of PlayerLevels; let i = index" (click)="UpdateLevel(level.ID)"
+                            [ngClass]="{'selected custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId == level.ID , 'custom-box': currentTicket.State==1 && currentTicket.PlayerLevelId != level.ID, 'selected':  currentTicket.PlayerLevelId == level.ID}">
                             <img [src]="level.Image">
                             {{level.Name}}
                         </li>
                     </ul>
                 </div>
-                <div class="box sessionsType">
+                <div class="box sessionsType" *ngIf="currentTicket.GameTypeId ==2">
                     <ul>
                         <li [ngClass]="currentTicket.SessionTimeId == 1 ?'selected':''"> <img
                                 src="/assets/img/watch-blue.svg"> 30 min </li>
@@ -96,17 +105,6 @@
                         <li [ngClass]="currentTicket.SessionTimeId == 3 ?'selected':''"> <img
                                 src="/assets/img/watch-blue.svg"> 60 min </li>
                     </ul>
-                </div>
-                <div class="row">
-                    <div class="col-3" *ngIf="ticket.State==1">
-                        <button class="custom-finish-btn" mat-raised-button (click)="FinishTicket()">Finish</button>
-                    </div>
-                    <div class="col-3" *ngIf="ticket.State==1">
-                        <button class="custom-pause-btn" mat-raised-button (click)="Pause()">Pause</button>
-                    </div>
-                    <div class="col-3" *ngIf="ticket.State==6">
-                        <button class="custom-resume-btn" mat-raised-button (click)="Resume()">Resume</button>
-                    </div>
                 </div>
             </div>
         </div>

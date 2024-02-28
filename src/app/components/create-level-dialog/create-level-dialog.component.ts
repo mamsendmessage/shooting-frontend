@@ -15,6 +15,7 @@ export class CreateLevelDialogComponent implements OnInit {
     this.levelForm = this.fb.group({
       Name: ['', Validators.required],
       Image: ['assets/img/pgreen.svg', Validators.required],
+      GameType: ['1', Validators.required]
     });
   }
 
@@ -25,12 +26,13 @@ export class CreateLevelDialogComponent implements OnInit {
     if (this.levelForm.valid) {
       const tLevelName = this.levelForm.get('Name').value;
       const tImagePath = this.levelForm.get('Image').value;
+      const tGameType = this.levelForm.get('GameType').value;
       const tConfiguration: Configuration = new Configuration();
       tConfiguration.config = `{"TimePerShot":10,"TimeToRefill":10,"NumberOfSkeet":1,"Skeets":[{"SkeetID":[],"API":[]}],"ID":"-1"}`;
       tConfiguration.NumberOfSkeet = 1;
       tConfiguration.TimePerShot = 10;
       tConfiguration.TimeToRefill = 10;
-      const tResult = await this.configurationService.AddConfig(tLevelName, tImagePath, tConfiguration);
+      const tResult = await this.configurationService.AddConfig(tLevelName, tImagePath, tGameType, tConfiguration);
       if (tResult == Result.SUCCESS) {
         location.reload();
       }

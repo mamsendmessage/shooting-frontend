@@ -9,6 +9,7 @@
             <th class="text-center whitespace-nowrap">Passports No</th>
             <th class="text-center whitespace-nowrap">Membership No </th>
             <th class="text-center whitespace-nowrap">Membership Expiry</th>
+            <th class="text-center whitespace-nowrap">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
                 <td class="text-center">{{ player.PassportsNo}} </td>
                 <td class="text-center">{{ player.MembershipNo}} </td>
                 <td class="text-center"> {{player.MembershipExpiry | date:'dd/MM/yyyy'}} </td>
+                <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player)"> </button>
             </tr>
         </ng-container>
         <ng-container>

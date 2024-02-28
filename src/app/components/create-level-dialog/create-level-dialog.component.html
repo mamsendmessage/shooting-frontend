@@ -10,10 +10,13 @@
             <mat-label>Level Name</mat-label>
             <input type="text" matInput formControlName="Name" placeholder="Full Name">
         </mat-form-field>
-        <!-- <mat-form-field class="custom-input">
-            <mat-label>Image Path</mat-label>
-            <input type="text" matInput formControlName="Image" placeholder="Iamge Path">
-        </mat-form-field> -->
+        <mat-form-field appearance="fill">
+            <mat-label>Game Type</mat-label>
+            <mat-select formControlName="GameType">
+                <mat-option value="1">  Normal </mat-option>
+                <mat-option value="2">  Special Session </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <button (click)="CreateLevel()" class="custom-btn">Create</button>
 </form>

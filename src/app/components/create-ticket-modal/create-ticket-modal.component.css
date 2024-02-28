@@ -2,15 +2,21 @@
     padding: 7px 10px;
 }
 
-.error-hint{
+.error-hint {
     color: red;
     font-size: 12px;
     padding: 0px 10px;
 }
-.btn-cancel{
+
+.btn-cancel {
     margin: 5px;
 }
 
-.btn-generate{
+.btn-generate {
     margin: 5px;
+}
+
+.file-name {
+    justify-content: center;
+    display: flex;
 }

@@ -1,1 +1,57 @@
-<p>competition-config works!</p>
+<div class="box p-3" *ngIf="isReady">
+    <form [formGroup]="skeetForm">
+        <div class="row box p-3">
+            <span class="titlebox extrafonts"> Competition</span>
+            <div class="skeet-play custom-full-height">
+                <div class="row border-b">
+                    <div class="row mb-1">
+                        <label for="timePerShot" class="col-sm-8 col-form-label">Time per shot</label>
+                        <div class="col-sm-4">
+                            <div class="d-flex">
+                                <span class="timer icons"> </span>
+                                <input class="form-control mb-1 custom-select" placeholder=""
+                                    formControlName="timePerShot" type="number">
+                                <span class="shotsValus"> shot/s </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skeeter-cong">
+                    <div class="row" formArrayName="configurations">
+                        <div class="custom-column" *ngFor="let config of configurations().controls; let i = index">
+                            <div [formGroupName]="i">
+                                <div class="d-flex headshot">
+                                    <span class="skeetIcon"> Lane No. </span>
+                                </div>
+                                <div formArrayName="skeets">
+                                    <div *ngFor="let skeet of configurationSkeets(i).controls; let j = index"
+                                        class="row" [formGroupName]="j">
+                                        <mat-select placeholder="Nothing selected" multiple formControlName="SkeetID"
+                                            class="col-6">
+                                            <mat-option *ngFor="let option of skeetOptions"
+                                                [disabled]="configurationSkeets(i).value[j].SkeetID.length > (getOneConfigClays(i)%2) && !configurationSkeets(i).value[j].SkeetID.includes(option.ID)"
+                                                [value]="option.ID">{{option.Name}}</mat-option>
+                                        </mat-select>
+                                        <ng-container *ngIf="j === 0">
+                                            <a class="custom-link addMore" (click)="addConfigurationSkeets(i)"> Add
+                                                Skeet </a>
+                                        </ng-container>
+                                        <ng-container *ngIf="j !== 0">
+                                            <a class=" custom-link removeitems" (click)="removConfigurationSkeets(i,j)">
+                                                Remove </a>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-skeet">
+                    Total <span class="valuesNo">{{getTotalClays()}}</span> shots with <span
+                        class="valuesNo">{{getTotalClays()}}</span> clays
+                </div>
+            </div>
+        </div>
+    </form>
+    <button (click)="onSubmit()" mat-raised-button color="primary">Submit</button>
+</div>

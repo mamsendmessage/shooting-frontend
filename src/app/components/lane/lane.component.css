@@ -167,3 +167,7 @@
             rgba(87, 140, 180, 1) 100%);
     
 }
+
+.small-font{
+    font-size: 18px;
+}

@@ -5,13 +5,21 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CommunicationService {
-  
+
   constructor(private http: HttpClient) { }
 
   public async getData(pUrl: string): Promise<any> {
     try {
       const tResponse = await this.http.get(pUrl).toPromise();
       return tResponse;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  public async download(pUrl: string) {
+    try {
+      return this.http.get(pUrl, { responseType: 'blob' })
     } catch (error) {
       return undefined;
     }
@@ -56,5 +64,5 @@ export class CommunicationService {
       return undefined;
     }
   }
-  
+
 }

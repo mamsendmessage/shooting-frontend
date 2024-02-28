@@ -34,6 +34,10 @@ export class TicketService {
     }
   }
 
+  public async DownloadFile(pFilename: string) {
+    const tFileName = pFilename.split('/')[1]
+    return this.communicationService.download(`${Constants.BaseServerUrl}download/${tFileName}`);
+  }
 
   //Anonymous Call
   public async GetTicketOnLane(pLaneId: number, pIsAllStatuses: boolean = false): Promise<X_TodayPlayer> {

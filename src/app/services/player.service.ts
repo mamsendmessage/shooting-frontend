@@ -149,7 +149,7 @@ export class PlayerService {
         const element = tResponse.payload;
         tPlayer = new Player(element);
       }
-      tPlayer.Photo = Constants.BaseServerUrl + tPlayer.Photo.replace('images', '');
+      tPlayer.Photo = Constants.BaseServerUrl + tPlayer.Photo;
 
       return tPlayer;
     } catch (error) {

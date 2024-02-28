@@ -100,13 +100,14 @@ export class ConfigurationService {
   }
 
 
-  public async AddConfig(pLevelName: string, pImagePath: string, pConfig: Configuration) {
+  public async AddConfig(pLevelName: string, pImagePath: string, pGameTypeId: number, pConfig: Configuration) {
     try {
       const tUrl: string = `${this.url}/AddConfig`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, {
         config: pConfig,
         level: pLevelName,
-        image: pImagePath
+        image: pImagePath,
+        gameTypeId: pGameTypeId
       });
       return tResponse?.result;
     } catch (error) {
@@ -114,6 +115,23 @@ export class ConfigurationService {
       return -1;
     }
   }
+
+
+  public async DeleteConfig(pId: number, pLevelId: number) {
+    try {
+      const tUrl: string = `${this.url}/DeleteConfig`;
+      const tResponse: APIResponse = await this.communicationService.postData(tUrl, {
+        id: pId,
+        level: pLevelId
+      });
+      return tResponse?.result;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+
 
   public async GetSessionsTime(): Promise<SessionsTime[]> {
     const tsessions: SessionsTime[] = [];
@@ -132,15 +150,15 @@ export class ConfigurationService {
       return tsessions;
     }
   }
-  public async GetPlayerLevel(): Promise<PlayerLevel[]> {
+  public async GetPlayerLevel(pGameTypeId: number = -1): Promise<PlayerLevel[]> {
     const tLevels: PlayerLevel[] = [];
     try {
-      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/levels`;
+      const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/levels/${pGameTypeId > 0 ? `?type=${pGameTypeId}` : ''}`;
       const tResponse: APIResponse = await this.communicationService.postData(tUrl, {});
       if (tResponse.result == 0) {
         for (let index = 0; index < tResponse.payload.length; index++) {
           const element = tResponse.payload[index];
-          tLevels.push(new PlayerLevel(+element.ID, element.Name, element.Image));
+          tLevels.push(new PlayerLevel(+element.ID, element.Name, element.GameTypeId, element.Image));
         }
       }
       return tLevels;

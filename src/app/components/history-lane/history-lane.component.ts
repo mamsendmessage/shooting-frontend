@@ -83,7 +83,7 @@ export class HistoryLaneComponent implements OnInit {
     try {
       this.currentTicket.State = 1;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      window.location.reload();
+      await this.initializeComponenet();
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +93,7 @@ export class HistoryLaneComponent implements OnInit {
     try {
       this.currentTicket.State = 6;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      window.location.reload();
+      await this.initializeComponenet();
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,7 @@ export class HistoryLaneComponent implements OnInit {
     try {
       this.currentTicket.State = 1;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      window.location.reload();
+      await this.initializeComponenet();
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +113,7 @@ export class HistoryLaneComponent implements OnInit {
     try {
       this.currentTicket.State = 3;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      window.location.reload();
+      await this.initializeComponenet();
     } catch (error) {
       console.log(error);
     }

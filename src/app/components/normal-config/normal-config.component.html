@@ -3,7 +3,15 @@
 
 <div class="box p-3" *ngIf="isReady">
     <form [formGroup]="skeetForm">
-        <span class="titlebox extrafonts"> {{typeName}} </span>
+        <div class="row">
+            <div class="col-10"><span class="titlebox extrafonts"> {{typeName}} </span></div>
+            <div class="col-2 end">
+                <button mat-mini-fab  class="custom-btn" (click)="DeleteConfig()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+        <br>
         <div class="skeet-play">
             <div class="row">
                 <div class="row mb-1">
@@ -25,8 +33,8 @@
                     <div class="col-sm-4">
                         <div class="d-flex">
                             <span class="timer icons"> </span>
-                            <input class="form-control mb-1 custom-select" placeholder=""
-                                formControlName="timeToRefill" type="number">
+                            <input class="form-control mb-1 custom-select" placeholder="" formControlName="timeToRefill"
+                                type="number">
                             <span class="shotsValus"> shot/s </span>
                         </div>
                     </div>
@@ -44,9 +52,9 @@
                     <div *ngFor="let control of skeetsArray.controls; let i = index" class="row">
                         <div class="col-12">
                             <div class="d-flex" [formGroupName]="i">
-                                <mat-select  placeholder="Nothing selected"
-                                    formControlName="skeetID" multiple>
-                                    <mat-option *ngFor="let option of skeetOptions" [disabled]="skeetsArray.value[i].skeetID.length > (getTotalClays()%2) && !skeetsArray.value[i].skeetID.includes(option.ID)"
+                                <mat-select placeholder="Nothing selected" formControlName="skeetID" multiple>
+                                    <mat-option *ngFor="let option of skeetOptions"
+                                        [disabled]="skeetsArray.value[i].skeetID.length > (getTotalClays()%2) && !skeetsArray.value[i].skeetID.includes(option.ID)"
                                         [value]="option.ID">{{option.Name}}</mat-option>
                                 </mat-select>
                                 <ng-container *ngIf="i === 0">
@@ -61,7 +69,7 @@
                 </div>
             </div>
             <div class="total-skeet">
-                Total <span class="valuesNo">{{   getTotalClays()  }}</span> shots with <span class="valuesNo">{{
+                Total <span class="valuesNo">{{ getTotalClays() }}</span> shots with <span class="valuesNo">{{
                     getTotalClays() }}</span> clays
             </div>
         </div>

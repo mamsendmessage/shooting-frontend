@@ -38,7 +38,6 @@
                                     <div class="col-sm-4 pd-r-1">
                                         <label for="MobNum" class="form-label">Mobile Numer</label>
                                         <div class="input-group 3">
-                                            <span class="input-group-text flags" id="qatariMobile"></span>
                                             <input type="text" class="form-control" placeholder="66-XXXXXXXX"
                                                 formControlName="mobileNumber" aria-label="qatariMobile"
                                                 aria-describedby="basic-addon1">
@@ -49,7 +48,7 @@
                                     </div>
                                     <div class="col-sm-2  ">
                                         <label for="firstName" class="form-label">Age</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="Above 21 "
+                                        <input type="text" class="form-control" id="firstName" placeholder="Age"
                                             value="" required="" formControlName="age">
                                         <div class="error-hint" *ngIf="isAttributeIsNotValid('age')">
                                             Age should be grater than 21.

@@ -1,5 +1,4 @@
-
-.mat-select{
+.mat-select {
     border: 1px solid #a0b2c4;
     border-radius: 5px;
     height: 37px;
@@ -8,4 +7,28 @@
     box-shadow: 0px 0px 6px rgb(160 178 196) inset;
     min-width: 50px;
     width: 26%;
+}
+
+.end {
+    justify-content: end;
+    display: flex;
+}
+
+.center {
+    justify-content: center;
+    display: flex;
+}
+
+.single-select {
+    width: 70%;
+    margin: 0px 18px;
+    border: 1px solid #a0b2c4;
+    border-radius: 5px;
+    height: 37px;
+    box-shadow: 0px 0px 6px rgb(160 178 196) inset;
+
+}
+
+.custom-height{
+    height: 15px;
 }

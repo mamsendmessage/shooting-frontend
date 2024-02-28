@@ -29,7 +29,7 @@ export class PlayerTableComponent implements OnInit, OnChanges {
     this.nationalities = await this.configService.GetAllNationalites();
     for (let index = 0; index < this.data.length; index++) {
       const element = this.data[index];
-      element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo?.replace('images', '') : this.myImgUrl;
+      element.Photo = element.Photo && element.Photo.length > 0 ? Constants.BaseServerUrl + element.Photo : this.myImgUrl;
       element.Nationality = this.nationalities.find((item) => item.ID == element.NationalityId).Name;
     }
     this.isReady = true;
@@ -54,7 +54,7 @@ export class PlayerTableComponent implements OnInit, OnChanges {
     const startIndex = this.startIndex;
     const endIndex = (startIndex + this.itemsPerPage) > this.data.length ? this.data.length : (startIndex + this.itemsPerPage);
     this.players = this.data.slice(startIndex, endIndex);
-    
+
   }
 
   public updateItemPerPage(pValue: any) {
@@ -62,12 +62,15 @@ export class PlayerTableComponent implements OnInit, OnChanges {
   }
 
   public selectItem(pTikcet) {
+
     this.openCreateUserDialog(pTikcet);
   }
 
-  public async openCreateUserDialog(pTikcet): Promise<void> {
+  public async openCreateUserDialog(pPlayer: Player): Promise<void> {
     const dialogRef = this.dialog.open(UserProfileComponent, {
-      data: pTikcet,
+      data: {
+        playerId: pPlayer.ID,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {

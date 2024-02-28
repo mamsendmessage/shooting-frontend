@@ -11,6 +11,8 @@ import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { TicketService } from 'src/app/services/ticket.service';
 import { SessionsTime } from 'src/app/models/SessionsTime';
 import { PlayerLevel } from 'src/app/models/PlayerLevel';
+import { catchError, throwError, timeout } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-ticket-modal',
   templateUrl: './create-ticket-modal.component.html',
@@ -22,30 +24,32 @@ export class CreateTicketModalComponent implements OnInit {
   public image: string = '';
   public laneId: number = -1;
   public fileName: string = 'No file selected';
+  public filePath: string = '';
   public nationalities: Nationality[] = [];
   public SessionsTime: SessionsTime[] = [];
   public PlayerLevels: PlayerLevel[] = [];
+  public isFileUploaded: boolean = false;
 
-  
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
     if (pPlayer && pPlayer.ID > 0) {
-      this.fileName = pPlayer.Document;
-      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo.replace('images', '') : null;
+      this.fileName = this.pPlayer.Name + "_wiver_document";
+      this.filePath = Constants.BaseServerUrl + pPlayer.Document;
+      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo : null;
       this.ticketForm = this.fb.group({
         nameOfPlayer: [pPlayer.Name, Validators.required],
         nationality: [pPlayer.NationalityId, Validators.required],
         mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
         age: [pPlayer.Age, Validators.required],
         gameType: ['1', Validators.required],
-        levelOfPlayer: ['1', Validators.required],
+        levelOfPlayer: ['1'],
         sessionTime: ['1', Validators.required],
         laneId: [''],
         photo: [''],
-        document: [''],
+        document: [pPlayer.Document],
         passportsNo: [pPlayer.PassportsNo, Validators.required],
         membershipNo: [pPlayer.MembershipNo, Validators.required],
         membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
@@ -57,7 +61,7 @@ export class CreateTicketModalComponent implements OnInit {
         mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
         age: ['', Validators.required],
         gameType: ['1', Validators.required],
-        levelOfPlayer: ['1', Validators.required],
+        levelOfPlayer: ['1'],
         sessionTime: ['1', Validators.required],
         laneId: [''],
         photo: [''],
@@ -80,6 +84,10 @@ export class CreateTicketModalComponent implements OnInit {
       })
   }
 
+  public async ChangeGameType(pGameTypeId){
+    this.PlayerLevels = await this.configService.GetPlayerLevel(pGameTypeId);
+  }
+
   async ngOnInit() {
     this.nationalities = await this.configService.GetAllNationalites();
     this.SessionsTime = await this.configService.GetSessionsTime();
@@ -97,6 +105,10 @@ export class CreateTicketModalComponent implements OnInit {
         this.openAlertDialog('Please Select Avaiable Lane');
         return;
       }
+      if (!this.isDocumentUploaded()) {
+        this.openAlertDialog('Please Upload Wiver File');
+        return;
+      }
       const tPlayer: Player = new Player(null);
       tPlayer.Age = this.ticketForm.value.age;
       tPlayer.MobileNumber = this.ticketForm.value.mobileNumber;
@@ -110,7 +122,7 @@ export class CreateTicketModalComponent implements OnInit {
       const tTicket: Ticket = new Ticket(null);
       tTicket.UserId = tPlayer.ID;
       tTicket.GameTypeId = this.ticketForm.value.gameType;
-      tTicket.PlayerLevelId = this.ticketForm.value.levelOfPlayer;
+      tTicket.PlayerLevelId = tTicket.GameTypeId != 3 ? this.ticketForm.value.levelOfPlayer : null;
       tTicket.SessionTimeId = this.ticketForm.value.sessionTime;
       tTicket.LaneId = this.laneId;
       const tResult: number = await this.ticketService.AddTicketForNewPlayer(tPlayer, tTicket);
@@ -153,10 +165,52 @@ export class CreateTicketModalComponent implements OnInit {
     this.ticketForm.get('document').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
+      this.isFileUploaded = true;
       this.ticketForm.value.document = reader.result;
-      console.log(reader.result);
+
     };
     reader.readAsDataURL(file);
+  }
+
+  public async download() {
+    (await this.ticketService.DownloadFile(this.fileName))
+      .pipe(
+        timeout(100000),
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((response) => {
+        this.saveFile(response);
+      })
+  }
+
+  private getExtensionFromContentType(contentType: string): string {
+    switch (contentType) {
+      case 'application/pdf':
+        return '.pdf';
+      case 'image/jpeg':
+        return '.jpg';
+      case 'image/png':
+        return '.png';
+      // Add more cases as needed for other content types
+      default:
+        return '';
+    }
+  }
+
+  private saveFile(blob: Blob) {
+    const a = document.createElement('a');
+    const objectUrl = URL.createObjectURL(blob);
+    const contentType = blob.type;
+    const extension = this.getExtensionFromContentType(contentType);
+    a.href = objectUrl;
+    a.download = this.pPlayer.Name + "_wiver_document" + extension;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
   }
 
   public isAttributeIsNotValid(pName) {
@@ -172,6 +226,10 @@ export class CreateTicketModalComponent implements OnInit {
 
   public isLaneValid() {
     return this.laneId > 0;
+  }
+
+  public isDocumentUploaded() {
+    return this.isFileUploaded;
   }
 
   openAlertDialog(pMessage: string) {

@@ -16,7 +16,7 @@
                 </div>
                 <div class="historyof-playing">
                     <div class="row">
-                        <button *ngIf="allowedStatusForReady.includes(ticket.State)" (click)="sendDataToLanePage()" mat-raised-button color="primary">Ready</button>
+                        <button *ngIf="allowedStatusForReady.includes(ticket.State) && isLaneReady" (click)="sendDataToLanePage()" mat-raised-button color="primary">Ready</button>
                        
                     </div>
                     <div class="row">

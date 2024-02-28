@@ -2,7 +2,7 @@ export class Ticket {
     public ID: number;
     public UserId: number;
     public LaneId: number;
-    public PlayerLevelId: number;
+    public PlayerLevelId?: number;
     public SessionTimeId: number;
     public GameTypeId: number;
     public State: number;

@@ -19,12 +19,12 @@ export class UserProfileComponent implements OnInit {
   public numOfTickets: number;
   constructor(public dialogRef: MatDialogRef<UserProfileComponent>,
     private ticketService: TicketService,
-    private playerService: PlayerService, @Inject(MAT_DIALOG_DATA) public pTikcet: X_TodayPlayer) {
+    private playerService: PlayerService, @Inject(MAT_DIALOG_DATA) public pData: any) {
   }
   async ngOnInit(): Promise<void> {
-    this.player = await this.playerService.GetPlayerById(this.pTikcet.UserId);
-    this.level = this.pTikcet.PlayerLevel;
-    this.photo = Constants.BaseServerUrl + this.player.Photo?.replace('images', '');
+    this.player = await this.playerService.GetPlayerById(this.pData.playerId);
+    this.level = this.pData.PlayerLevel ? this.pData.PlayerLevel : null;
+    this.photo = Constants.BaseServerUrl + this.player.Photo;
     this.isReady = true;
     this.numOfTickets = (await this.ticketService.GetUserTickets(this.player.ID)).length;
   }

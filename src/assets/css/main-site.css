@@ -2695,6 +2695,21 @@ span.Memeberships {
   transform: scale(1.1);
 }
 
+.removeConfig{
+
+  width: 30px;
+  height: 30px;
+  background: url(../img/closeslides.svg.svg) no-repeat center center;
+  border-radius: 60px;
+  vertical-align: middle;
+  line-height: 30px;
+  font-size: 0px;
+  margin-top: 3px;
+  margin-left: auto;
+  background-size: contain;
+  min-width: 30px;
+}
+
 
 .removeitems{
 

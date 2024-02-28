@@ -23,17 +23,19 @@ export class AllocateDialoadComponent implements OnInit {
   public numOfTickets: number;
   allowedStatusForCancel: number[] = [0, 2,];
   allowedStatusForReady: number[] = [0, 2,];
+  public isLaneReady: boolean = true;
 
-
-  constructor(public dialogRef: MatDialogRef<AllocateDialoadComponent>,@Inject(MAT_DIALOG_DATA) public ticket: X_TodayPlayer, private socketService: SocketCommunicationService, private playerService: PlayerService, private ticketService: TicketService,public dialog: MatDialog) { }
+  constructor(public dialogRef: MatDialogRef<AllocateDialoadComponent>, @Inject(MAT_DIALOG_DATA) public ticket: X_TodayPlayer, private socketService: SocketCommunicationService, private playerService: PlayerService, private ticketService: TicketService, public dialog: MatDialog) { }
   async ngOnInit(): Promise<void> {
-
-    console.log(this.ticket);
     this.player = await this.playerService.GetPlayerById(this.ticket.UserId);
     this.level = this.ticket.PlayerLevel;
-    this.photo = Constants.BaseServerUrl + this.player.Photo.replace('images', '');
+    this.photo = Constants.BaseServerUrl + this.player.Photo;
     this.isReady = true;
     this.numOfTickets = (await this.ticketService.GetUserTickets(this.player.ID)).length;
+    const tTicket: X_TodayPlayer = await this.ticketService.GetTicketOnLane(this.ticket.LaneId, true);
+    if (tTicket.State == 1) {
+      this.isLaneReady = false;
+    }
     this.isReady = true;
   }
 

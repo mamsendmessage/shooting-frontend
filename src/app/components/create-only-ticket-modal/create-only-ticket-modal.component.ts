@@ -12,6 +12,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { SessionsTime } from 'src/app/models/SessionsTime';
 import { PlayerLevel } from 'src/app/models/PlayerLevel';
 import { PlayerService } from 'src/app/services/player.service';
+import { catchError, throwError, timeout } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-only-ticket-modal',
   templateUrl: './create-only-ticket-modal.component.html',
@@ -36,19 +38,18 @@ export class CreateOnlyTicketModalComponent implements OnInit {
   public passportsNo: string = '';
   public membershipNo: string = '';
   public membershipExpiry: string = '';
-
+  public filePath:string='';
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private playerService: PlayerService, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
     if (pPlayer && pPlayer.ID > 0) {
-      this.fileName = pPlayer.Document;
-      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo.replace('images', '') : null;
+      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo: null;
       this.ticketForm = this.fb.group({
         mobileNumber: [],
         gameType: ['1', Validators.required],
-        levelOfPlayer: ['1', Validators.required],
+        levelOfPlayer: ['1'],
         sessionTime: ['1', Validators.required],
         laneId: [''],
       });
@@ -56,7 +57,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
       this.ticketForm = this.fb.group({
         mobileNumber: [],
         gameType: ['1', Validators.required],
-        levelOfPlayer: ['1', Validators.required],
+        levelOfPlayer: ['1'],
         sessionTime: ['1', Validators.required],
         laneId: [''],
       });
@@ -105,7 +106,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
       const tTicket: Ticket = new Ticket(null);
       tTicket.UserId = this.playerId;
       tTicket.GameTypeId = this.ticketForm.value.gameType;
-      tTicket.PlayerLevelId = this.ticketForm.value.levelOfPlayer;
+      tTicket.PlayerLevelId = tTicket.GameTypeId != 3 ? this.ticketForm.value.levelOfPlayer : null;
       tTicket.SessionTimeId = this.ticketForm.value.sessionTime;
       tTicket.State = 2;
       tTicket.LaneId = this.laneId;
@@ -130,6 +131,10 @@ export class CreateOnlyTicketModalComponent implements OnInit {
         });
       }
     });
+  }
+
+  public async ChangeGameType(pGameTypeId){
+    this.PlayerLevels = await this.configService.GetPlayerLevel(pGameTypeId);
   }
 
   handleImage(webcamImage: WebcamImage) {
@@ -165,6 +170,8 @@ export class CreateOnlyTicketModalComponent implements OnInit {
       const tMobileNumber: string = this.ticketForm.get('mobileNumber').value;
       const tPlayer = await this.playerService.GetPlayerByMobileNumber(tMobileNumber);
       if (tPlayer && tPlayer.ID > 0) {
+        this.fileName = tPlayer.Name + "_wiver_document";
+        this.filePath = Constants.BaseServerUrl + tPlayer.Document;
         this.isPlayerFound = true;
         this.ticketForm.controls['sessionTime'].enable();
         this.ticketForm.controls['levelOfPlayer'].enable();
@@ -176,9 +183,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
         this.passportsNo = tPlayer.PassportsNo;
         this.membershipExpiry = new Date(tPlayer.MembershipExpiry).toLocaleDateString();
         this.membershipNo = tPlayer.MembershipNo;
-        this.image = tPlayer.Photo ? Constants.BaseServerUrl + tPlayer.Photo.replace('images', '') : null;
-
-
+        this.image = tPlayer.Photo ? Constants.BaseServerUrl + tPlayer.Photo : null;
       } else {
         this.isPlayerFound = false;
         this.ticketForm.controls['sessionTime'].disable();
@@ -198,6 +203,48 @@ export class CreateOnlyTicketModalComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  
+  public async download() {
+    (await this.ticketService.DownloadFile(this.fileName))
+      .pipe(
+        timeout(100000),
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((response) => {
+        this.saveFile(response);
+      })
+  }
+
+  private getExtensionFromContentType(contentType: string): string {
+    switch (contentType) {
+      case 'application/pdf':
+        return '.pdf';
+      case 'image/jpeg':
+        return '.jpg';
+      case 'image/png':
+        return '.png';
+      // Add more cases as needed for other content types
+      default:
+        return '';
+    }
+  }
+
+  private saveFile(blob: Blob) {
+    const a = document.createElement('a');
+    const objectUrl = URL.createObjectURL(blob);
+    const contentType = blob.type;
+    const extension = this.getExtensionFromContentType(contentType);
+    a.href = objectUrl;
+    a.download = this.fileName + extension;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
   }
 
   openAlertDialog(pMessage: string) {

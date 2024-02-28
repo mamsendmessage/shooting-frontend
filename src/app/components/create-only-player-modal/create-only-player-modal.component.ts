@@ -27,7 +27,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   public nationalities: Nationality[] = [];
   public SessionsTime: SessionsTime[] = [];
   public PlayerLevels: PlayerLevel[] = [];
-
+  public isFileUploaded: boolean = false;
 
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
@@ -38,15 +38,18 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       nameOfPlayer: ['', Validators.required],
       nationality: [634, Validators.required],
       mobileNumber: ['', [Validators.required,
-      Validators.pattern("^[0-9]*$"),
-      Validators.minLength(8), Validators.maxLength(8)]],
-      age: ['', [Validators.required,Validators.min(21)]],
+      Validators.pattern("^[0-9]*$")]],
+      age: ['', [Validators.required]],
       photo: [''],
       document: [''],
       passportsNo: ['', Validators.required],
       membershipNo: ['', Validators.required],
       membershipExpiry: ['', Validators.required]
     });
+  }
+
+  public isDocumentUploaded() {
+    return this.isFileUploaded;
   }
 
   async ngOnInit() {
@@ -60,6 +63,10 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   }
   async onSubmit() {
     if (this.playerForm.valid) {
+      if (!this.isDocumentUploaded()) {
+        this.openAlertDialog('Please Upload Wiver File');
+        return;
+      }
       const tPlayer: Player = new Player(null);
       tPlayer.Age = this.playerForm.value.age;
       tPlayer.MobileNumber = this.playerForm.value.mobileNumber;
@@ -109,7 +116,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       this.playerForm.value.document = reader.result;
-      console.log(reader.result);
+      this.isFileUploaded = true;
     };
     reader.readAsDataURL(file);
   }
@@ -124,6 +131,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       return false;
     }
   }
+
   openAlertDialog(pMessage: string) {
     this.dialog.open(AlertDialogComponent, {
       data: {

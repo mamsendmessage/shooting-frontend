@@ -6,6 +6,7 @@ import { SkeetConfig } from 'src/app/models/SkeetConfig';
 import { ConfigurationService } from 'src/app/services/config.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GameType } from 'src/app/models/enums';
 
 @Component({
   selector: 'app-normal-config',
@@ -27,8 +28,8 @@ export class NormalConfigComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.skeetOptions = await this.configService.GetAllSkeets();
     const tPlayerLevels = await this.configService.GetPlayerLevel();
-
-    this.typeName = tPlayerLevels.find((item) => item.ID == this.type)?.Name;
+    const tLevel = tPlayerLevels.find((item) => item.ID == this.type);
+    this.typeName = tLevel?.Name + " - " + GameType[tLevel.GameTypeId].toString();
     this.tempConfig = this.config.config.length > 0 ? JSON.parse(this.config.config) : new Configuration();
     this.initializeForm();
     this.isReady = true;
@@ -55,6 +56,7 @@ export class NormalConfigComponent implements OnInit {
   public getSkeetsFeilds(pSkeet: SkeetConfig = new SkeetConfig()) {
     return new FormGroup({
       skeetID: new FormControl(pSkeet.SkeetID),
+      order: new FormControl(pSkeet.Order == -1 ? this.getNextOrder() : pSkeet.Order)
     })
   }
 
@@ -81,6 +83,24 @@ export class NormalConfigComponent implements OnInit {
     }
     return tCount;
   }
+
+
+  public getNextOrder() {
+    try {
+      let tMaxOrder = 0;
+      for (let index = 0; index < this.skeetForm.value.skeets.length; index++) {
+        const tOrder = this.skeetForm.value.skeets[index].order;
+        if (tOrder > tMaxOrder) {
+          tMaxOrder = tOrder;
+        }
+      }
+      return tMaxOrder + 1;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
   async onSubmit(): Promise<void> {
     const tConfiguration: Configuration = new Configuration();
     tConfiguration.TimePerShot = this.skeetForm.value.timePerShot;
@@ -93,6 +113,7 @@ export class NormalConfigComponent implements OnInit {
         const tItem = this.skeetOptions.find((item) => item.ID == element);
         tSkeetConfig.API.push(tItem.API);
       }
+      tSkeetConfig.Order = this.skeetForm.value.skeets[index].order;
       tConfiguration.Skeets.push(tSkeetConfig);
     }
     tConfiguration.NumberOfSkeet = tConfiguration.Skeets.length;
@@ -102,6 +123,15 @@ export class NormalConfigComponent implements OnInit {
       this.openAlertDialog('The Settings Saved Successfully');
     } else {
       this.openAlertDialog('Faild To Save Settings');
+    }
+  }
+
+  async DeleteConfig() {
+    try {
+      this.configService.DeleteConfig(this.config.ID, this.config.Type);
+      location.reload();
+    } catch (error) {
+      console.log(error);
     }
   }
 

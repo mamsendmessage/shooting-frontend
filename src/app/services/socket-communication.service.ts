@@ -38,10 +38,10 @@ export class SocketCommunicationService {
     }
   }
 
-  public listenToTimer(): Observable<any> {
+  public listenToRefillTimer(): Observable<any> {
     try {
       return new Observable((Subscribe) => {
-        this.clientSocket.on("TimeUpdate", (data) => {
+        this.clientSocket.on("TimeToRefill", (data) => {
           Subscribe.next(data);
         })
       })
@@ -50,6 +50,21 @@ export class SocketCommunicationService {
       return null;
     }
   }
+
+
+  public listenToTimePerShotTimer(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("TimePerShot", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   public listenToFinish(): Observable<any> {
     try {
       return new Observable((Subscribe) => {

@@ -42,7 +42,6 @@ import { CompetitionConfigComponent } from './components/competition-config/comp
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { DEFAULT_TIMEOUT, HttpInterceptorService } from './communication/http-interceptor.service';
-import { SkeetConffigComponent } from './components/skeet-conffig/skeet-conffig.component';
 import { LaneComponent } from './components/lane/lane.component';
 import { AllocateDialoadComponent } from './components/allocate-diaload/allocate-diaload.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -91,7 +90,6 @@ import { SetPasswordDialogComponent } from './components/user-management/set-pas
     CompetitionConfigComponent,
     UserProfileComponent,
     AlertDialogComponent,
-    SkeetConffigComponent,
     LaneComponent,
     AllocateDialoadComponent,
     HistoryLaneComponent,

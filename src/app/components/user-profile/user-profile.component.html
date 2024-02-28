@@ -1,18 +1,20 @@
-<div  tabindex="-1" aria-labelledby="euserProfileLabel" aria-hidden="true">
+<div tabindex="-1" aria-labelledby="euserProfileLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered sidePanels">
-        <div class="modal-content">   
+        <div class="modal-content">
             <div class="modal-body">
                 <div class="photoUsers">
                     <div class="card-cover" style="background: url(assets/img/user-m.jpg);"> </div>
-                    <img [src]="photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'" class="profilesPhoto"> 
+                    <img [src]="photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'"
+                        class="profilesPhoto">
                     <span class="status avilable"> </span>
                 </div>
                 <div class="name-users">{{player.Name}}</div>
                 <div class="other-info">
                     <span class="mobile icons-profile ">{{player.MobileNumber}}</span>
-                    <span class="age icons-profile ">  {{player.Age}} <span class="hints">years </span></span>
-                    <span class="levelPlyaer icons-profile "> {{level}} </span> 
-                    <span class="total-tickets icons-profile "> {{numOfTickets}}  <span class="hints">Tickets </span> </span> 
+                    <span class="age icons-profile "> {{player.Age}} <span class="hints">years </span></span>
+                    <span class="levelPlyaer icons-profile " *ngIf="level"> {{level}} </span>
+                    <span class="total-tickets icons-profile "> {{numOfTickets}} <span class="hints">Tickets </span>
+                    </span>
                 </div>
                 <div class="historyof-playing">
                     <div class="row">
@@ -20,6 +22,6 @@
                     </div>
                 </div>
             </div>
-        </div> 
         </div>
- </div>
+    </div>
+</div>
