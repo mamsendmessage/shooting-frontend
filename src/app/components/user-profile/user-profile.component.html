@@ -1,7 +1,7 @@
 <div tabindex="-1" aria-labelledby="euserProfileLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered sidePanels">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="player">
                 <div class="photoUsers">
                     <div class="card-cover" style="background: url(assets/img/user-m.jpg);"> </div>
                     <img [src]="photo" onerror="this.onerror=null; this.src='assets/img/profile-8.jpg'"

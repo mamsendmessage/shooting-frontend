@@ -3,13 +3,15 @@
         <div class="modal-content darks">
             <form [formGroup]="playerForm">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Create New Player </h5>
+                    <h5 *ngIf="!pPlayer" class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Create New Player </h5>
+                    <!-- <button type="button" class="btn-close" aria-label="Close" (click)="close()" id="close1"></button> -->
+                    <h5 *ngIf="pPlayer" class="modal-title" id="createUserLabel"> <i class="tiketsIcon"></i> Edit Player {{pPlayer.Name}} </h5>
                     <button type="button" class="btn-close" aria-label="Close" (click)="close()" id="close1"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xxl-8 col-xl-8">
-                            <span class="titlebox  mr-auto"> Create New Users Profile </span>
+                            <span  class="titlebox  mr-auto">{{pPlayer?'Edit':'Create'}} New Users Profile </span>
                         </div>
                     </div>
                     <div class="row">
@@ -108,14 +110,27 @@
                                             <p class="file-name" id="js-file-name">{{fileName}}</p>
                                         </div>
                                     </div>
+
+                                 
+                                </div>
+                                  
+                            </div>
+                            <div class="takePhoto mr-t-6">
+                                <div class="file-wrapper" *ngIf="filePath">
+
+                                    <a class="file-name" id="js-file-name" (click)="download()"
+                                        [download]="fileName">{{fileName}}</a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="close()" class="btn-cancel">Cancel</button>
-                    <button type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Add New Player</button>
+                    <button  *ngIf="!pPlayer" type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Add New Player</button>
+                    <button  *ngIf="pPlayer" type="button" (click)="onSubmit()" class=" btn-generate" id="close2">Update Player</button>
+
                 </div>
             </form>
         </div>

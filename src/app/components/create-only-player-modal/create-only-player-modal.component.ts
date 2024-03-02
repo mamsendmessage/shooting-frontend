@@ -12,6 +12,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { SessionsTime } from 'src/app/models/SessionsTime';
 import { PlayerLevel } from 'src/app/models/PlayerLevel';
 import { PlayerService } from 'src/app/services/player.service';
+import { catchError, throwError, timeout } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-only-player-modal',
   templateUrl: './create-only-player-modal.component.html',
@@ -28,13 +30,37 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   public SessionsTime: SessionsTime[] = [];
   public PlayerLevels: PlayerLevel[] = [];
   public isFileUploaded: boolean = false;
+  public filePath: string = '';
 
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyPlayerModalComponent>,
-    private playerService: PlayerService, private configService: ConfigurationService, public dialog: MatDialog) {
+    private playerService: PlayerService,
+    private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public pPlayer: Player,) {
 
-    this.playerForm = this.fb.group({
+
+    console.log(this.pPlayer);
+    if (this.pPlayer && this.pPlayer.ID > 0) {
+      //edit mode 
+      this.filePath = Constants.BaseServerUrl + pPlayer.Document;
+      this.isFileUploaded=true;
+      this.image = pPlayer.Photo ;
+      this.fileName = pPlayer.Name + "_wiver_document";
+      this.playerForm = this.fb.group({
+        nameOfPlayer: [pPlayer.Name, Validators.required],
+        nationality: [pPlayer.NationalityId, Validators.required],
+        mobileNumber: [pPlayer.MobileNumber, [Validators.required,
+        Validators.pattern("^[0-9]*$")]],
+        age: [pPlayer.Age, [Validators.required]],
+        photo: [pPlayer.Photo],
+        document: [pPlayer.Document],
+        passportsNo: [pPlayer.PassportsNo, Validators.required],
+        membershipNo: [pPlayer.MembershipNo, Validators.required],
+        membershipExpiry: [ new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
+      });
+    }
+    else 
+    {  this.playerForm = this.fb.group({
       nameOfPlayer: ['', Validators.required],
       nationality: [634, Validators.required],
       mobileNumber: ['', [Validators.required,
@@ -46,6 +72,8 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       membershipNo: ['', Validators.required],
       membershipExpiry: ['', Validators.required]
     });
+
+    }
   }
 
   public isDocumentUploaded() {
@@ -139,6 +167,44 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
         message: pMessage
       }
     });
+  }
+  public async download() {
+    (await this.ticketService.DownloadFile(this.pPlayer.Document))
+      .pipe(
+        timeout(100000),
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((response) => {
+        this.saveFile(response);
+      })
+  }
+  private getExtensionFromContentType(contentType: string): string {
+    switch (contentType) {
+      case 'application/pdf':
+        return '.pdf';
+      case 'image/jpeg':
+        return '.jpg';
+      case 'image/png':
+        return '.png';
+      // Add more cases as needed for other content types
+      default:
+        return '';
+    }
+  }
+  private saveFile(blob: Blob) {
+    const a = document.createElement('a');
+    const objectUrl = URL.createObjectURL(blob);
+    const contentType = blob.type;
+    const extension = this.getExtensionFromContentType(contentType);
+    a.href = objectUrl;
+    a.download = this.pPlayer.Name + "_wiver_document" + extension;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
   }
 
 }

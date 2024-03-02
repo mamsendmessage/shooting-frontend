@@ -7,6 +7,7 @@ import { AllocateDialoadComponent } from '../allocate-diaload/allocate-diaload.c
 import { Player } from 'src/app/models/Player';
 import { Nationality } from 'src/app/models/Nationality';
 import { ConfigurationService } from 'src/app/services/config.service';
+import { CreateOnlyPlayerModalComponent } from '../create-only-player-modal/create-only-player-modal.component';
 @Component({
   selector: 'app-player-table',
   templateUrl: './player-table.component.html',
@@ -67,10 +68,12 @@ export class PlayerTableComponent implements OnInit, OnChanges {
   }
 
   public async openCreateUserDialog(pPlayer: Player): Promise<void> {
-    const dialogRef = this.dialog.open(UserProfileComponent, {
-      data: {
-        playerId: pPlayer.ID,
-      },
+
+   
+    const dialogRef = this.dialog.open(CreateOnlyPlayerModalComponent, {
+      maxHeight: "95vh",
+      data: pPlayer,
+      
     });
 
     dialogRef.afterClosed().subscribe(result => {

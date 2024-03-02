@@ -34,43 +34,44 @@ export class CreateTicketModalComponent implements OnInit {
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
-
-    if (pPlayer && pPlayer.ID > 0) {
-      this.fileName = this.pPlayer.Name + "_wiver_document";
-      this.filePath = Constants.BaseServerUrl + pPlayer.Document;
-      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo : null;
-      this.ticketForm = this.fb.group({
-        nameOfPlayer: [pPlayer.Name, Validators.required],
-        nationality: [pPlayer.NationalityId, Validators.required],
-        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
-        age: [pPlayer.Age, Validators.required],
-        gameType: ['1', Validators.required],
-        levelOfPlayer: ['1'],
-        sessionTime: ['1', Validators.required],
-        laneId: [''],
-        photo: [''],
-        document: [pPlayer.Document],
-        passportsNo: [pPlayer.PassportsNo, Validators.required],
-        membershipNo: [pPlayer.MembershipNo, Validators.required],
-        membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
-      });
-    } else {
-      this.ticketForm = this.fb.group({
-        nameOfPlayer: ['', Validators.required],
-        nationality: [634, Validators.required],
-        mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
-        age: ['', Validators.required],
-        gameType: ['1', Validators.required],
-        levelOfPlayer: ['1'],
-        sessionTime: ['1', Validators.required],
-        laneId: [''],
-        photo: [''],
-        document: [''],
-        passportsNo: ['', Validators.required],
-        membershipNo: ['', Validators.required],
-        membershipExpiry: ['', Validators.required]
-      });
-    }
+debugger;
+if (pPlayer && pPlayer.ID > 0) {
+  this.fileName = this.pPlayer.Name + "_wiver_document";
+  this.filePath = Constants.BaseServerUrl + pPlayer.Document;
+  this.isFileUploaded=true;
+  this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo : null;
+  this.ticketForm = this.fb.group({
+    nameOfPlayer: [pPlayer.Name, Validators.required],
+    nationality: [pPlayer.NationalityId, Validators.required],
+    mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
+    age: [pPlayer.Age, Validators.required],
+    gameType: ['1', Validators.required],
+    levelOfPlayer: ['1'],
+    sessionTime: ['1', Validators.required],
+    laneId: [''],
+    photo: [''],
+    document: [pPlayer.Document],
+    passportsNo: [pPlayer.PassportsNo, Validators.required],
+    membershipNo: [pPlayer.MembershipNo, Validators.required],
+    membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
+  });
+} else {
+  this.ticketForm = this.fb.group({
+    nameOfPlayer: ['', Validators.required],
+    nationality: [634, Validators.required],
+    mobileNumber: [pPlayer.MobileNumber ? pPlayer.MobileNumber : '', Validators.required],
+    age: ['', Validators.required],
+    gameType: ['1', Validators.required],
+    levelOfPlayer: ['1'],
+    sessionTime: ['1', Validators.required],
+    laneId: [''],
+    photo: [''],
+    document: [''],
+    passportsNo: ['', Validators.required],
+    membershipNo: ['', Validators.required],
+    membershipExpiry: ['', Validators.required]
+  });
+}
     this.ticketForm.controls['sessionTime'].disable();
     this.ticketForm.controls['gameType'].valueChanges
       .subscribe((res: string) => {
@@ -100,6 +101,7 @@ export class CreateTicketModalComponent implements OnInit {
     location.reload();
   }
   async onSubmit() {
+    debugger;
     if (this.ticketForm.valid) {
       if (!this.isLaneValid()) {
         this.openAlertDialog('Please Select Avaiable Lane');
@@ -173,7 +175,7 @@ export class CreateTicketModalComponent implements OnInit {
   }
 
   public async download() {
-    (await this.ticketService.DownloadFile(this.fileName))
+    (await this.ticketService.DownloadFile(this.pPlayer.Document))
       .pipe(
         timeout(100000),
         catchError((error: HttpErrorResponse) => {
