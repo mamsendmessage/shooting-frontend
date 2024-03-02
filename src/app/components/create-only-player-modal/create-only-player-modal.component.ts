@@ -30,21 +30,19 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   public SessionsTime: SessionsTime[] = [];
   public PlayerLevels: PlayerLevel[] = [];
   public isFileUploaded: boolean = false;
+  public isNewDocument: boolean = false;
   public filePath: string = '';
-
+  public isEditMode: boolean = false;
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyPlayerModalComponent>,
     private playerService: PlayerService,
     private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public pPlayer: Player,) {
-
-
-    console.log(this.pPlayer);
     if (this.pPlayer && this.pPlayer.ID > 0) {
-      //edit mode 
+      this.isEditMode = true;
       this.filePath = Constants.BaseServerUrl + pPlayer.Document;
-      this.isFileUploaded=true;
-      this.image = pPlayer.Photo ;
+      this.isFileUploaded = true;
+      this.image = pPlayer.Photo;
       this.fileName = pPlayer.Name + "_wiver_document";
       this.playerForm = this.fb.group({
         nameOfPlayer: [pPlayer.Name, Validators.required],
@@ -56,22 +54,22 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
         document: [pPlayer.Document],
         passportsNo: [pPlayer.PassportsNo, Validators.required],
         membershipNo: [pPlayer.MembershipNo, Validators.required],
-        membershipExpiry: [ new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
+        membershipExpiry: [new Date(pPlayer.MembershipExpiry).toISOString().split('T')[0], Validators.required]
       });
     }
-    else 
-    {  this.playerForm = this.fb.group({
-      nameOfPlayer: ['', Validators.required],
-      nationality: [634, Validators.required],
-      mobileNumber: ['', [Validators.required,
-      Validators.pattern("^[0-9]*$")]],
-      age: ['', [Validators.required]],
-      photo: [''],
-      document: [''],
-      passportsNo: ['', Validators.required],
-      membershipNo: ['', Validators.required],
-      membershipExpiry: ['', Validators.required]
-    });
+    else {
+      this.playerForm = this.fb.group({
+        nameOfPlayer: ['', Validators.required],
+        nationality: [634, Validators.required],
+        mobileNumber: ['', [Validators.required,
+        Validators.pattern("^[0-9]*$")]],
+        age: ['', [Validators.required]],
+        photo: [''],
+        document: [''],
+        passportsNo: ['', Validators.required],
+        membershipNo: ['', Validators.required],
+        membershipExpiry: ['', Validators.required]
+      });
 
     }
   }
@@ -105,7 +103,24 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       tPlayer.PassportsNo = this.playerForm.value.passportsNo;
       tPlayer.MembershipNo = this.playerForm.value.membershipNo;
       tPlayer.MembershipExpiry = this.playerForm.value.membershipExpiry;
-      const tResult: number = await this.playerService.AddPlayer(tPlayer);
+      let tResult: number = 0;
+      if (this.isEditMode) {
+        let isNewPhoto: boolean = false;
+        tPlayer.ID = this.pPlayer.ID;
+        if (this.webcamImage) {
+          isNewPhoto = true;
+          tPlayer.Photo = this.webcamImage.imageAsBase64;
+        } else {
+          isNewPhoto = false;
+          tPlayer.Photo = this.playerForm.value.photo;
+          tPlayer.Photo = tPlayer.Photo.replace(Constants.BaseServerUrl, '');
+        }
+
+        tResult = await this.playerService.UpdatePlayer(tPlayer,isNewPhoto,this.isNewDocument);
+      } else {
+        tResult = await this.playerService.AddPlayer(tPlayer);
+      }
+
       if (tResult == 0) {
         this.close();
       } else if (tResult == -2) {
@@ -143,6 +158,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
     this.playerForm.get('document').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
+      this.isNewDocument = true;
       this.playerForm.value.document = reader.result;
       this.isFileUploaded = true;
     };

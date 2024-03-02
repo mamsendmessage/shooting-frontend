@@ -128,8 +128,12 @@ export class NormalConfigComponent implements OnInit {
 
   async DeleteConfig() {
     try {
-      this.configService.DeleteConfig(this.config.ID, this.config.Type);
-      location.reload();
+      const tResult = await this.configService.DeleteConfig(this.config.ID, this.config.Type);
+      if (tResult == -1) {
+        this.openAlertDialog('Faild To Delete Settings, Please make sure that now player use this level');
+      }else{
+        location.reload();
+      }
     } catch (error) {
       console.log(error);
     }

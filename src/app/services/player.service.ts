@@ -117,10 +117,14 @@ export class PlayerService {
     }
   }
 
-  public async UpdatePlayer(pPlayer: Player): Promise<number> {
+  public async UpdatePlayer(pPlayer: Player, isNewPhoto: boolean = false, isNewDocument: boolean = false): Promise<number> {
     try {
       const tUrl: string = `${this.url}/${pPlayer.ID}`;
-      const tResponse: APIResponse = await this.communicationService.putData(tUrl, pPlayer);
+      const tResponse: APIResponse = await this.communicationService.putData(tUrl, {
+        player: pPlayer,
+        isNewPhoto: isNewPhoto,
+        isNewDocument: isNewDocument
+      });
       return tResponse.result;
     } catch (error) {
       console.log(error);

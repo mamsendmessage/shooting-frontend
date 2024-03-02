@@ -37,15 +37,16 @@ export class CreateOnlyTicketModalComponent implements OnInit {
   public nationality: string = '';
   public passportsNo: string = '';
   public membershipNo: string = '';
+  public document: string = '';
   public membershipExpiry: string = '';
-  public filePath:string='';
+  public filePath: string = '';
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private playerService: PlayerService, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
 
     if (pPlayer && pPlayer.ID > 0) {
-      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo: null;
+      this.image = pPlayer.Photo ? Constants.BaseServerUrl + pPlayer.Photo : null;
       this.ticketForm = this.fb.group({
         mobileNumber: [],
         gameType: ['1', Validators.required],
@@ -68,7 +69,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
 
     this.ticketForm.controls['gameType'].valueChanges
       .subscribe((res: string) => {
-        if (res != "3") {
+        if (res != "2") {
           this.ticketForm.controls['sessionTime'].disable();
           this.ticketForm.controls['sessionTime'].removeValidators(Validators.required);
         } else {
@@ -133,7 +134,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
     });
   }
 
-  public async ChangeGameType(pGameTypeId){
+  public async ChangeGameType(pGameTypeId) {
     this.PlayerLevels = await this.configService.GetPlayerLevel(pGameTypeId);
   }
 
@@ -184,6 +185,7 @@ export class CreateOnlyTicketModalComponent implements OnInit {
         this.membershipExpiry = new Date(tPlayer.MembershipExpiry).toLocaleDateString();
         this.membershipNo = tPlayer.MembershipNo;
         this.image = tPlayer.Photo ? Constants.BaseServerUrl + tPlayer.Photo : null;
+        this.document = tPlayer.Document;
       } else {
         this.isPlayerFound = false;
         this.ticketForm.controls['sessionTime'].disable();
@@ -205,19 +207,21 @@ export class CreateOnlyTicketModalComponent implements OnInit {
     }
   }
 
-  
+
   public async download() {
-    (await this.ticketService.DownloadFile(this.fileName))
-      .pipe(
-        timeout(100000),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(error);
+    if (this.isPlayerFound) {
+      (await this.ticketService.DownloadFile(this.document))
+        .pipe(
+          timeout(100000),
+          catchError((error: HttpErrorResponse) => {
+            console.log(error);
+            return throwError(error);
+          })
+        )
+        .subscribe((response) => {
+          this.saveFile(response);
         })
-      )
-      .subscribe((response) => {
-        this.saveFile(response);
-      })
+    }
   }
 
   private getExtensionFromContentType(contentType: string): string {
