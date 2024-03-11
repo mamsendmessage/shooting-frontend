@@ -108,6 +108,9 @@ export class LaneComponent implements OnInit {
   public async loadData() {
     this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId);
     if (this.currentTicket) {
+      var seconds = (Date.now() - new Date(this.currentTicket.LastModificationDate).getTime()) / 1000;
+      const tTimer = (this.currentTicket.GamePeriod - Math.ceil(seconds)) * 1000;
+      this.startTimer(tTimer,'Time to finish')
       this.PlayerLevels = await this.configurationService.GetPlayerLevel(this.currentTicket.GameTypeId);
       this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
       this.playerLevel = this.PlayerLevels.find((item) => item.ID == this.currentTicket.PlayerLevelId)?.Name;

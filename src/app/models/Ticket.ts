@@ -8,6 +8,7 @@ export class Ticket {
     public State: number;
     public CreationDate: Date;
     public LastModificationDate: Date;
+    public GamePeriod: number;
     constructor(pTicket: Ticket) {
         if (pTicket) {
             this.ID = pTicket.ID;
@@ -19,6 +20,7 @@ export class Ticket {
             this.State = pTicket.State;
             this.CreationDate = pTicket.CreationDate;
             this.LastModificationDate = pTicket.LastModificationDate;
+            this.GamePeriod = pTicket.GamePeriod;
         }
     }
 }

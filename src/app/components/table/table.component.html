@@ -45,11 +45,10 @@
 
                 </td>
                 <td class="text-center">
-                    <ng-container *ngFor="let level of PlayerLevels; let i = index">
-                        <span *ngIf="player.PlayerLevel==level.Name"
-                            [ngClass]="{'professional': level.Name === 'Professional' , 'intermediate': level.Name === 'Intermediate' , 'beginner': level.Name === 'Beginner'}">
-                            {{player.PlayerLevel}} </span>
-                    </ng-container>
+
+                    <span
+                        [ngClass]="{'professional': player.PlayerLevel === 'Professional' , 'intermediate': player.PlayerLevel === 'Intermediate' , 'beginner': player.PlayerLevel === 'Beginner'}">
+                        {{player.PlayerLevel}} </span>
                 </td>
                 <td class="text-center"> {{player.DisplayedTicketType}} </td>
                 <td class="text-center"> <button href="#" class="profileIcons" (click)="selectItem(player)"> </button>
