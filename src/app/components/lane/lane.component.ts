@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Lane } from 'src/app/models/Lane';
 import { Nationality } from 'src/app/models/Nationality';
@@ -12,6 +13,7 @@ import { LaneService } from 'src/app/services/lane.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketCommunicationService } from 'src/app/services/socket-communication.service';
 import { TicketService } from 'src/app/services/ticket.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-lane',
@@ -37,7 +39,7 @@ export class LaneComponent implements OnInit {
   public PlayerLevels: PlayerLevel[] = [];
   public timerCaption = ''
   constructor(private route: ActivatedRoute, private socketCommunicationService: SocketCommunicationService, private playerService: PlayerService,
-    private configurationService: ConfigurationService, private ticketService: TicketService) { }
+    private configurationService: ConfigurationService, private ticketService: TicketService, public dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async params => {
@@ -57,9 +59,17 @@ export class LaneComponent implements OnInit {
   public async initializeComponenet() {
     try {
       //const tLane: Lane = await this.laneService.GetLaneByID(this.laneId);
-      this.socketCommunicationService.listenToChange().subscribe((pTicket: X_TodayPlayer) => {
+      this.socketCommunicationService.listenToChange().subscribe(async (pTicket: X_TodayPlayer) => {
         if (pTicket.LaneId == this.laneId) {
-          this.BuildUI();
+          await this.BuildUI();
+        }
+      });
+      this.socketCommunicationService.listenToFinihsTimer().subscribe(async (pData: any) => {
+        if (pData.laneId == this.ticket.LaneId) {
+          if (pData.timer > 0) {
+            await this.BuildUI();
+            this.startTimer(pData.timer * 1000, 'Time to Finish')
+          }
         }
       });
       this.socketCommunicationService.listenToRefillTimer().subscribe((pData: any) => {
@@ -69,7 +79,6 @@ export class LaneComponent implements OnInit {
           }
         }
       });
-
       this.socketCommunicationService.listenToTimePerShotTimer().subscribe((pData: any) => {
         if (pData.laneId == this.ticket.LaneId) {
           if (pData.timer > 0) {
@@ -77,13 +86,29 @@ export class LaneComponent implements OnInit {
           }
         }
       });
-
       this.socketCommunicationService.listenToFinish().subscribe(async (pData: any) => {
         if (pData.laneId == -100 || (pData.laneId == this.ticket.LaneId && pData.ticketId == this.ticket.TicketId)) {
           await this.FinishTicket();
         }
       });
-      this.BuildUI();
+      this.socketCommunicationService.listenToPause().subscribe(async (pData: any) => {
+        if (pData.laneId == -100 || (pData.laneId == this.ticket.LaneId)) {
+          window.location.reload();
+        }
+      });
+      this.socketCommunicationService.listenToForceFinish().subscribe(async (pData: any) => {
+        if (pData.laneId == -100 || (pData.laneId == this.ticket.LaneId)) {
+          window.location.reload();
+        }
+      });
+
+      this.socketCommunicationService.listenToResume().subscribe(async (pData: any) => {
+        if (pData.laneId == -100 || (pData.laneId == this.ticket.LaneId)) {
+          window.location.reload();
+        }
+      });
+
+      await this.BuildUI();
     } catch (error) {
       console.log(error);
     }
@@ -108,9 +133,11 @@ export class LaneComponent implements OnInit {
   public async loadData() {
     this.currentTicket = await this.ticketService.GetTicketById(this.ticket.TicketId);
     if (this.currentTicket) {
-      var seconds = (Date.now() - new Date(this.currentTicket.LastModificationDate).getTime()) / 1000;
-      const tTimer = (this.currentTicket.GamePeriod - Math.ceil(seconds)) * 1000;
-      this.startTimer(tTimer,'Time to finish')
+      if (this.currentTicket.State == 1) {
+        var seconds = (Date.now() - new Date(this.currentTicket.LastModificationDate).getTime()) / 1000;
+        const tTimer = (this.currentTicket.GamePeriod - Math.ceil(seconds)) * 1000;
+        this.startTimer(tTimer, 'Time to finish')
+      }
       this.PlayerLevels = await this.configurationService.GetPlayerLevel(this.currentTicket.GameTypeId);
       this.player = await this.playerService.GetPlayerById_An(this.ticket.UserId);
       this.playerLevel = this.PlayerLevels.find((item) => item.ID == this.currentTicket.PlayerLevelId)?.Name;
@@ -124,12 +151,31 @@ export class LaneComponent implements OnInit {
     this.isActiveTicket = true;
   }
 
+  openAlertDialog(pMessage: string) {
+    this.dialog.open(AlertDialogComponent, {
+      data: {
+        icon: 'Error',
+        message: pMessage
+      }
+    });
+  }
+
   public async UpdateTicketState() {
     try {
       this.currentTicket.State = 1;
-      await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
-      this.BuildUI();
-      this.startTimer(3000, 'Time to Start')
+      const tUpdateResult = await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
+      if (tUpdateResult == -4) {
+        this.openAlertDialog('An Error Occured While Performing Your Request, Please Make Sure that only one in game ticket at a time');
+      }
+      await this.BuildUI();
+      if (this.currentTicket.State == 1) {
+        var seconds = (Date.now() - new Date(this.currentTicket.LastModificationDate).getTime()) / 1000;
+        const tTimer = (this.currentTicket.GamePeriod - Math.ceil(seconds)) * 1000;
+        this.startTimer(tTimer, 'Time to finish')
+      } else if (this.currentTicket.State == 6) {
+        this.pauseTimer();
+        this.countdown = '00:00';
+      }
     } catch (error) {
       console.log(error);
     }
@@ -140,7 +186,7 @@ export class LaneComponent implements OnInit {
       this.currentTicket.State = 6;
       await this.ticketService.UpdateTicketState_Ann(this.currentTicket);
       this.pauseTimer();
-      window.location.reload();
+      await this.BuildUI();
     } catch (error) {
       console.log(error);
     }

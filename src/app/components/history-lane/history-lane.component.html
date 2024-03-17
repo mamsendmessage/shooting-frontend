@@ -39,7 +39,10 @@
                         <li class="timedown timesicon">
                             <div class="frames blink">
                                 <div>
-                                    <span>00:00 </span>
+                                    <span *ngIf="timerCaption.length>0"
+                                        [ngClass]="isTimerStarted?'small-font countdown':'small-font'">{{timerCaption}}
+                                        <br></span>
+                                    <span [ngClass]="isTimerStarted?'countdown':''">{{countdown}} </span>
                                 </div>
                             </div>
                         </li>

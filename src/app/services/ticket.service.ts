@@ -178,7 +178,7 @@ export class TicketService {
     try {
       const tUrl: string = `${Constants.APIAnonymousServerUrl}/lanes/updateState`;
       const tResponse: APIResponse = await this.communicationService.putData(tUrl, pTicket);
-      return tResponse.result;
+      return tResponse.result == -1 ? tResponse.errorCode : tResponse.result;
     } catch (error) {
       console.log(error);
       return -1;

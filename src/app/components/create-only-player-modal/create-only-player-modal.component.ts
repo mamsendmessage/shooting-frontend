@@ -35,6 +35,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
   public isEditMode: boolean = false;
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
+  public fileContent: string = '';
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateOnlyPlayerModalComponent>,
     private playerService: PlayerService,
     private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public pPlayer: Player,) {
@@ -99,7 +100,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
       tPlayer.Name = this.playerForm.value.nameOfPlayer;
       tPlayer.NationalityId = this.playerForm.value.nationality;
       tPlayer.Photo = this.webcamImage ? this.webcamImage.imageAsBase64 : '';
-      tPlayer.Document = this.playerForm.value.document ? this.playerForm.value.document : '';
+      tPlayer.Document = this.fileContent;
       tPlayer.PassportsNo = this.playerForm.value.passportsNo;
       tPlayer.MembershipNo = this.playerForm.value.membershipNo;
       tPlayer.MembershipExpiry = this.playerForm.value.membershipExpiry;
@@ -116,7 +117,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
           tPlayer.Photo = tPlayer.Photo.replace(Constants.BaseServerUrl, '');
         }
 
-        tResult = await this.playerService.UpdatePlayer(tPlayer,isNewPhoto,this.isNewDocument);
+        tResult = await this.playerService.UpdatePlayer(tPlayer, isNewPhoto, this.isNewDocument);
       } else {
         tResult = await this.playerService.AddPlayer(tPlayer);
       }
@@ -159,6 +160,7 @@ export class CreateOnlyPlayerModalComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       this.isNewDocument = true;
+      this.fileContent = reader.result.toString();
       this.playerForm.value.document = reader.result;
       this.isFileUploaded = true;
     };

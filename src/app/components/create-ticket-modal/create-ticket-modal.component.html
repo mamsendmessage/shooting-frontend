@@ -137,7 +137,7 @@
                                 <img class="attachedPhoto" [src]="image" />
                                 <span> {{ticketForm.get('nameOfPlayer').value}} </span>
                             </div>
-                            <div class="takePhoto">
+                            <div class="takePhoto" *ngIf="!isPlayerFound">
                                 <app-camera (pictureTaken)="handleImage($event)"></app-camera>
                             </div>
                             <div class="takePhoto mr-t-6">

@@ -51,6 +51,19 @@ export class SocketCommunicationService {
     }
   }
 
+  public listenToFinihsTimer(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("TimeToFinish", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
 
   public listenToTimePerShotTimer(): Observable<any> {
     try {
@@ -78,6 +91,45 @@ export class SocketCommunicationService {
     }
   }
 
+  public listenToForceFinish(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("ForceFinishTicket", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  public listenToPause(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("PauseTicket", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  
+  public listenToResume(): Observable<any> {
+    try {
+      return new Observable((Subscribe) => {
+        this.clientSocket.on("ResumeTicket", (data) => {
+          Subscribe.next(data);
+        })
+      })
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
 
 

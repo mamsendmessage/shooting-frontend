@@ -29,14 +29,15 @@ export class CreateTicketModalComponent implements OnInit {
   public SessionsTime: SessionsTime[] = [];
   public PlayerLevels: PlayerLevel[] = [];
   public isFileUploaded: boolean = false;
-
+  public fileContent: string = '';
   public isFormSubmitted: boolean = false;
   public isReady: boolean = false;
+  public isPlayerFound: boolean = false;
   public playerFields = ['nameOfPlayer', 'nationality', 'mobileNumber', 'age', 'photo', 'document', 'passportsNo', 'membershipNo', 'membershipExpiry'];
   constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<CreateTicketModalComponent>,
     @Inject(MAT_DIALOG_DATA) public pPlayer: Player, private ticketService: TicketService, private configService: ConfigurationService, public dialog: MatDialog) {
-    debugger;
     if (pPlayer && pPlayer.ID > 0) {
+      this.isPlayerFound = true;
       this.fileName = this.pPlayer.Name + "_wiver_document";
       this.filePath = Constants.BaseServerUrl + pPlayer.Document;
       this.isFileUploaded = true;
@@ -130,7 +131,7 @@ export class CreateTicketModalComponent implements OnInit {
       tPlayer.Name = tPlayerData.nameOfPlayer;
       tPlayer.NationalityId = tPlayerData.nationality;
       tPlayer.Photo = this.webcamImage ? this.webcamImage.imageAsBase64 : '';
-      tPlayer.Document = tPlayerData.document ? tPlayerData.document : '';
+      tPlayer.Document = this.fileContent;
       tPlayer.PassportsNo = tPlayerData.passportsNo;
       tPlayer.MembershipNo = tPlayerData.membershipNo;
       tPlayer.MembershipExpiry = tPlayerData.membershipExpiry;
@@ -181,6 +182,7 @@ export class CreateTicketModalComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       this.isFileUploaded = true;
+      this.fileContent = reader.result.toString();
       this.ticketForm.value.document = reader.result;
 
     };
